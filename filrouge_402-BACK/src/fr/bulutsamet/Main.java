@@ -10,7 +10,8 @@ public class Main {
         // Créer une instance d'un rectangle
         Rectangle r1 = new Rectangle(5,5);
         System.out.println(r1.toString());
-        r1.modifRectangle(2,2);
+        r1.setLargeur(2);
+        r1.setLongueur(2);
         System.out.println("Après modification " + r1.toString());
         //
 

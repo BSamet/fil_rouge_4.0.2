@@ -19,13 +19,24 @@ public class Rectangle extends Forms {
         return "le perimètre du rectangle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
     }
 
-    public void modifRectangle(double largeur, double longueur) {
+    public Rectangle(double largeur, double longueur) {
         this.largeur = largeur;
         this.longueur = longueur;
     }
 
-    public Rectangle(double largeur, double longueur) {
+    public double getLargeur() {
+        return largeur;
+    }
+
+    public void setLargeur(double largeur) {
         this.largeur = largeur;
+    }
+
+    public double getLongueur() {
+        return longueur;
+    }
+
+    public void setLongueur(double longueur) {
         this.longueur = longueur;
     }
 }
