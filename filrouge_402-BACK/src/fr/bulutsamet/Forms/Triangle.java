@@ -18,8 +18,13 @@ public class Triangle extends Forms{
     }
 
     @Override
-    public double getVolume() {
-        return 0;
+    public String toString() {
+        return "le perimètre du triangle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
+    }
+
+    public void modifTriangle(double base, double longueur) {
+        this.base = base;
+        this.longueur = longueur;
     }
 
     public Triangle(double base, double longueur) {

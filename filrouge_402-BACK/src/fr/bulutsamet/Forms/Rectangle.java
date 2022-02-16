@@ -3,7 +3,6 @@ package fr.bulutsamet.Forms;
 public class Rectangle extends Forms {
     private double largeur;
     private double longueur;
-    private double hauteur;
 
     @Override
     public double getPerimetre() {
@@ -16,18 +15,17 @@ public class Rectangle extends Forms {
     }
 
     @Override
-    public double getVolume() {
-       return this.largeur * this.longueur * this.hauteur;
+    public String toString() {
+        return "le perimètre du rectangle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
+    }
+
+    public void modifRectangle(double largeur, double longueur) {
+        this.largeur = largeur;
+        this.longueur = longueur;
     }
 
     public Rectangle(double largeur, double longueur) {
         this.largeur = largeur;
         this.longueur = longueur;
-    }
-
-    public Rectangle(double largeur, double longueur, double hauteur) {
-        this.largeur = largeur;
-        this.longueur = longueur;
-        this.hauteur = hauteur;
     }
 }

@@ -15,12 +15,16 @@ public class Cercle extends Forms{
     }
 
     @Override
-    public double getVolume() {
-        return 0;
+    public String toString() {
+        return "le perimètre du cercle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
     }
 
     public double getDiametre() {
         return this.rayon *2;
+    }
+
+    public void modifCercle(double rayon) {
+        this.rayon = rayon;
     }
 
     public Cercle(double rayon) {
