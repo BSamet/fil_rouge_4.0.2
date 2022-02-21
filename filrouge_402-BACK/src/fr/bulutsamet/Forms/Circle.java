@@ -26,9 +26,12 @@ public class Circle extends Forms{
         return this.rayon *2;
     }
 
+    //Getter & Setter
     public double getRayon() {
         return rayon;
     }
+
+    public void setRayon(double rayon) { this.rayon = rayon; }
     //
 
     //Constructor

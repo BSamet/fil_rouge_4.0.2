@@ -1,69 +1,84 @@
 @startuml
 
-abstract class Forms {
-  --Method--
-  {abstract} getPerimetre();
-  {abstract} getAire();
-  {abstract} toString();
+abstract class Forms #80BA9D {
+    --Method--
+    {abstract} getPerimetre();
+    {abstract} getAire();
+    {abstract} toString();
 }
 
-class Circle {
-  --Atribute--
-  -rayon:double;
+class Circle #9BD1A7 {
+    --Atribute--
+    -rayon:double;
 
-  --Method--
-  +getPerimetre(): double;
-  +getAire(): double;
-  +toString(): String;
-  +getDiametre(): double;
-  +getRayon(): double;
-  +setRayon(rayon:double);
+    --Method--
+    +getPerimetre(): double;
+    +getAire(): double;
+    +toString(): String;
+    +getDiametre(): double;
+    +getRayon(): double;
+    +setRayon(rayon:double);
 
-  --Constructor--
-  +Circle();
-  +Circle(rayon:double);
+    --Constructor--
+    +Circle();
+    +Circle(rayon:double);
 }
 
-class Rectangle {
-  --Atribute--
-  -largeur:double;
-  -longueur:double;
+class Rectangle #9BD1A7 {
+    --Atribute--
+    -largeur:double;
+    -longueur:double;
 
-  --Method--
-  +getPerimetre(): double;
-  +getAire(): double;
-  +toString(): String;
-  +getLargeur(): double;
-  +setLargeur(largeur:double);
-  +getLongueur(): double;
-  +setLongueur(longueur:double): double;
+    --Method--
+    +getPerimetre(): double;
+    +getAire(): double;
+    +toString(): String;
+    +getLargeur(): double;
+    +setLargeur(largeur:double);
+    +getLongueur(): double;
+    +setLongueur(longueur:double): double;
 
-  --Constructor--
-  +Rectangle();
-  +Rectangle(largeur:double, longueur:double);
+    --Constructor--
+    +Rectangle();
+    +Rectangle(largeur:double, longueur:double);
 }
 
-class Triangle {
-  --Atribute--
-  -base:double;
-  -longueur:double;
+class Triangle #9BD1A7 {
+    --Atribute--
+    -base:double;
+    -longueur:double;
 
-  --Method--
-  +getPerimetre(): double;
-  +getAire(): double;
-  +toString(): String;
-  +getBase(): double;
-  +setBase(base:double): double;
-  +getLongueur(): double;
-  +setLongueur(longueur:double): double;
+    --Method--
+    +getPerimetre(): double;
+    +getAire(): double;
+    +toString(): String;
+    +getBase(): double;
+    +setBase(base:double): double;
+    +getLongueur(): double;
+    +setLongueur(longueur:double): double;
 
-  --Constructor--
-  +Triangle();
-  +Triangle(base:double, longueur:double);
+    --Constructor--
+    +Triangle();
+    +Triangle(base:double, longueur:double);
 }
 
-Forms <|-- Circle
-Forms <|-- Rectangle
-Forms <|-- Triangle
+class FormsManager #BEE0B4 {
+    --Attributes--
+    -myAllForms:List<Form>;
+    -myTotalPerimeter:double;
+    -myTotalAire:double;
+
+    --Method--
+    +calculatePerimeterForms(): double;
+    +calculateAireForms(): double;
+    +toString(): String;
+
+    --Constructor--
+    +FormsManager(List<Form> myAllForms);
+}
+
+Forms <|-- Circle #6CBB7A
+Forms <|-- Rectangle #6CBB7A
+Forms <|-- Triangle #6CBB7A
 
 @enduml

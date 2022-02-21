@@ -22,6 +22,8 @@ public class Rectangle extends Forms {
     public String toString() {
         return "le perimètre du rectangle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
     }
+
+    //Getter & Setter
     public double getLargeur() {
         return largeur;
     }
@@ -37,6 +39,7 @@ public class Rectangle extends Forms {
     public void setLongueur(double longueur) {
         this.longueur = longueur;
     }
+    //
 
     //Constructor
     public Rectangle() {}
