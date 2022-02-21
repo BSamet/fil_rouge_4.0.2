@@ -1,6 +1,6 @@
 package fr.bulutsamet;
 
-import fr.bulutsamet.Forms.Cercle;
+import fr.bulutsamet.Forms.Circle;
 import fr.bulutsamet.Forms.Rectangle;
 import fr.bulutsamet.Forms.Triangle;
 
@@ -16,7 +16,7 @@ public class Main {
         //
 
         // Créer une instance d'un cercle
-        Cercle c1 = new Cercle(5);
+        Circle c1 = new Circle(5);
         System.out.println(c1.toString());
         //
 

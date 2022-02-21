@@ -1,9 +1,12 @@
 package fr.bulutsamet.Forms;
 
-public class Cercle extends Forms{
+public class Circle extends Forms{
 
+    //Attribute
     private double rayon;
+    //
 
+    //Method
     @Override
     public double getPerimetre() {
         return getDiametre() * Math.PI;
@@ -23,15 +26,16 @@ public class Cercle extends Forms{
         return this.rayon *2;
     }
 
-    public Cercle(double rayon) {
-        this.rayon = rayon;
-    }
-
     public double getRayon() {
         return rayon;
     }
+    //
 
-    public void setRayon(double rayon) {
+    //Constructor
+    public Circle() {}
+
+    public Circle(double rayon) {
         this.rayon = rayon;
     }
+    //
 }

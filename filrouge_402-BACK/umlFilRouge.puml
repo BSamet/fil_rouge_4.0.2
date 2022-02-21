@@ -1,0 +1,69 @@
+@startuml
+
+abstract class Forms {
+  --Method--
+  {abstract} getPerimetre();
+  {abstract} getAire();
+  {abstract} toString();
+}
+
+class Circle {
+  --Atribute--
+  -rayon:double;
+
+  --Method--
+  +getPerimetre(): double;
+  +getAire(): double;
+  +toString(): String;
+  +getDiametre(): double;
+  +getRayon(): double;
+  +setRayon(rayon:double);
+
+  --Constructor--
+  +Circle();
+  +Circle(rayon:double);
+}
+
+class Rectangle {
+  --Atribute--
+  -largeur:double;
+  -longueur:double;
+
+  --Method--
+  +getPerimetre(): double;
+  +getAire(): double;
+  +toString(): String;
+  +getLargeur(): double;
+  +setLargeur(largeur:double);
+  +getLongueur(): double;
+  +setLongueur(longueur:double): double;
+
+  --Constructor--
+  +Rectangle();
+  +Rectangle(largeur:double, longueur:double);
+}
+
+class Triangle {
+  --Atribute--
+  -base:double;
+  -longueur:double;
+
+  --Method--
+  +getPerimetre(): double;
+  +getAire(): double;
+  +toString(): String;
+  +getBase(): double;
+  +setBase(base:double): double;
+  +getLongueur(): double;
+  +setLongueur(longueur:double): double;
+
+  --Constructor--
+  +Triangle();
+  +Triangle(base:double, longueur:double);
+}
+
+Forms <|-- Circle
+Forms <|-- Rectangle
+Forms <|-- Triangle
+
+@enduml
