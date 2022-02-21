@@ -7,5 +7,4 @@ public abstract class Forms {
     public abstract double getAire();
 
     public abstract String toString();
-
 }
