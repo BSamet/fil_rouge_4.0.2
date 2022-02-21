@@ -80,5 +80,6 @@ class FormsManager #BEE0B4 {
 Forms <|-- Circle #6CBB7A
 Forms <|-- Rectangle #6CBB7A
 Forms <|-- Triangle #6CBB7A
+FormsManager *-- "*" Forms #6CBB7A
 
 @enduml
