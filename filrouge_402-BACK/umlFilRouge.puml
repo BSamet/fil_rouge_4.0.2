@@ -4,13 +4,11 @@ abstract class Forms #80BA9D {
     --Method--
     {abstract} getPerimetre();
     {abstract} getAire();
-    {abstract} toString();
 }
 
 class Circle #9BD1A7 {
-    --Atribute--
+    --Attribute--
     -rayon:double;
-
     --Method--
     +getPerimetre(): double;
     +getAire(): double;
@@ -18,17 +16,15 @@ class Circle #9BD1A7 {
     +getDiametre(): double;
     +getRayon(): double;
     +setRayon(rayon:double);
-
     --Constructor--
     +Circle();
     +Circle(rayon:double);
 }
 
 class Rectangle #9BD1A7 {
-    --Atribute--
+    --Attribute--
     -largeur:double;
     -longueur:double;
-
     --Method--
     +getPerimetre(): double;
     +getAire(): double;
@@ -36,50 +32,46 @@ class Rectangle #9BD1A7 {
     +getLargeur(): double;
     +setLargeur(largeur:double);
     +getLongueur(): double;
-    +setLongueur(longueur:double): double;
-
+    +setLongueur(longueur:double);
     --Constructor--
     +Rectangle();
     +Rectangle(largeur:double, longueur:double);
 }
 
 class Triangle #9BD1A7 {
-    --Atribute--
+    --Attribute--
     -base:double;
     -longueur:double;
-
     --Method--
     +getPerimetre(): double;
     +getAire(): double;
     +toString(): String;
     +getBase(): double;
-    +setBase(base:double): double;
+    +setBase(base:double);
     +getLongueur(): double;
-    +setLongueur(longueur:double): double;
-
+    +setLongueur(longueur:double);
     --Constructor--
     +Triangle();
     +Triangle(base:double, longueur:double);
 }
 
-class FormsManager #BEE0B4 {
-    --Attributes--
+class FormsComposite #9BD1A7 {
+    --Attribute--
     -myAllForms:List<Form>;
-    -myTotalPerimeter:double;
-    -myTotalAire:double;
-
     --Method--
-    +calculatePerimeterForms(): double;
-    +calculateAireForms(): double;
+    +getPerimetre(): double;
+    +getAire(): double;
+    +addForm(forms:Forms);
+    +removeForm(forms:Forms);
     +toString(): String;
-
     --Constructor--
-    +FormsManager(List<Form> myAllForms);
+    +FormsComposite(List<Form> myAllForms);
 }
 
 Forms <|-- Circle #6CBB7A
 Forms <|-- Rectangle #6CBB7A
 Forms <|-- Triangle #6CBB7A
-FormsManager *-- "*" Forms #6CBB7A
+Forms <|-- FormsComposite #6CBB7A
+Forms "*" <-- FormsComposite #6CBB7A
 
 @enduml

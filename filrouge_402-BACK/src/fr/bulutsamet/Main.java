@@ -2,17 +2,14 @@ package fr.bulutsamet;
 
 import fr.bulutsamet.Forms.*;
 
-import java.util.Arrays;
-
 public class Main {
 
     public static void main(String[] args) {
         // Créer une instance d'un rectangle
-        Rectangle r1 = new Rectangle(5,5);
+        Rectangle r1 = new Rectangle(6,12);
         System.out.println(r1);
-        r1.setLongueur(2);
-        r1.setLargeur(2);
-        System.out.println("Après modification " + r1);
+        Rectangle r2 = new Rectangle(8,79);
+        System.out.println(r2);
         //
 
         // Créer une instance d'un cercle
@@ -25,7 +22,12 @@ public class Main {
         System.out.println(t1);
         //
 
-        FormsManager manageForms = new FormsManager(Arrays.asList(r1, t1, c1));
+        FormsComposite manageForms = new FormsComposite();
+        manageForms.addForm(r1);
+        System.out.println(manageForms);
+        manageForms.addForm(r2);
+        manageForms.addForm(c1);
+        manageForms.addForm(t1);
         System.out.println(manageForms);
     }
 }

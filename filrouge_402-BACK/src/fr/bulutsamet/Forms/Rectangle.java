@@ -20,8 +20,9 @@ public class Rectangle extends Forms {
 
     @Override
     public String toString() {
-        return "le perimètre du rectangle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
+        return "le perimètre du rectangle est de " + df.format(this.getPerimetre()) + " cm et l'aire est de " + df.format(this.getAire()) + " cm2.";
     }
+    //
 
     //Getter & Setter
     public double getLargeur() {

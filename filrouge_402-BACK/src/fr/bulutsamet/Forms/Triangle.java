@@ -21,7 +21,7 @@ public class Triangle extends Forms{
 
     @Override
     public String toString() {
-        return "le perimètre du triangle est de " + this.getPerimetre() + " cm et l'aire est de " + this.getAire() + " cm2.";
+        return "le perimètre du triangle est de " + df.format(this.getPerimetre()) + " cm et l'aire est de " + df.format(this.getAire()) + " cm2.";
     }
     //
 
