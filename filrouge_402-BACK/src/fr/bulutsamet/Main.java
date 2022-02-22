@@ -6,19 +6,19 @@ public class Main {
 
     public static void main(String[] args) {
         // Créer une instance d'un rectangle
-        Rectangle r1 = new Rectangle(6,12);
+        Rectangle r1 = new Rectangle(6,12, "Rectangle 1");
         System.out.println(r1);
-        Rectangle r2 = new Rectangle(8,79);
+        Rectangle r2 = new Rectangle(8,79, "Rectangle 2");
         System.out.println(r2);
         //
 
         // Créer une instance d'un cercle
-        Circle c1 = new Circle(5);
+        Circle c1 = new Circle(90, "Cercle 1");
         System.out.println(c1);
         //
 
         // Créer une instance d'un triangle
-        Triangle t1 = new Triangle(10,20);
+        Triangle t1 = new Triangle(10,20, "Triangle 1");
         System.out.println(t1);
         //
 
@@ -30,7 +30,8 @@ public class Main {
         manageForms.addForm(t1);
         System.out.println(manageForms);
 
-        Forms3d my3dForms = new Forms3d(c1);
-        System.out.println(my3dForms.getVolumes());
+        Forms3d my3dForms = new Forms3d(r1);
+        my3dForms.setProfondeur(4);
+        System.out.println(my3dForms);
     }
 }

@@ -45,9 +45,10 @@ public class Rectangle extends Forms {
     //Constructor
     public Rectangle() {}
 
-    public Rectangle(double largeur, double longueur) {
+    public Rectangle(double largeur, double longueur, String name) {
         this.largeur = largeur;
         this.longueur = longueur;
+        this.name = name;
     }
     //
 }

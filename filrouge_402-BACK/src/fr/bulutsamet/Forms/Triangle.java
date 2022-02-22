@@ -46,9 +46,10 @@ public class Triangle extends Forms{
     //Constructor
     public Triangle() {}
 
-    public Triangle(double base, double longueur) {
+    public Triangle(double base, double longueur, String name) {
         this.base = base;
         this.longueur = longueur;
+        this.name = name;
     }
     //
 }

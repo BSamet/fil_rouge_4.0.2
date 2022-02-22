@@ -37,8 +37,9 @@ public class Circle extends Forms{
     //Constructor
     public Circle() {}
 
-    public Circle(double rayon) {
+    public Circle(double rayon, String name) {
         this.rayon = rayon;
+        this.name = name;
     }
     //
 }
