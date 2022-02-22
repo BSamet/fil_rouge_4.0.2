@@ -29,5 +29,8 @@ public class Main {
         manageForms.addForm(c1);
         manageForms.addForm(t1);
         System.out.println(manageForms);
+
+        Forms3d my3dForms = new Forms3d(c1);
+        System.out.println(my3dForms.getVolumes());
     }
 }
