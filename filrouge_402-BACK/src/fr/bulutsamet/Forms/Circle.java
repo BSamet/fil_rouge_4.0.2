@@ -27,6 +27,16 @@ public class Circle extends Forms{
     }
 
     //Getter & Setter
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getRayon() {
         return rayon;
     }

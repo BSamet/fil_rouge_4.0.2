@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormsComposite extends Forms {
+
     //Attribute
     private List<Forms> myAllForms;
     //
@@ -37,6 +38,17 @@ public class FormsComposite extends Forms {
 
     public String toString(){
         return "Total perimeter = " + df.format(getPerimetre()) + " cm, Total Aire = " + df.format(getAire()) + " cm2";
+    }
+    //
+
+    //Getter & Setter
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public void setName(String name) {
     }
     //
 

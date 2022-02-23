@@ -13,4 +13,10 @@ public abstract class Forms {
 
     public abstract double getAire();
     //
+
+    //Getter & Setter
+    public abstract String getName();
+
+    public abstract void setName(String name);
+    //
 }

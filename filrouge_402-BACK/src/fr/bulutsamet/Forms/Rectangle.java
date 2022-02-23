@@ -25,8 +25,18 @@ public class Rectangle extends Forms {
     //
 
     //Getter & Setter
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void setName(String name) {
+         this.name = name;
+    }
+
     public double getLargeur() {
-        return largeur;
+        return this.largeur;
     }
 
     public void setLargeur(double largeur) {
@@ -34,7 +44,7 @@ public class Rectangle extends Forms {
     }
 
     public double getLongueur() {
-        return longueur;
+        return this.longueur;
     }
 
     public void setLongueur(double longueur) {

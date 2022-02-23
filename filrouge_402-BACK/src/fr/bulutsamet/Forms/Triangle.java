@@ -26,6 +26,16 @@ public class Triangle extends Forms{
     //
 
     //Getter & Setter
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getBase() {
         return base;
     }

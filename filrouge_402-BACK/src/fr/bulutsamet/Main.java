@@ -1,6 +1,8 @@
 package fr.bulutsamet;
 
 import fr.bulutsamet.Forms.*;
+import fr.bulutsamet.Forms3d.Forms3d;
+import fr.bulutsamet.Forms3d.Forms3dComposite;
 
 public class Main {
 
@@ -18,7 +20,7 @@ public class Main {
         //
 
         // Créer une instance d'un triangle
-        Triangle t1 = new Triangle(10,20, "Triangle 1");
+        Triangle t1 = new Triangle(10,7, "Triangle 1");
         System.out.println(t1);
         //
 
@@ -30,8 +32,15 @@ public class Main {
         manageForms.addForm(t1);
         System.out.println(manageForms);
 
-        Forms3d my3dForms = new Forms3d(r1);
-        my3dForms.setProfondeur(4);
-        System.out.println(my3dForms);
+        Forms3d myForms3d = new Forms3d(r1, 10);
+        System.out.println(myForms3d);
+
+        Forms3d myForms3dT = new Forms3d(t1, 10);
+        System.out.println(myForms3dT);
+
+        Forms3dComposite forms3d = new Forms3dComposite();
+        forms3d.add3dForm(myForms3d);
+        forms3d.add3dForm(myForms3dT);
+        System.out.println(forms3d);
     }
 }
