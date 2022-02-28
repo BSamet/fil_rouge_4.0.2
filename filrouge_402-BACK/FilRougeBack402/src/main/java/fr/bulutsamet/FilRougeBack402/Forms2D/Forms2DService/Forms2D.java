@@ -1,20 +1,28 @@
 package fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DService;
 
 import fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DService.Forms3D;
-import io.swagger.annotations.Api;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
+@Table(name = "Forms2D")
 public class Forms2D {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "longueur")
     private double longueur;
+    @Column(name = "largeur")
     private double largeur;
+    @Column(name = "rayon")
     private double rayon;
+
+    @ManyToOne
+    @JoinColumn(name = "forms3d_id")
+    private Forms3D forms3d;
 
     public int getId() {
         return id;
