@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
 
 import java.util.ArrayList;
 import java.util.List;

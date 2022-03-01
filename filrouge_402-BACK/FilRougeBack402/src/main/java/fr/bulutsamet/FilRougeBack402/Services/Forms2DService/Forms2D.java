@@ -1,6 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DService;
-
-import fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DService.Forms3D;
+package fr.bulutsamet.FilRougeBack402.Services.Forms2DService;
 
 import javax.persistence.*;
 
@@ -19,10 +17,6 @@ public class Forms2D {
     private double largeur;
     @Column(name = "rayon")
     private double rayon;
-
-    @ManyToOne
-    @JoinColumn(name = "forms3d_id")
-    private Forms3D forms3d;
 
     public int getId() {
         return id;

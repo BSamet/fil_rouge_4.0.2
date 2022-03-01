@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DService;
+package fr.bulutsamet.FilRougeBack402.Services.Forms2DService;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

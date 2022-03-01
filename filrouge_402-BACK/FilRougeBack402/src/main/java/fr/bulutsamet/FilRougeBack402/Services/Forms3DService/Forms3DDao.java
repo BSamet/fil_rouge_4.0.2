@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DService;
+package fr.bulutsamet.FilRougeBack402.Services.Forms3DService;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

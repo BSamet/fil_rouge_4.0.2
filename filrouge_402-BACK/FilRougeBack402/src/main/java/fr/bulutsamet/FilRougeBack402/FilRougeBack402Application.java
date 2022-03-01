@@ -1,9 +1,9 @@
 package fr.bulutsamet.FilRougeBack402;
 
-import fr.bulutsamet.FilRougeBack402.Forms2D.Circle;
-import fr.bulutsamet.FilRougeBack402.Forms2D.FormsComposite;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Rectangle;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Triangle;
+import fr.bulutsamet.FilRougeBack402.Model.Forms2D.Circle;
+import fr.bulutsamet.FilRougeBack402.Model.Forms2D.FormsComposite;
+import fr.bulutsamet.FilRougeBack402.Model.Forms2D.Rectangle;
+import fr.bulutsamet.FilRougeBack402.Model.Forms2D.Triangle;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Configuration;
@@ -35,11 +35,10 @@ public class FilRougeBack402Application {
 		//
 
 		FormsComposite manageForms = new FormsComposite();
-		manageForms.addForm(r1);
-		System.out.println(manageForms);
-		manageForms.addForm(r2);
-		manageForms.addForm(c1);
-		manageForms.addForm(t1);
+		for (int i = 0; i < 201; i++){
+			Rectangle rectangleFlorent = new Rectangle(5, 5, "Rectangle FLorent" + i);
+			manageForms.addForm(rectangleFlorent);
+		}
 		System.out.println(manageForms);
 	}
 

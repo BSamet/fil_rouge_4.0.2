@@ -1,5 +1,5 @@
-package fr.bulutsamet.FilRougeBack402.Forms3D;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Forms;
+package fr.bulutsamet.FilRougeBack402.Model.Forms3D;
+import fr.bulutsamet.FilRougeBack402.Model.Forms2D.Forms;
 
 import java.text.DecimalFormat;
 

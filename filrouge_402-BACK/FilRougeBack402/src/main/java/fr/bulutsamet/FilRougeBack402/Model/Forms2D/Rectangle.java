@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
 
 public class Rectangle extends Forms {
 

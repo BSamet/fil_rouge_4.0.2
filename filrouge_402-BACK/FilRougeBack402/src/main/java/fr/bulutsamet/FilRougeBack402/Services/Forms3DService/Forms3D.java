@@ -1,9 +1,8 @@
-package fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DService;
+package fr.bulutsamet.FilRougeBack402.Services.Forms3DService;
 
-import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DService.Forms2D;
+import fr.bulutsamet.FilRougeBack402.Services.Forms2DService.Forms2D;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "Forms3D")
@@ -15,14 +14,13 @@ public class Forms3D {
     @Column(name = "depths")
     private double depths;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            targetEntity = Forms2D.class,
-            mappedBy = "forms3d"
-    )
-    private List<Forms2D> forms2d;
+    @ManyToOne
+    @JoinColumn(name = "forms_2_d_id")
+    private Forms2D forms2d;
+
+    public Forms2D getForms2d() {
+        return forms2d;
+    }
 
     public int getId() {
         return id;

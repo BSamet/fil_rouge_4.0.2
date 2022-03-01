@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402;
+package fr.bulutsamet.FilRougeBack402.Services;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +15,8 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DService"))
-                .paths(PathSelectors.regex("/Forms2D.*"))
+                .apis(RequestHandlerSelectors.basePackage("fr.bulutsamet.FilRougeBack402.Services"))
+                .paths(PathSelectors.regex("/Forms*.*"))
                 .build();
     }
 }

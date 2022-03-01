@@ -1,6 +1,7 @@
-package fr.bulutsamet.FilRougeBack402.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
 
 import java.text.DecimalFormat;
+
 
 public abstract class Forms {
     //Attribute

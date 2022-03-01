@@ -1,7 +1,6 @@
-package fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DService;
+package fr.bulutsamet.FilRougeBack402.Services.Forms3DService;
 
-import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DService.Forms2DDao;
-import fr.bulutsamet.FilRougeBack402.UnkownFormsException;
+import fr.bulutsamet.FilRougeBack402.Services.UnkownFormsException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;

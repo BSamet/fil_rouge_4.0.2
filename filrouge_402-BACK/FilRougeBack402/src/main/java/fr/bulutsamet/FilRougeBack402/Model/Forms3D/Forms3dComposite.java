@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Forms3D;
+package fr.bulutsamet.FilRougeBack402.Model.Forms3D;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
