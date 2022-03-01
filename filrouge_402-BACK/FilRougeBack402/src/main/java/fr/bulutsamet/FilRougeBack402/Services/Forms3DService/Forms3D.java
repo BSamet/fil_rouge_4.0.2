@@ -13,13 +13,18 @@ public class Forms3D {
     private int id;
     @Column(name = "depths")
     private double depths;
-
+    @Column(name = "forms2dId")
+    private int forms2dId;
     @ManyToOne
     @JoinColumn(name = "forms_2_d_id")
     private Forms2D forms2d;
 
     public Forms2D getForms2d() {
         return forms2d;
+    }
+
+    public void setForms2d(Forms2D forms2d) {
+        this.forms2d = forms2d;
     }
 
     public int getId() {
@@ -36,6 +41,14 @@ public class Forms3D {
 
     public void setDepths(double depths) {
         this.depths = depths;
+    }
+
+    public int getForms2dId() {
+        return forms2dId;
+    }
+
+    public void setForms2dId(int forms2dId) {
+        this.forms2dId = forms2dId;
     }
 
     @Override

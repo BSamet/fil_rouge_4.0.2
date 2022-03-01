@@ -1,118 +1,127 @@
 @startuml
 
-package "Forms" {
-    abstract class Forms #80BA9D {
-        --Method--
-        {abstract} getPerimetre();
-        {abstract} getAire();
-        {abstract} getName();
-        {abstract} setName();
+package "Model" {
+    package "Forms2D" {
+        abstract class Forms #80BA9D {
+            --Method--
+            {abstract} getPerimetre();
+            {abstract} getAire();
+            {abstract} getName();
+            {abstract} setName();
+        }
+
+        class Circle #9BD1A7 {
+            --Attribute--
+            -rayon:double;
+            --Method--
+            +getPerimetre(): double;
+            +getAire(): double;
+            +toString(): String;
+            +getDiametre(): double;
+            +getName():String;
+            +setName(name:String);
+            +getRayon(): double;
+            +setRayon(rayon:double);
+            --Constructor--
+            +Circle();
+            +Circle(rayon:double);
+        }
+
+        class Rectangle #9BD1A7 {
+            --Attribute--
+            -largeur:double;
+            -longueur:double;
+            --Method--
+            +getPerimetre(): double;
+            +getAire(): double;
+            +toString(): String;
+            +getName():String;
+            +setName(name:String);
+            +getLargeur(): double;
+            +setLargeur(largeur:double);
+            +getLongueur(): double;
+            +setLongueur(longueur:double);
+            --Constructor--
+            +Rectangle();
+            +Rectangle(largeur:double, longueur:double);
+        }
+
+        class Triangle #9BD1A7 {
+            --Attribute--
+            -base:double;
+            -longueur:double;
+            --Method--
+            +getPerimetre(): double;
+            +getAire(): double;
+            +toString(): String;
+            +getName():String;
+            +setName(name:String);
+            +getBase(): double;
+            +setBase(base:double);
+            +getLongueur(): double;
+            +setLongueur(longueur:double);
+            --Constructor--
+            +Triangle();
+            +Triangle(base:double, longueur:double);
+        }
+
+        class FormsComposite #9BD1A7 {
+            --Method--
+            +getPerimetre(): double;
+            +getAire(): double;
+            +getName():String;
+            +setName(name:String);
+            +addForm(forms:Forms);
+            +removeForm(forms:Forms);
+            +toString(): String;
+            --Constructor--
+            +FormsComposite();
+        }
+            Forms <|-- Circle #6CBB7A
+            Forms <|-- Rectangle #6CBB7A
+            Forms <|-- Triangle #6CBB7A
+            Forms <|-- FormsComposite #6CBB7A
+            Forms "*" <-- FormsComposite #6CBB7A
     }
 
-    class Circle #9BD1A7 {
-        --Attribute--
-        -rayon:double;
-        --Method--
-        +getPerimetre(): double;
-        +getAire(): double;
-        +toString(): String;
-        +getDiametre(): double;
-        +getName():String;
-        +setName(name:String);
-        +getRayon(): double;
-        +setRayon(rayon:double);
-        --Constructor--
-        +Circle();
-        +Circle(rayon:double);
-    }
+    package "Forms3D" {
+        class Forms3d #80BA9D {
+            --Attribute--
+            -df:DecimalFormat;
+            -depths:double;
+            --Method--
+            +getVolumes():double;
+            +toString():String;
+            +getForms():Forms;
+            +setForms(forms:Forms);
+            +getDepths():double;
+            setDepths(depths:double);
+            --Constructor--
+            +Forms3d(forms:Forms, depths:double);
+        }
 
-    class Rectangle #9BD1A7 {
-        --Attribute--
-        -largeur:double;
-        -longueur:double;
-        --Method--
-        +getPerimetre(): double;
-        +getAire(): double;
-        +toString(): String;
-        +getName():String;
-        +setName(name:String);
-        +getLargeur(): double;
-        +setLargeur(largeur:double);
-        +getLongueur(): double;
-        +setLongueur(longueur:double);
-        --Constructor--
-        +Rectangle();
-        +Rectangle(largeur:double, longueur:double);
+        class Forms3dComposite #9BD1A7 {
+            --Attribute--
+            -df:DecimalFormat;
+            --Method--
+            +getVolumes():double;
+            +toString():String;
+            +add3dForm(forms:Forms);
+            +remove3dForm(forms:Forms);
+            --Constructor--
+            +Forms3dComposite();
+        }
+        Forms3d "*" <-- Forms3dComposite #6CBB7A
     }
-
-    class Triangle #9BD1A7 {
-        --Attribute--
-        -base:double;
-        -longueur:double;
-        --Method--
-        +getPerimetre(): double;
-        +getAire(): double;
-        +toString(): String;
-        +getName():String;
-        +setName(name:String);
-        +getBase(): double;
-        +setBase(base:double);
-        +getLongueur(): double;
-        +setLongueur(longueur:double);
-        --Constructor--
-        +Triangle();
-        +Triangle(base:double, longueur:double);
-    }
-
-    class FormsComposite #9BD1A7 {
-        --Method--
-        +getPerimetre(): double;
-        +getAire(): double;
-        +getName():String;
-        +setName(name:String);
-        +addForm(forms:Forms);
-        +removeForm(forms:Forms);
-        +toString(): String;
-        --Constructor--
-        +FormsComposite();
-    }
-        Forms <|-- Circle #6CBB7A
-        Forms <|-- Rectangle #6CBB7A
-        Forms <|-- Triangle #6CBB7A
-        Forms <|-- FormsComposite #6CBB7A
-        Forms "*" <-- FormsComposite #6CBB7A
+    Forms "1" <-- Forms3d #6CBB7A
 }
 
-package "Forms3d" {
-    class Forms3d #80BA9D {
-        --Attribute--
-        -df:DecimalFormat;
-        -depths:double;
-        --Method--
-        +getVolumes():double;
-        +toString():String;
-        +getForms():Forms;
-        +setForms(forms:Forms);
-        +getDepths():double;
-        setDepths(depths:double);
-        --Constructor--
-        +Forms3d(forms:Forms, depths:double);
+package "Service" {
+    package "Forms2DService" {
     }
-
-    class Forms3dComposite #9BD1A7 {
-        --Attribute--
-        -df:DecimalFormat;
-        --Method--
-        +getVolumes():double;
-        +toString():String;
-        +add3dForm(forms:Forms);
-        +remove3dForm(forms:Forms);
-        --Constructor--
-        +Forms3dComposite();
+    package "Forms3DService" {
     }
-    Forms3d "*" <-- Forms3dComposite #6CBB7A
 }
-Forms "1" <-- Forms3d #6CBB7A
 
 
 @enduml
