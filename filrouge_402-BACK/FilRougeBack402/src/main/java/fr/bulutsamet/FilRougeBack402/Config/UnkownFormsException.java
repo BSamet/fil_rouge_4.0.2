@@ -1,4 +1,4 @@
-package fr.bulutsamet.FilRougeBack402.Services;
+package fr.bulutsamet.FilRougeBack402.Config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

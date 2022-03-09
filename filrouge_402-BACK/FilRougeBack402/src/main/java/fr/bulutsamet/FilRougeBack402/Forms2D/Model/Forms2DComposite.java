@@ -1,20 +1,20 @@
-package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Forms2D.Model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormsComposite extends Forms {
+public class Forms2DComposite extends Forms2D {
 
     //Attribute
-    private List<Forms> myAllForms;
+    private List<Forms2D> myAllForms;
     //
 
     //Method
     @Override
     public double getPerimetre() {
         double totalPerimeterForms = 0;
-        for (Forms forms : myAllForms) {
-            totalPerimeterForms += forms.getPerimetre();
+        for (Forms2D forms2D : myAllForms) {
+            totalPerimeterForms += forms2D.getPerimetre();
         }
         return totalPerimeterForms;
     }
@@ -22,18 +22,18 @@ public class FormsComposite extends Forms {
     @Override
     public double getAire() {
         double totalAireForms = 0;
-        for (Forms forms : myAllForms) {
-            totalAireForms += forms.getAire();
+        for (Forms2D forms2D : myAllForms) {
+            totalAireForms += forms2D.getAire();
         }
         return totalAireForms;
     }
 
-    public void addForm(Forms forms) {
-        this.myAllForms.add(forms);
+    public void addForm(Forms2D forms2D) {
+        this.myAllForms.add(forms2D);
     }
 
-    public void removeForm(Forms forms) {
-        this.myAllForms.remove(forms);
+    public void removeForm(Forms2D forms2D) {
+        this.myAllForms.remove(forms2D);
     }
 
     public String toString(){
@@ -53,7 +53,7 @@ public class FormsComposite extends Forms {
     //
 
     //Constructor
-    public FormsComposite() {
+    public Forms2DComposite() {
         this.myAllForms = new ArrayList<>();
     }
     //

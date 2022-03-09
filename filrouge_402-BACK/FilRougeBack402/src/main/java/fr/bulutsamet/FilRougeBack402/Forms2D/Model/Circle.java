@@ -1,8 +1,16 @@
-package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Forms2D.Model;
 
-public class Circle extends Forms{
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("circle")
+public class Circle extends Forms2D {
 
     //Attribute
+    @Column(name = "rayon")
     private double rayon;
     //
 
@@ -22,6 +30,7 @@ public class Circle extends Forms{
         return "le perimètre du cercle est de " + df.format(this.getPerimetre()) + " cm et l'aire est de " + df.format(this.getAire()) + " cm2.";
     }
 
+    @JsonIgnore
     public double getDiametre() {
         return this.rayon *2;
     }

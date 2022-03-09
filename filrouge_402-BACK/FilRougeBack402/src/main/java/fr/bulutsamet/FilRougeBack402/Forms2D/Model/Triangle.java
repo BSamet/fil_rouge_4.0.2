@@ -1,9 +1,17 @@
-package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Forms2D.Model;
 
-public class Triangle extends Forms{
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("triangle")
+public class Triangle extends Forms2D {
 
     //Attribute
+    @Column(name = "base")
     private double base;
+    @Column(name = "longueur")
     private double longueur;
     //
 

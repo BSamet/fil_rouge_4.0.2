@@ -1,9 +1,17 @@
-package fr.bulutsamet.FilRougeBack402.Model.Forms2D;
+package fr.bulutsamet.FilRougeBack402.Forms2D.Model;
 
-public class Rectangle extends Forms {
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("rectangle")
+public class Rectangle extends Forms2D {
 
     //Attribute
+    @Column(name = "largeur")
     private double largeur;
+    @Column(name = "longueur")
     private double longueur;
     //
 
