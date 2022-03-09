@@ -9,8 +9,7 @@ import java.text.DecimalFormat;
 public class Forms3D {
     //Attribute
     @JsonIgnore
-    private final DecimalFormat df = new DecimalFormat("0.00");
-
+    protected static final DecimalFormat df = new DecimalFormat("0.00");
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -19,12 +18,14 @@ public class Forms3D {
     private double depths;
     @Column(name = "forms2dId")
     private int forms2dId;
+
     @ManyToOne
     @JoinColumn(name = "forms_2_d_id")
     private Forms2D forms2D;
     //
 
     //Method
+    @JsonIgnore
     public double getVolumes() {
         return forms2D.getAire() * this.depths;
     }
@@ -67,7 +68,6 @@ public class Forms3D {
     public void setForms2dId(int forms2dId) {
         this.forms2dId = forms2dId;
     }
-
     //
 
     //Constructor

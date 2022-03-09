@@ -1,13 +1,19 @@
 @startuml
 
-package "Model" {
+package "fr.bulutsamet.FilRougeBack402" {
     package "Forms2D" {
-        abstract class Forms #80BA9D {
+        abstract class Forms2D #80BA9D {
+            --Attribute--
+            -id:integer
+            -type:String
+            -name:String
             --Method--
+            {abstract} getId();
             {abstract} getPerimetre();
             {abstract} getAire();
             {abstract} getName();
             {abstract} setName();
+            {abstract} getType();
         }
 
         class Circle #9BD1A7 {
@@ -24,7 +30,7 @@ package "Model" {
             +setRayon(rayon:double);
             --Constructor--
             +Circle();
-            +Circle(rayon:double);
+            +Circle(rayon:double, name:String);
         }
 
         class Rectangle #9BD1A7 {
@@ -43,7 +49,7 @@ package "Model" {
             +setLongueur(longueur:double);
             --Constructor--
             +Rectangle();
-            +Rectangle(largeur:double, longueur:double);
+            +Rectangle(largeur:double, longueur:double, name:String);
         }
 
         class Triangle #9BD1A7 {
@@ -62,10 +68,10 @@ package "Model" {
             +setLongueur(longueur:double);
             --Constructor--
             +Triangle();
-            +Triangle(base:double, longueur:double);
+            +Triangle(base:double, longueur:double, name:String);
         }
 
-        class FormsComposite #9BD1A7 {
+        class Forms2DComposite #9BD1A7 {
             --Method--
             +getPerimetre(): double;
             +getAire(): double;
@@ -77,18 +83,57 @@ package "Model" {
             --Constructor--
             +FormsComposite();
         }
-            Forms <|-- Circle #6CBB7A
-            Forms <|-- Rectangle #6CBB7A
-            Forms <|-- Triangle #6CBB7A
-            Forms <|-- FormsComposite #6CBB7A
-            Forms "*" <-- FormsComposite #6CBB7A
+
+        class Forms2DController #9BD1A7 {
+            --Attribute--
+            -forms2DRepository:Forms2DRepository
+            --Method--
+            +findAllForms2D():List<Forms2D>
+            +listOneForms2D():Forms2D
+            +addForms2D(forms2dDTO:Forms2DSendByUser)
+            +updateForms2D(forms2d:Forms2D)
+            +deleteForms2D(id:integer)
+            --Constructor--
+            +Forms2DController(forms2DRepository:Forms2DRepository)
+        }
+
+        interface Forms2DRepository #9BD1A7 {
+            --Method--
+            +findById(id:integer)
+        }
+
+        class Forms2DSendByUser #9BD1A7 {
+            --Attribute--
+            -type:String
+            -name:String
+            -largeur:double;
+            -longueur:double;
+            -base:double;
+            -rayon:double;
+            --Method--
+            +Forms2DSendByUser2Form2D(dto:Forms2DSendByUser)
+            +toForm2D():Forms2D
+            --Constructor--
+            +Forms2DSendByUser()
+        }
+
+            Forms2D <|-- Circle #6CBB7A
+            Forms2D <|-- Rectangle #6CBB7A
+            Forms2D <|-- Triangle #6CBB7A
+            Forms2D <|-- Forms2DComposite #6CBB7A
+            Forms2D "*" <-- Forms2DComposite #6CBB7A
+            Forms2DController "1" *-- "*" Forms2D #6CBB7A
+            Forms2DRepository "1" -- "1" Forms2DController #6CBB7A
+            Forms2DSendByUser "1" -- "1" Forms2DController #6CBB7A
     }
 
     package "Forms3D" {
         class Forms3d #80BA9D {
             --Attribute--
             -df:DecimalFormat;
+            -id:integer;
             -depths:double;
+            -forms2dId:integer;
             --Method--
             +getVolumes():double;
             +toString():String;
@@ -111,16 +156,31 @@ package "Model" {
             --Constructor--
             +Forms3dComposite();
         }
-        Forms3d "*" <-- Forms3dComposite #6CBB7A
-    }
-    Forms "1" <-- Forms3d #6CBB7A
-}
 
-package "Service" {
-    package "Forms2DService" {
+        class Forms3DController #80BA9D {
+            --Attribute--
+            -forms3DRepository:Forms3DRepository
+            -forms2DRepository:Forms2DRepository
+            --Method--
+            +findAllForms3D():List<Forms3D>
+            +listOneForms3D():Forms3D
+            +addForms3D(forms3d:Forms3D)
+            +updateForms3D(forms3d:Forms3D)
+            +deleteForms3D(id:integer)
+            --Constructor--
+            +Forms3DController(forms3DRepository:Forms3DRepository, forms2DRepository:Forms2DRepository)
+        }
+
+        interface Forms3DRepository #80BA9D {
+            --Method--
+            +findById(id:integer)
+        }
+        Forms3d "*" <-- Forms3dComposite #6CBB7A
+        Forms3DController "1" *-- "*" Forms3d #6CBB7A
+        Forms3DRepository "1" -- "1" Forms3DController #6CBB7A
     }
-    package "Forms3DService" {
-    }
+    Forms2D "1" <-- Forms3d #6CBB7A
+    Forms2D "1" <-- "1" Forms3DController #6CBB7A
 }
 
 

@@ -34,7 +34,6 @@ public class Forms3DController {
         return forms3d;
     }
 
-
     @PostMapping("/Forms3D")
     public ResponseEntity<Void> addForms3D(@RequestBody Forms3D forms3d) {
         if (forms3d == null) {
@@ -42,10 +41,9 @@ public class Forms3DController {
         }
         int id = forms3d.getForms2dId();
         double depths = forms3d.getDepths();
-        Forms3D toSave = new Forms3D();
-        toSave.setForms2dId(id);
-        toSave.setDepths(depths);
         Forms2D forms2d = forms2DRepository.getById(id);
+        Forms3D toSave = new Forms3D(forms2d, depths);
+        toSave.setForms2dId(id);
         Forms3D formsAdded = forms3DRepository.save(toSave);
 
         URI location = ServletUriComponentsBuilder

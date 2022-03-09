@@ -37,10 +37,6 @@ public abstract class Forms2D {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public abstract String getName();
 
     public abstract void setName(String name);

@@ -5,7 +5,6 @@ import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Config.UnkownFormsException;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,25 +15,17 @@ import java.util.List;
 @RestController
 public class Forms2DController {
 
+    //Attribute
     private final Forms2DRepository forms2DRepository;
+    //
 
+    //Constructor
     public Forms2DController(Forms2DRepository forms2DRepository) {
         this.forms2DRepository = forms2DRepository;
     }
+    //
 
-    @GetMapping("/Forms2D/add")
-    public void add() {
-        Forms2D f = new Rectangle();
-        forms2DRepository.save(f);
-        f = new Circle();
-        forms2DRepository.save(f);
-        f = new Triangle();
-        forms2DRepository.save(f);
-        f = new Rectangle();
-        forms2DRepository.save(f);
-    }
-
-
+    //Method
     @RequestMapping("/Forms2D")
     public List<Forms2D> findAllForms2D() {
         return forms2DRepository.findAll();
@@ -72,4 +63,5 @@ public class Forms2DController {
     public void deleteForms2D(@PathVariable int id) {
         forms2DRepository.deleteById(id);
     }
+    //
 }

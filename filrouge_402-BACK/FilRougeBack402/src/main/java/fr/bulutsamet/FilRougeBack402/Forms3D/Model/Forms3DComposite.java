@@ -1,5 +1,7 @@
 package fr.bulutsamet.FilRougeBack402.Forms3D.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,8 @@ import java.util.List;
 public class Forms3DComposite {
 
     //Attribute
-    private final DecimalFormat df = new DecimalFormat("0.00");
+    @JsonIgnore
+    protected static final DecimalFormat df = new DecimalFormat("0.00");
     private List<Forms3D> myAll3dForms;
     //
 
