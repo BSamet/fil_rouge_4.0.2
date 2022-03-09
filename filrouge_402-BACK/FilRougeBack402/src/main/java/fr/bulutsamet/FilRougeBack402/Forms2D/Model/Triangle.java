@@ -49,7 +49,11 @@ public class Triangle extends Forms2D {
     }
 
     public void setBase(double base) {
-        this.base = base;
+        if ( base < 0 && base > this.longueur ) {
+            throw new IllegalArgumentException("Erreur lors de la configuration de la base");
+        } else {
+            this.base = base;
+        }
     }
 
     public double getLongueur() {
@@ -57,17 +61,35 @@ public class Triangle extends Forms2D {
     }
 
     public void setLongueur(double longueur) {
-        this.longueur = longueur;
+        if (longueur < 0 && longueur < this.base) {
+            throw new IllegalArgumentException("Erreur lors de la configuration de la longueur");
+        } else {
+            this.longueur = longueur;
+        }
     }
     //
 
     //Constructor
-    public Triangle() {}
+    public Triangle() {
+        this.type = "Triangle";
+    }
 
     public Triangle(double base, double longueur, String name) {
-        this.base = base;
-        this.longueur = longueur;
+        if (base > longueur) {
+            throw new IllegalArgumentException("La base ne peut être plus long que la longueur");
+        }
+        if (longueur > 0) {
+            this.longueur = longueur;
+        } else {
+            throw new IllegalArgumentException("La longueur ne peut pas valoir 0 ou être négatif");
+        }
+        if ( base > 0){
+            this.base = base;
+        } else {
+            throw new IllegalArgumentException("La base ne peut pas valoir 0 ou être négatif");
+        }
         this.name = name;
+        this.type = "Triangle";
     }
     //
 }

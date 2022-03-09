@@ -15,6 +15,8 @@ public class Rectangle extends Forms2D {
     private double longueur;
     //
 
+
+
     //Method
     @Override
     public double getPerimetre() {
@@ -61,12 +63,15 @@ public class Rectangle extends Forms2D {
     //
 
     //Constructor
-    public Rectangle() {}
+    public Rectangle() {
+        this.type = "Rectangle";
+    }
 
     public Rectangle(double largeur, double longueur, String name) {
         this.largeur = largeur;
         this.longueur = longueur;
         this.name = name;
+        this.type = "Rectangle";
     }
     //
 }

@@ -49,9 +49,5 @@ public abstract class Forms2D {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     //
 }

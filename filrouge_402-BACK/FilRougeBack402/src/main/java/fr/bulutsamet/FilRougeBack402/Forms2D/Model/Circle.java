@@ -54,11 +54,14 @@ public class Circle extends Forms2D {
     //
 
     //Constructor
-    public Circle() {}
+    public Circle() {
+        this.type = "Circle";
+    }
 
     public Circle(double rayon, String name) {
         this.rayon = rayon;
         this.name = name;
+        this.type = "Circle";
     }
     //
 }
