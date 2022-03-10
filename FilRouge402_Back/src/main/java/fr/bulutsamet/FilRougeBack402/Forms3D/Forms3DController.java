@@ -42,8 +42,7 @@ public class Forms3DController {
         int id = forms3d.getForms2dId();
         double depths = forms3d.getDepths();
         Forms2D forms2d = forms2DRepository.getById(id);
-        Forms3D toSave = new Forms3D(forms2d, depths);
-        toSave.setForms2dId(id);
+        Forms3D toSave = new Forms3D(forms2d, depths, id);
         Forms3D formsAdded = forms3DRepository.save(toSave);
 
         URI location = ServletUriComponentsBuilder

@@ -32,17 +32,17 @@ public class Forms3D {
 
     @Override
     public String toString() {
-        return "Le volume de " + forms2D.getName() + " est de " + df.format(getVolumes()) + " cm3";
+        return "Forms3D{" +
+                "depths=" + depths +
+                ", forms2dId=" + forms2dId +
+                ", forms2D=" + forms2D +
+                '}';
     }
     //
 
     //Getter & Setter
     public Forms2D getForms2D() {
         return forms2D;
-    }
-
-    public void setForms2D(Forms2D forms2D) {
-        this.forms2D = forms2D;
     }
 
     public double getDepths() {
@@ -57,24 +57,17 @@ public class Forms3D {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getForms2dId() {
         return forms2dId;
-    }
-
-    public void setForms2dId(int forms2dId) {
-        this.forms2dId = forms2dId;
     }
     //
 
     //Constructor
     public Forms3D() {}
 
-    public Forms3D(Forms2D forms2D, double depths) {
+    public Forms3D(Forms2D forms2D, double depths, int forms2dId) {
         this.forms2D = forms2D;
         this.depths = depths;
+        this.forms2dId = forms2dId;
     }
 }

@@ -30,7 +30,12 @@ public class Rectangle extends Forms2D {
 
     @Override
     public String toString() {
-        return "le perimètre du rectangle est de " + df.format(this.getPerimetre()) + " cm et l'aire est de " + df.format(this.getAire()) + " cm2.";
+        return "Rectangle{" +
+                "type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", largeur=" + largeur +
+                ", longueur=" + longueur +
+                '}';
     }
     //
 

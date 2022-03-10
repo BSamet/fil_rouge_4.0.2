@@ -36,8 +36,13 @@ public class Forms2DComposite extends Forms2D {
         this.myAllForms.remove(forms2D);
     }
 
-    public String toString(){
-        return "Total perimeter = " + df.format(getPerimetre()) + " cm, Total Aire = " + df.format(getAire()) + " cm2";
+    @Override
+    public String toString() {
+        return "Forms2DComposite{" +
+                "type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", myAllForms=" + myAllForms +
+                '}';
     }
     //
 

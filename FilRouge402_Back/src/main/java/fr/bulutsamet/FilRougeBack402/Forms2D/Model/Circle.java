@@ -25,15 +25,20 @@ public class Circle extends Forms2D {
         return (this.rayon * this.rayon) * Math.PI;
     }
 
-    @Override
-    public String toString() {
-        return "le perimètre du cercle est de " + df.format(this.getPerimetre()) + " cm et l'aire est de " + df.format(this.getAire()) + " cm2.";
-    }
-
     @JsonIgnore
     public double getDiametre() {
         return this.rayon *2;
     }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "rayon=" + rayon +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+    //
 
     //Getter & Setter
     @Override

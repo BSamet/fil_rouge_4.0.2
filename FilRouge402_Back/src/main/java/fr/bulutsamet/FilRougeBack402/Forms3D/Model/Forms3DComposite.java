@@ -31,8 +31,11 @@ public class Forms3DComposite {
         this.myAll3dForms.remove(forms3d);
     }
 
-    public String toString(){
-        return "le volume total des formes est de " + df.format(getVolumes()) + " cm3";
+    @Override
+    public String toString() {
+        return "Forms3DComposite{" +
+                "myAll3dForms=" + myAll3dForms +
+                '}';
     }
     //
 
