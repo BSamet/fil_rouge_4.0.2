@@ -1,10 +1,7 @@
 package fr.bulutsamet.FilRougeBack402.Forms2D;
 
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Circle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Config.UnkownFormsException;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,6 +9,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class Forms2DController {
 

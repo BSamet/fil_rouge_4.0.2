@@ -1,36 +1,40 @@
 <template>
-  {{ forms }}
+  <section class="allShape">
+    <h1 class="allShape__title">3D Shape</h1>
+    <card3d></card3d>
+  </section>
 </template>
 
-<script lang="ts">
-import Card from "@/components/Card.vue";
-import axios from "axios";
-import Store from '@/store
+<script>
+import axios from 'axios';
+import Card3d from "@/components/Card3d.vue";
 
 export default {
+  components: {Card3d},
   data() {
     return {
-      myForms: null,
+      myForms: "",
     };
   },
-  computed: {
-    forms3d() {
-      return this.$store.state.forms3d
+  methods: {
+    getForms: function() {
+      axios.get('http://localhost:9090/Forms3D').then((forms3d) => {
+        this.myForms = forms3d.data;
+      })
     }
   },
   mounted() {
-    this.$store.dispatch("getForms3d");
+    this.getForms();
   }
 };
 </script>
 
 <style lang="scss">
-section {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: 100px;
-  align-items: start;
-  justify-items: center;
+.allShape {
+  &__title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+  }
 }
 </style>

@@ -32,7 +32,7 @@ export default {
 
     &__nav {
       background-color: #FFEEDD;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       width: 100vw;
       display: flex;
       justify-content: space-around;
