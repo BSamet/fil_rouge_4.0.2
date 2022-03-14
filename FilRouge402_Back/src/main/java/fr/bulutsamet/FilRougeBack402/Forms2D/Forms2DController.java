@@ -37,9 +37,9 @@ public class Forms2DController {
     }
 
     @PostMapping("/Forms2D")
-    public ResponseEntity<String> addForms2D(@RequestBody Forms2DSendByUser forms2dDTO) {
+    public Forms2D addForms2D(@RequestBody Forms2DSendByUser forms2dDTO) {
         if (forms2dDTO == null) {
-            return ResponseEntity.noContent().build();
+            return null;
         }
         Forms2DSendByUser checkForms = new Forms2DSendByUser();
         Forms2D myForms = checkForms.Forms2DSendByUser2Form2D(forms2dDTO);
@@ -49,7 +49,7 @@ public class Forms2DController {
                 .path("/{id}")
                 .buildAndExpand(formsAdded.getId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return formsAdded;
     }
 
     @PutMapping("/Forms2D")

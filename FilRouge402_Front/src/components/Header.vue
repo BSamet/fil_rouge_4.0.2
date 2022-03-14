@@ -1,11 +1,11 @@
 <template>
-  <header class="header">
+  <header class="eader">
     <div class="header__title">
       <h1>Shape that !</h1>
     </div>
     <nav class="header__nav">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/addshape">Add</RouterLink>
     </nav>
   </header>
 </template>
@@ -32,7 +32,7 @@ export default {
 
     &__nav {
       background-color: #FFEEDD;
-      font-size: 1.4rem;
+      font-size: 1.7rem;
       width: 100vw;
       display: flex;
       justify-content: space-around;

@@ -1,6 +1,6 @@
 <template>
   <section class="allShape">
-    <h1 class="allShape__title">3D Shape</h1>
+    <h1 class="allShape__title">Shape</h1>
     <card3d></card3d>
   </section>
 </template>
@@ -33,7 +33,7 @@ export default {
 .allShape {
   &__title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
   }
 }

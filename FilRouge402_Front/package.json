@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@asigloo/vue-dynamic-forms": "^3.18.1",
     "axios": "^0.26.1",
     "simplex-noise": "^3.0.1",
     "three": "^0.134.0",
