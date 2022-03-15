@@ -5,7 +5,7 @@ import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
 
-public class Forms2DSendByUser {
+public class Forms2DDto {
 
     public String type;
     public String name;
@@ -14,7 +14,7 @@ public class Forms2DSendByUser {
     public double base;
     public double rayon;
 
-    public Forms2D Forms2DSendByUser2Form2D(Forms2DSendByUser dto) {
+    public static Forms2D Forms2DSendByUser2Form2D(Forms2DDto dto) {
         Forms2D f = null;
         switch (dto.type) {
             case "Rectangle":
@@ -45,6 +45,4 @@ public class Forms2DSendByUser {
         }
         return f;
     }
-
-    public Forms2DSendByUser() {}
 }

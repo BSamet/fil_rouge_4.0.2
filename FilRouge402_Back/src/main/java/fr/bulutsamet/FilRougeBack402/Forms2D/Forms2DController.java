@@ -2,7 +2,6 @@ package fr.bulutsamet.FilRougeBack402.Forms2D;
 
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Config.UnkownFormsException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -37,11 +36,11 @@ public class Forms2DController {
     }
 
     @PostMapping("/Forms2D")
-    public Forms2D addForms2D(@RequestBody Forms2DSendByUser forms2dDTO) {
+    public Forms2D addForms2D(@RequestBody Forms2DDto forms2dDTO) {
         if (forms2dDTO == null) {
             return null;
         }
-        Forms2DSendByUser checkForms = new Forms2DSendByUser();
+        Forms2DDto checkForms = new Forms2DDto();
         Forms2D myForms = checkForms.Forms2DSendByUser2Form2D(forms2dDTO);
         Forms2D formsAdded = forms2DRepository.save(myForms);
         URI location = ServletUriComponentsBuilder

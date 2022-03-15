@@ -10,6 +10,7 @@ public class Forms3D {
     //Attribute
     @JsonIgnore
     protected static final DecimalFormat df = new DecimalFormat("0.00");
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

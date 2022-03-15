@@ -85,6 +85,7 @@ export default {
     width: 300px;
     height: 400px;
     font-size: 1.3rem;
+    transition: all 0.1s ease-in-out;
     &__info {
       display: flex;
       flex-direction: column;
