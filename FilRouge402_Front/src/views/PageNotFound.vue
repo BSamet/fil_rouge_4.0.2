@@ -14,6 +14,6 @@ export default {
 <style scoped>
   div {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 </style>

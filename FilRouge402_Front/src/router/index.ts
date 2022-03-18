@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Shape3dView from '../views/Shape3dView.vue'
-import AddShape3dView from '../views/AddShapeView.vue'
+import AddShape3dView from '../components/AddShape.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 
 const router = createRouter({
@@ -16,11 +16,6 @@ const router = createRouter({
       path: '/shape3d/:id',
       name: 'shape3d',
       component: Shape3dView
-    },
-    {
-      path: '/addshape',
-      name: 'addshape3dView',
-      component: AddShape3dView
     },
     {
       path: '/:catchAll(.*)*',

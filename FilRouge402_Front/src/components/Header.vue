@@ -5,7 +5,7 @@
     </div>
     <nav class="header__nav">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/addshape">Add</RouterLink>
+      <RouterLink to="/">Sandbox</RouterLink>
     </nav>
   </header>
 </template>
@@ -32,7 +32,7 @@ export default {
 
     &__nav {
       background-color: #FFEEDD;
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       width: 100vw;
       display: flex;
       justify-content: space-around;

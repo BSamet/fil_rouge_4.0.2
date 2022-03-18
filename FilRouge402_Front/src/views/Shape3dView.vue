@@ -1,7 +1,7 @@
 <template>
   <section v-if="loading" class="shape3d">
     <div class="shape3d__name">
-      <h1>{{ myFormsById.forms2D.name }}</h1>
+      <h1>{{ forms3dbyid.forms2D.name }}</h1>
     </div>
     <div class="shape3d__scene">
       <Renderer
@@ -18,15 +18,15 @@
         <Camera :position="{ x: 0, y: 0, z: 50 }" />
         <Scene>
           <Cone
-            v-if="myFormsById.forms2D.type === 'Triangle'"
+            v-if="forms3dbyid.forms2D.type === 'Triangle'"
             ref="mesh"
             :size="1"
             :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }"
-            :radius="myFormsById.depths"
+            :radius="forms3dbyid.depths"
             :height="
               Math.sqrt(
-                myFormsById.forms2D.longueur * myFormsById.forms2D.longueur -
-                  (myFormsById.forms2D.base * myFormsById.forms2D.base) / 4
+                forms3dbyid.forms2D.longueur * forms3dbyid.forms2D.longueur -
+                  (forms3dbyid.forms2D.base * forms3dbyid.forms2D.base) / 4
               )
             "
             :radialSegments="100"
@@ -36,13 +36,13 @@
           </Cone>
 
           <Cylinder
-            v-if="myFormsById.forms2D.type === 'Circle'"
+            v-if="forms3dbyid.forms2D.type === 'Circle'"
             ref="mesh"
             :size="1"
             :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }"
-            :height="myFormsById.depths"
-            :radiusTop="myFormsById.forms2D.rayon"
-            :radiusBottom="myFormsById.forms2D.rayon"
+            :height="forms3dbyid.depths"
+            :radiusTop="forms3dbyid.forms2D.rayon"
+            :radiusBottom="forms3dbyid.forms2D.rayon"
             :radialSegments="100"
             :heightSegments="100"
           >
@@ -50,13 +50,13 @@
           </Cylinder>
 
           <Box
-            v-if="myFormsById.forms2D.type === 'Rectangle'"
+            v-if="forms3dbyid.forms2D.type === 'Rectangle'"
             ref="mesh"
             :size="1"
             :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }"
-            :width="myFormsById.forms2D.largeur"
-            :height="myFormsById.forms2D.longueur"
-            :depth="myFormsById.depths"
+            :width="forms3dbyid.forms2D.largeur"
+            :height="forms3dbyid.forms2D.longueur"
+            :depth="forms3dbyid.depths"
             :radialSegments="100"
             :heightSegments="100"
           >
@@ -66,20 +66,20 @@
       </Renderer>
     </div>
     <div class="shape3d__info">
-      <p v-if="myFormsById.forms2D.longueur">
-        Longueur : {{ myFormsById.forms2D.longueur }} cm
+      <p v-if="forms3dbyid.forms2D.longueur">
+        Longueur : {{ forms3dbyid.forms2D.longueur }} cm
       </p>
-      <p v-if="myFormsById.forms2D.largeur">
-        Largeur : {{ myFormsById.forms2D.largeur }} cm
+      <p v-if="forms3dbyid.forms2D.largeur">
+        Largeur : {{ forms3dbyid.forms2D.largeur }} cm
       </p>
-      <p v-if="myFormsById.forms2D.base">
-        Base : {{ myFormsById.forms2D.base }} cm
+      <p v-if="forms3dbyid.forms2D.base">
+        Base : {{ forms3dbyid.forms2D.base }} cm
       </p>
-      <p v-if="myFormsById.forms2D.rayon">
-        Rayon : {{ myFormsById.forms2D.rayon }} cm
+      <p v-if="forms3dbyid.forms2D.rayon">
+        Rayon : {{ forms3dbyid.forms2D.rayon }} cm
       </p>
-      <p v-if="myFormsById.forms2D.depths">
-        Profondeur : {{ myFormsById.depths }} cm
+      <p v-if="forms3dbyid.depths">
+        Profondeur : {{ forms3dbyid.depths }} cm
       </p>
     </div>
   </section>
@@ -94,22 +94,17 @@ export default {
   data() {
     return {
       shapeId: this.$route.params.id,
-      myFormsById: "",
-      loading: false,
+      loading: false
     };
   },
-  methods: {
-    getForms: function () {
-      axios
-        .get("http://localhost:9090/Forms3D/" + this.shapeId)
-        .then((forms3d) => {
-          this.myFormsById = forms3d.data;
-          this.loading = true;
-        });
-    },
+  computed: {
+    forms3dbyid() {
+      return this.$store.state.forms3dbyid;
+    }
   },
-  mounted() {
-    this.getForms();
+  async mounted() {
+    await this.$store.dispatch("getForms3dById", this.shapeId)
+      .then(() => (this.loading = true));
   },
 };
 </script>
@@ -123,15 +118,15 @@ export default {
   height: 750px;
   &__name {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: white;
   }
   &__scene {
-    height: 675px;
+    height: 690px;
   }
   &__info {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     display: flex;
     justify-content: center;
     p {

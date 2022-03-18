@@ -1,31 +1,59 @@
 <template>
   <section class="allShape">
     <h1 class="allShape__title">Shape</h1>
-    <card3d></card3d>
-    <div class="allShape__button"><img src="../assets/addShape.png"></div>
+    <Transition name="fade" mode="out-in">
+      <card3d :key="$store.state.updateComponent"></card3d>
+    </Transition>
+    <div>{{ $store.state.updateComponent }}</div>
+    <div class="allShape__button" @click="showModal"><img src="../assets/addShape.png"></div>
+
+    <!--    Shape forms-->
+    <Transition name="slide-fade">
+      <div class="allShape--blur" v-if="$store.state.isModalVisible"></div>
+    </Transition>
+
+    <div class="allShape__forms">
+      <Transition name="slide-fade">
+        <modal-shape
+          v-if="$store.state.isModalVisible"
+          @close="closeModal"
+        >
+          <template v-slot:header>
+            <h3><u>Add new shape</u></h3>
+          </template>
+
+          <template v-slot:body>
+            <add-shape></add-shape>
+          </template>
+
+          <template v-slot:footer>
+            This is a modal footer.
+          </template>
+        </modal-shape>
+      </Transition>
+    </div>
   </section>
 </template>
 
 <script>
-import axios from 'axios';
 import Card3d from "@/components/Card3d.vue";
+import ModalShape from "@/components/ModalShape.vue";
+import AddShape from "@/components/AddShape.vue";
 
 export default {
-  components: {Card3d},
+  components: { AddShape, ModalShape, Card3d },
   data() {
     return {
-      myForms: "",
+      myForms: ""
     };
   },
   methods: {
-    getForms: function() {
-      axios.get('http://localhost:9090/Forms3D').then((forms3d) => {
-        this.myForms = forms3d.data;
-      })
+    showModal() {
+      this.$store.state.isModalVisible = true;
+    },
+    closeModal() {
+      this.$store.state.isModalVisible = false;
     }
-  },
-  mounted() {
-    this.getForms();
   }
 };
 </script>
@@ -34,18 +62,71 @@ export default {
 .allShape {
   &__title {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: bold;
   }
+
   &__button {
     cursor: pointer;
     position: fixed;
     bottom: 75px;
     right: 7%;
+
     img {
+      height: 75px;
       background: #d5d6aa;
       border-radius: 50%;
     }
   }
+
+  &__forms {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+    > div {
+      width: 400px;
+      height: 500px;
+      background-color: #d5d6aa;
+      box-shadow: 20px 20px 40px 1px #5b5b5b;
+      border-radius: 15px;
+      padding: 30px;
+    }
+  }
+
+  &--blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f2f2f2;
+    opacity: 0.5;
+  }
+}
+
+//Forms transition
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

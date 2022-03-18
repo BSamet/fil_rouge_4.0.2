@@ -1,10 +1,9 @@
 <template>
-  <div class="shape3d">
+  <div v-if="loading" class="shape3d">
     <div
       class="card"
-      v-if="loading"
-      v-for="forms of myForms"
-      v-bind="myForms.id"
+      v-for="forms of forms3d"
+      :key="forms.id"
     >
       <div class="card__picture">
         <div
@@ -30,7 +29,7 @@
         </p>
         <p v-if="forms.forms2D.base">Base : {{ forms.forms2D.base }} cm</p>
         <p v-if="forms.forms2D.rayon">Rayon : {{ forms.forms2D.rayon }} cm</p>
-        <p v-if="forms.forms2D.depths">Profondeur : {{ forms.depths }} cm</p>
+        <p v-if="forms.depths">Profondeur : {{ forms.depths }} cm</p>
       </div>
       <div class="card__link">
         <RouterLink :to="'/shape3d/' + forms.id">View 3D</RouterLink>
@@ -40,36 +39,30 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "Card3d",
   data() {
     return {
-      myForms: "",
-      loading: false,
+      loading: false
     };
   },
-  methods: {
-    getForms: function () {
-      axios.get("http://localhost:9090/Forms3D").then((forms3d) => {
-        this.myForms = forms3d.data;
-        this.loading = true;
-      });
-    },
+  computed: {
+    forms3d() {
+      return this.$store.state.forms3d
+    }
   },
-  mounted() {
-    this.getForms();
-  },
+  async mounted() {
+    await this.$store.dispatch("getForms3d")
+      .then(() => (this.loading = true));
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .shape3d {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: 100px;
+  grid-template-columns: repeat(6 , 1fr);
+  grid-auto-rows: 390px;
   align-items: start;
   justify-items: center;
 
@@ -81,16 +74,17 @@ export default {
     background-color: #ffeedd;
     box-shadow: 20px 20px 40px 1px #5b5b5b;
     border-radius: 15px;
-    margin: 10px;
-    width: 300px;
-    height: 400px;
-    font-size: 1.3rem;
+    width: 250px;
+    height: 350px;
+    font-size: 1.1rem;
     transition: all 0.1s ease-in-out;
+
     &__info {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
       h1 {
         font-weight: 600;
       }
