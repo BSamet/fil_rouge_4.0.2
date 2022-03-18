@@ -5,7 +5,7 @@
       <card3d :key="$store.state.updateComponent"></card3d>
     </Transition>
     <div>{{ $store.state.updateComponent }}</div>
-    <div class="allShape__button" @click="showModal"><img src="../assets/addShape.png"></div>
+    <div class="allShape__button" @click="showModal"><img src="../assets/addShape.svg"></div>
 
     <!--    Shape forms-->
     <Transition name="slide-fade">

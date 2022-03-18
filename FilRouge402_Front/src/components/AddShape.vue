@@ -16,11 +16,11 @@
       </div>
       <div v-if="shapeType === 'Rectangle'">
         <div class="shapeForms__forms--container">
-          <label class="shapeForms__forms--label" for="rLongueur">Longueur :</label>
+          <label class="shapeForms__forms--label" for="rLongueur">Length :</label>
           <input v-model="longueur" type="number" id="rLongueur" placeholder="Enter a lenght" required>
         </div>
         <div class="shapeForms__forms--container">
-          <label class="shapeForms__forms--label" for="rLargeur">Largeur :</label>
+          <label class="shapeForms__forms--label" for="rLargeur">Width :</label>
           <input v-model="largeur" type="number" id="rLargeur" placeholder="Enter a width" required>
         </div>
         <div class="shapeForms__forms--container">
@@ -40,7 +40,7 @@
       </div>
       <div v-if="shapeType === 'Triangle'">
         <div class="shapeForms__forms--container">
-          <label class="shapeForms__forms--label" for="tLongueur">Longueur :</label>
+          <label class="shapeForms__forms--label" for="tLongueur">Length :</label>
           <input v-model="longueur" type="number" id="tLongueur" placeholder="Enter a length" required>
         </div>
         <div class="shapeForms__forms--container">
