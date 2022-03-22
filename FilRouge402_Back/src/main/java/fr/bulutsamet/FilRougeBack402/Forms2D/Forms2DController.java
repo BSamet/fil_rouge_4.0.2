@@ -53,7 +53,9 @@ public class Forms2DController {
 
     @PutMapping("/Forms2D")
     public void updateForms2D(@RequestBody Forms2D forms2d) {
-        forms2DRepository.save(forms2d);
+        int id = forms2d.getId();
+        Forms2D toUpdate = forms2DRepository.getById(id);
+        forms2DRepository.save(toUpdate);
     }
 
     @DeleteMapping("/Forms2D/{id}")

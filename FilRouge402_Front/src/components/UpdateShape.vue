@@ -1,0 +1,159 @@
+<template>
+  <div v-if="loadingUpdate" class="shapeForms__forms">
+    <form action="#">
+      <div class="shapeForms__forms--container">
+        <p class="shapeForms__forms--label">Type of shape </p>
+        <input type="text" :value="forms3dbyid.forms2D.type" disabled>
+      </div>
+
+      <div class="shapeForms__forms--container">
+        <label class="shapeForms__forms--label" for="name">Name :</label>
+        <input v-model="name" type="text" id="name" required>
+      </div>
+
+      <div v-if="forms3dbyid.forms2D.type === 'Rectangle'">
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="rLongueur">Length :</label>
+          <input v-model="longueur" type="number" id="rLongueur" required>
+        </div>
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="rLargeur">Width :</label>
+          <input v-model="largeur" type="number" id="rLargeur" required>
+        </div>
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="rDepths">Depths :</label>
+          <input v-model="depths" type="number" id="rDepths" required>
+        </div>
+      </div>
+
+      <div v-if="forms3dbyid.forms2D.type === 'Circle'">
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="cRayon">Rayon :</label>
+          <input v-model="rayon" type="number" id="cRayon" required>
+        </div>
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="cDepths">Depths :</label>
+          <input v-model="depths" type="number" id="cDepths" required>
+        </div>
+      </div>
+
+      <div v-if="forms3dbyid.forms2D.type === 'Triangle'">
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="tLongueur">Length :</label>
+          <input v-model="longueur" type="number" id="tLongueur" required>
+        </div>
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="tBase">Base :</label>
+          <input v-model="base" type="number" id="tBase" required>
+        </div>
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="tDepths">Depths :</label>
+          <input v-model="depths" type="number" id="tDepths" required>
+        </div>
+      </div>
+
+      <div class="shapeForms__forms--container">
+        <p class="shapeForms__forms--submit" @click.prevent="sendUpdate()">Update</p>
+      </div>
+
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "UpdateShape",
+  props: ["shapeIdUpdate"],
+  data() {
+    return {
+      loadingUpdate: false,
+      shapeName: String,
+
+      shapeType: "",
+      name: "",
+      longueur: "",
+      largeur: "",
+      base: "",
+      rayon: "",
+      depths: "",
+      forms2dId: "",
+    };
+  },
+  methods: {
+    sendUpdate: function() {
+      const post2dShape = {id: this.forms2dId, type: this.shapeType, name: this.name, longueur: this.longueur, largeur: this.largeur, base: this.base, rayon: this.rayon };
+      axios
+        .put("http://localhost:9090/Forms2D", post2dShape)
+        .then(res => {
+          this.forms2dId = res.data.id;
+          const post3dShape = {id: this.shapeIdUpdate, depths: this.depths, forms2dId: this.forms2dId};
+          axios
+            .put("http://localhost:9090/Forms3D", post3dShape)
+          this.$store.state.updateComponent++
+          this.$store.state.isModalUpdateVisible = false
+        });
+    }
+  },
+  computed: {
+    forms3dbyid() {
+      this.name = this.$store.state.forms3dbyid.forms2D.name;
+      this.longueur = this.$store.state.forms3dbyid.forms2D.longueur;
+      this.largeur = this.$store.state.forms3dbyid.forms2D.largeur;
+      this.base = this.$store.state.forms3dbyid.forms2D.base;
+      this.rayon = this.$store.state.forms3dbyid.forms2D.rayon;
+      this.depths = this.$store.state.forms3dbyid.depths;
+      this.forms2dId = this.$store.state.forms3dbyid.forms2D.id;
+      return this.$store.state.forms3dbyid;
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch("getForms3dById", this.shapeIdUpdate)
+      .then(() => (this.loadingUpdate = true));
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.shapeForms {
+  &__forms {
+  &--container {
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     margin: 8px 0 8px 0;
+  input, select {
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 15px;
+    width: 250px;
+    height: 25px;
+    border: none;
+    transition: all 0.2s linear;
+  &:focus, &:active {
+              outline: none;
+              border: 2px solid #d2c072;
+            }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+     margin: 0;
+   }
+  }
+  }
+  &--label {
+     align-self: self-start;
+   }
+  &--submit {
+     margin-top: 15px;
+     padding: 0 25px 0 25px;
+     cursor: pointer;
+     box-shadow: 0 0 2px 1px #5b5b5b;
+     border-radius: 15px;
+     background-color: #FFEEDD;
+   }
+  }
+}
+</style>

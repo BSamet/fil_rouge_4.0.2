@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="shapeForms__forms--container">
-        <p class="shapeForms__forms--submit" @click.prevent="sendPost()">Submit</p>
+        <p class="shapeForms__forms--submit" @click.prevent="sendPost()">Post</p>
       </div>
     </form>
   </div>

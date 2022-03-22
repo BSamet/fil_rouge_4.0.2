@@ -6,6 +6,7 @@
           This is the default title!
         </slot>
       </header>
+
       <section class="modal-body">
         <slot name="body">
           This is the default body!
@@ -13,7 +14,9 @@
       </section>
 
       <footer class="modal-footer">
-        <p @click="close">Close</p>
+        <slot name="footer">
+          This is the default footer.
+        </slot>
       </footer>
     </div>
   </div>
@@ -22,11 +25,6 @@
 <script>
 export default {
   name: "ModalShape",
-  methods: {
-    close() {
-      this.$emit('close');
-    },
-  }
 };
 </script>
 
@@ -52,13 +50,6 @@ export default {
       height: 5%;
       font-size: 1.2rem;
       text-align: center;
-      p {
-        padding: 0 25px 0 25px;
-        cursor: pointer;
-        box-shadow: 0 0 2px 1px #5b5b5b;
-        border-radius: 15px;
-        background-color: #FFEEDD;
-      }
     }
   }
 </style>

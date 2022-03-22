@@ -3,6 +3,7 @@ import axios from "axios";
 
 export interface State {
   isModalVisible: boolean;
+  isModalUpdateVisible: boolean
   forms3d: any;
   forms3dbyid: any;
   updateComponent: number;
@@ -12,6 +13,7 @@ export interface State {
 const store = createStore<State>({
   state: {
     isModalVisible: false,
+    isModalUpdateVisible: false,
     forms3d: [],
     forms3dbyid: [],
     updateComponent: 0,

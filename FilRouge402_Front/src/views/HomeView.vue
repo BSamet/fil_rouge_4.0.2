@@ -27,7 +27,9 @@
           </template>
 
           <template v-slot:footer>
-            This is a modal footer.
+            <div class="allShape__forms--footer">
+              <p @click="closeModal">Close</p>
+            </div>
           </template>
         </modal-shape>
       </Transition>
@@ -95,6 +97,15 @@ export default {
       box-shadow: 20px 20px 40px 1px #5b5b5b;
       border-radius: 15px;
       padding: 30px;
+    }
+    &--footer {
+      p {
+        padding: 0 25px 0 25px;
+        cursor: pointer;
+        box-shadow: 0 0 2px 1px #5b5b5b;
+        border-radius: 15px;
+        background-color: #FFEEDD;
+      }
     }
   }
 

@@ -36,9 +36,9 @@ public class Forms3DController {
     }
 
     @PostMapping("/Forms3D")
-    public ResponseEntity<Void> addForms3D(@RequestBody Forms3D forms3d) {
+    public Forms3D addForms3D(@RequestBody Forms3D forms3d) {
         if (forms3d == null) {
-            return ResponseEntity.noContent().build();
+            return null;
         }
         int id = forms3d.getForms2dId();
         double depths = forms3d.getDepths();
@@ -51,7 +51,7 @@ public class Forms3DController {
                 .path("/{id}")
                 .buildAndExpand(formsAdded.getId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return formsAdded;
     }
 
     @PutMapping("/Forms3D")

@@ -7,6 +7,7 @@ import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
 
 public class Forms2DDto {
 
+    public int id;
     public String type;
     public String name;
     public double largeur;
