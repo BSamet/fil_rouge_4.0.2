@@ -36,22 +36,15 @@ public class Forms3DController {
     }
 
     @PostMapping("/Forms3D")
-    public Forms3D addForms3D(@RequestBody Forms3D forms3d) {
-        if (forms3d == null) {
-            return null;
-        }
-        int id = forms3d.getForms2dId();
-        double depths = forms3d.getDepths();
-        Forms2D forms2d = forms2DRepository.getById(id);
-        Forms3D toSave = new Forms3D(forms2d, depths, id);
-        Forms3D formsAdded = forms3DRepository.save(toSave);
+    public Forms3D addForms3D(@RequestBody Forms3DDto dto) {
+        Forms3DDto toSave = new Forms3DDto();
+        Forms2D convertedMyDtoTo2d = toSave.Forms3DSendByUser2Form2D(dto);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(formsAdded.getId())
-                .toUri();
-        return formsAdded;
+        double depths = dto.depths;
+        Forms3D convertMyDtoTo3d = toSave.Forms3DSendByUser2Forms3D(convertedMyDtoTo2d, depths);
+        Forms3D saveMyForms3d = forms3DRepository.save(convertMyDtoTo3d);
+
+        return saveMyForms3d;
     }
 
     @PutMapping("/Forms3D")

@@ -1,6 +1,8 @@
 package fr.bulutsamet.FilRougeBack402.SceneConcept;
 
 import fr.bulutsamet.FilRougeBack402.Config.UnkownFormsException;
+import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DRepository;
+import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DRepository;
 import fr.bulutsamet.FilRougeBack402.Forms3D.Model.Forms3D;
 import fr.bulutsamet.FilRougeBack402.Forms3D.Model.Forms3DComposite;
@@ -16,10 +18,12 @@ import java.util.List;
 public class Scene3dConceptController {
 
     private final Scene3dConceptRepository sceneConceptRepository;
+    private final Forms2DRepository forms2DRepository;
     private final Forms3DRepository forms3DRepository;
 
-    public Scene3dConceptController(Scene3dConceptRepository sceneConceptRepository, Forms3DRepository forms3DRepository) {
+    public Scene3dConceptController(Scene3dConceptRepository sceneConceptRepository, Forms2DRepository forms2DRepository, Forms3DRepository forms3DRepository) {
         this.sceneConceptRepository = sceneConceptRepository;
+        this.forms2DRepository = forms2DRepository;
         this.forms3DRepository = forms3DRepository;
     }
 
@@ -49,14 +53,30 @@ public class Scene3dConceptController {
         return ResponseEntity.created(location).build();
     }
 
-    @PostMapping("/Forms3DComposite/{id}")
-    public Forms3DComposite addFormsInForms3DComposite(@RequestBody Scene3dConceptDto forms3dId, @PathVariable int id) {
-        Forms3DComposite myScene = sceneConceptRepository.getById(id);
-        Forms3D forms3d = forms3DRepository.findById(forms3dId.value);
+//    @PostMapping("/Forms3DComposite/{id}")
+//    public Forms3DComposite addFormsInForms3DComposite(@RequestBody Scene3dConceptDto forms3dId, @PathVariable int id) {
+//        Forms3DComposite myScene = sceneConceptRepository.getById(id);
+//        Forms3D forms3d = forms3DRepository.findById(forms3dId.value);
+//
+//        myScene.add3dForm(forms3d);
+//        myScene = sceneConceptRepository.save(myScene);
+//        return myScene;
+//    }
 
-        myScene.add3dForm(forms3d);
-        myScene = sceneConceptRepository.save(myScene);
-        return myScene;
+    @PostMapping("/Forms3DComposite/test")
+    public void ThisIsMyTest(@RequestBody Scene3dConceptDto thisIsMyTest) {
+        // Take the data and convert to shape 2D
+        Scene3dConceptDto toSave = new Scene3dConceptDto();
+        Forms2D convertedMyDtoTo2d = toSave.SceneSentByUser2Form2D(thisIsMyTest);
+
+        double depths = thisIsMyTest.depths;
+        Forms3D convertMyDtoTo3d = toSave.SceneSendByUser2Forms3D(convertedMyDtoTo2d, depths);
+        Forms3D saveMyForms3d = forms3DRepository.save(convertMyDtoTo3d);
+
+        System.out.println("3D Shape:");
+        System.out.println("================");
+        System.out.println(saveMyForms3d);
+        System.out.println("================");
     }
 
     @PutMapping("/Forms3DComposite")

@@ -17,10 +17,8 @@ public class Forms3D {
     private int id;
     @Column(name = "depths")
     private double depths;
-    @Column(name = "forms2dId")
-    private int forms2dId;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "forms_2_d_id")
     private Forms2D forms2D;
     //
@@ -35,7 +33,6 @@ public class Forms3D {
     public String toString() {
         return "Forms3D{" +
                 "depths=" + depths +
-                ", forms2dId=" + forms2dId +
                 ", forms2D=" + forms2D +
                 '}';
     }
@@ -57,18 +54,13 @@ public class Forms3D {
     public int getId() {
         return id;
     }
-
-    public int getForms2dId() {
-        return forms2dId;
-    }
     //
 
     //Constructor
     public Forms3D() {}
 
-    public Forms3D(Forms2D forms2D, double depths, int forms2dId) {
+    public Forms3D(Forms2D forms2D, double depths) {
         this.forms2D = forms2D;
         this.depths = depths;
-        this.forms2dId = forms2dId;
     }
 }

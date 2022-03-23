@@ -21,7 +21,7 @@ public class Forms3DComposite {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name = "my_alla3d_forms")
     private List<Forms3D> myAll3dForms;
     //

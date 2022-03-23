@@ -6,8 +6,7 @@ import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
 
 public class Forms2DDto {
-
-    public int id;
+    // Attribute
     public String type;
     public String name;
     public double largeur;
@@ -15,6 +14,7 @@ public class Forms2DDto {
     public double base;
     public double rayon;
 
+    // Method
     public static Forms2D Forms2DSendByUser2Form2D(Forms2DDto dto) {
         Forms2D f = null;
         switch (dto.type) {
@@ -45,5 +45,54 @@ public class Forms2DDto {
                 break;
         }
         return f;
+    }
+
+    // Getter Setter
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getLargeur() {
+        return largeur;
+    }
+
+    public void setLargeur(double largeur) {
+        this.largeur = largeur;
+    }
+
+    public double getLongueur() {
+        return longueur;
+    }
+
+    public void setLongueur(double longueur) {
+        this.longueur = longueur;
+    }
+
+    public double getBase() {
+        return base;
+    }
+
+    public void setBase(double base) {
+        this.base = base;
+    }
+
+    public double getRayon() {
+        return rayon;
+    }
+
+    public void setRayon(double rayon) {
+        this.rayon = rayon;
     }
 }
