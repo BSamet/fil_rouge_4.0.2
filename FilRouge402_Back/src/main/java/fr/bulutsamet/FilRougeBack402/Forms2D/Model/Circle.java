@@ -33,7 +33,8 @@ public class Circle extends Forms2D {
     @Override
     public String toString() {
         return "Circle{" +
-                "rayon=" + rayon +
+                "id='" + id + '\'' +
+                ", rayon=" + rayon +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 '}';

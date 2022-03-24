@@ -1,20 +1,20 @@
 package fr.bulutsamet.FilRougeBack402.Forms3D;
 
+import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DDto;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DRepository;
 import fr.bulutsamet.FilRougeBack402.Config.UnkownFormsException;
+import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
 import fr.bulutsamet.FilRougeBack402.Forms3D.Model.Forms3D;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class Forms3DController {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger( Forms3DController.class );
     private final Forms3DRepository forms3DRepository;
     private final Forms2DRepository forms2DRepository;
 
@@ -37,19 +37,19 @@ public class Forms3DController {
 
     @PostMapping("/Forms3D")
     public Forms3D addForms3D(@RequestBody Forms3DDto dto) {
-        Forms3DDto toSave = new Forms3DDto();
-        Forms2D convertedMyDtoTo2d = toSave.Forms3DSendByUser2Form2D(dto);
+        Forms2D convertedMyDtoTo2d = Forms3DDto.Forms3DSentByUser2Form2D(dto);
 
-        double depths = dto.depths;
-        Forms3D convertMyDtoTo3d = toSave.Forms3DSendByUser2Forms3D(convertedMyDtoTo2d, depths);
-        Forms3D saveMyForms3d = forms3DRepository.save(convertMyDtoTo3d);
+        double depths = dto.getDepths();
+        Forms3D convertMyDtoTo3d = Forms3DDto.Forms3DSentByUser2Forms3D(convertedMyDtoTo2d, depths);
 
-        return saveMyForms3d;
+        return forms3DRepository.save(convertMyDtoTo3d);
     }
 
     @PutMapping("/Forms3D")
-    public void updateForms3D(@RequestBody Forms3D forms3d) {
-        forms3DRepository.save(forms3d);
+    public void updateForms3D(@RequestBody Forms3DDto dto) {
+        Forms3D toUpdate = forms3DRepository.findById(dto.getId());
+        Forms2D toUpdateForm2d = toUpdate.getForms2D();
+
     }
 
     @DeleteMapping("/Forms3D/{id}")

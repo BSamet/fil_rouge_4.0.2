@@ -30,7 +30,8 @@ public class Triangle extends Forms2D {
     @Override
     public String toString() {
         return "Triangle{" +
-                "type='" + type + '\'' +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", base=" + base +
                 ", longueur=" + longueur +

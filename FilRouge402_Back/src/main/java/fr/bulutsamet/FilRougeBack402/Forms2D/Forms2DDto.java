@@ -4,15 +4,21 @@ import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Circle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Objects;
+
+@Getter @Setter
 public class Forms2DDto {
     // Attribute
-    public String type;
-    public String name;
-    public double largeur;
-    public double longueur;
-    public double base;
-    public double rayon;
+    private int id;
+    private String type;
+    private String name;
+    private double largeur;
+    private double longueur;
+    private double base;
+    private double rayon;
 
     // Method
     public static Forms2D Forms2DSendByUser2Form2D(Forms2DDto dto) {
@@ -47,52 +53,27 @@ public class Forms2DDto {
         return f;
     }
 
-    // Getter Setter
-    public String getType() {
-        return type;
+    public static Forms2D Forms2DSendByUser2UpdateForm2D(Forms2D forms2d, Forms2DDto dto) {
+        if (Objects.equals(forms2d.getType(), "Rectangle")) {
+            Rectangle rectangle = (Rectangle) forms2d;
+            rectangle.setName(dto.getName());
+            rectangle.setLargeur(dto.getLargeur());
+            rectangle.setLongueur(dto.getLongueur());
+            return rectangle;
+        } else if(Objects.equals(forms2d.getType(), "Triangle")) {
+            Triangle triangle = (Triangle) forms2d;
+            triangle.setName(dto.getName());
+            triangle.setBase(dto.getBase());
+            triangle.setLongueur(dto.getLongueur());
+            return triangle;
+        } else if(Objects.equals(forms2d.getType(), "Circle")){
+            Circle circle = (Circle) forms2d;
+            circle.setName(dto.getName());
+            circle.setRayon(dto.getRayon());
+            return circle;
+        } else {
+            return null;
+        }
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getLargeur() {
-        return largeur;
-    }
-
-    public void setLargeur(double largeur) {
-        this.largeur = largeur;
-    }
-
-    public double getLongueur() {
-        return longueur;
-    }
-
-    public void setLongueur(double longueur) {
-        this.longueur = longueur;
-    }
-
-    public double getBase() {
-        return base;
-    }
-
-    public void setBase(double base) {
-        this.base = base;
-    }
-
-    public double getRayon() {
-        return rayon;
-    }
-
-    public void setRayon(double rayon) {
-        this.rayon = rayon;
-    }
 }

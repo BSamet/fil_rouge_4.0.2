@@ -8,6 +8,7 @@ import static fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DDto.getForms2D;
 public class Scene3dConceptDto {
     // Attribute
     public int value;
+    private int forms2did;
     public double depths;
     public String type;
     public String name;

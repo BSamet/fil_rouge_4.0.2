@@ -43,6 +43,10 @@ public class Forms3D {
         return forms2D;
     }
 
+    public void setForms2D(Forms2D forms2D) {
+        this.forms2D = forms2D;
+    }
+
     public double getDepths() {
         return depths;
     }

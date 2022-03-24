@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Forms2DRepository extends JpaRepository<Forms2D, Integer>  {
-    Forms2D findById(int id);
 }

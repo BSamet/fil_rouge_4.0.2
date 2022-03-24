@@ -31,7 +31,8 @@ public class Rectangle extends Forms2D {
     @Override
     public String toString() {
         return "Rectangle{" +
-                "type='" + type + '\'' +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", largeur=" + largeur +
                 ", longueur=" + longueur +
