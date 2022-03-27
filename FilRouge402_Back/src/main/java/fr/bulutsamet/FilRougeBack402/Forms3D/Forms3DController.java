@@ -1,14 +1,14 @@
 package fr.bulutsamet.FilRougeBack402.Forms3D;
 
-import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DDto;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DRepository;
 import fr.bulutsamet.FilRougeBack402.Config.UnkownFormsException;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
+import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DDto;
+import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DRepository;
+import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
 import fr.bulutsamet.FilRougeBack402.Forms3D.Model.Forms3D;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -37,19 +37,27 @@ public class Forms3DController {
 
     @PostMapping("/Forms3D")
     public Forms3D addForms3D(@RequestBody Forms3DDto dto) {
-        Forms2D convertedMyDtoTo2d = Forms3DDto.Forms3DSentByUser2Form2D(dto);
+        Forms2D convertedMyDtoTo2d = Forms3DDto.forms3DSentByUser2Form2D(dto);
 
         double depths = dto.getDepths();
-        Forms3D convertMyDtoTo3d = Forms3DDto.Forms3DSentByUser2Forms3D(convertedMyDtoTo2d, depths);
+        Forms3D convertMyDtoTo3d = Forms3DDto.forms3DSentByUser2Forms3D(convertedMyDtoTo2d, depths);
 
         return forms3DRepository.save(convertMyDtoTo3d);
     }
 
     @PutMapping("/Forms3D")
-    public void updateForms3D(@RequestBody Forms3DDto dto) {
+    public Forms3D updateForms3D(@RequestBody Forms3DDto dto) {
         Forms3D toUpdate = forms3DRepository.findById(dto.getId());
-        Forms2D toUpdateForm2d = toUpdate.getForms2D();
+        Optional<Forms2D> toUpdateForms2D = Optional.ofNullable(toUpdate.getForms2D());
 
+        Forms2D toSaveForms2D = Forms3DDto.forms3DSentByUser2Form2D(dto);
+
+        Forms2D forms2D = Forms2DDto.Forms2DSendByUser2UpdateForm2D(toUpdateForms2D, Forms2DDto.toDto2D(toSaveForms2D));
+
+        Forms3D toFinalSave = Forms3DDto.forms3DSentByUser2UpdateForms3D(toUpdate, dto, forms2D);
+
+        forms2DRepository.save(forms2D);
+        return forms3DRepository.save(toFinalSave);
     }
 
     @DeleteMapping("/Forms3D/{id}")

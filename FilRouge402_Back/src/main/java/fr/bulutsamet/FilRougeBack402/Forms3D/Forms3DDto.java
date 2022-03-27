@@ -1,17 +1,11 @@
 package fr.bulutsamet.FilRougeBack402.Forms3D;
 
 import fr.bulutsamet.FilRougeBack402.Forms2D.Forms2DDto;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Circle;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Rectangle;
-import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Triangle;
 import fr.bulutsamet.FilRougeBack402.Forms3D.Model.Forms3D;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
-import java.util.Optional;
 
 @Getter @Setter @NoArgsConstructor
 public class Forms3DDto {
@@ -26,7 +20,7 @@ public class Forms3DDto {
     private double depths;
 
     // Method
-    public static Forms2D Forms3DSentByUser2Form2D(Forms3DDto dto) {
+    public static Forms2D forms3DSentByUser2Form2D(Forms3DDto dto) {
         return getForms2D(dto.type, dto.name, dto.largeur, dto.longueur, dto.base, dto.rayon);
     }
 
@@ -41,7 +35,13 @@ public class Forms3DDto {
         return forms2d.toForm2D();
     }
 
-    public static Forms3D Forms3DSentByUser2Forms3D(Forms2D dto, double depths) {
+    public static Forms3D forms3DSentByUser2Forms3D(Forms2D dto, double depths) {
         return new Forms3D(dto, depths);
+    }
+
+    public static Forms3D forms3DSentByUser2UpdateForms3D(Forms3D forms3D, Forms3DDto dto, Forms2D forms2D) {
+        forms3D.setDepths(dto.getDepths());
+        forms3D.setForms2D(forms2D);
+        return forms3D;
     }
 }

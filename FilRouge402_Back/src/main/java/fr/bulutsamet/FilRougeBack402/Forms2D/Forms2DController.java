@@ -35,7 +35,7 @@ public class Forms2DController {
 
     @PostMapping("/Forms2D")
     public Forms2D addForms2D(@RequestBody Forms2DDto forms2dDTO) {
-        Forms2D myForms = Forms2DDto.Forms2DSendByUser2Form2D(forms2dDTO);
+        Forms2D myForms = Forms2DDto.toEntity2D(forms2dDTO);
         return forms2DRepository.save(myForms);
     }
 
@@ -45,7 +45,7 @@ public class Forms2DController {
         Optional<Forms2D> toUpdateOptional = forms2DRepository.findById(id);
         if(toUpdateOptional.isEmpty()) throw new UnkownFormsException("La forme avec l'id " + id + " est introuvable.");
 
-        Forms2D myForm = Forms2DDto.Forms2DSendByUser2UpdateForm2D(toUpdateOptional.get(), Optional.of(dto));
+        Forms2D myForm = Forms2DDto.Forms2DSendByUser2UpdateForm2D(toUpdateOptional, dto);
         return forms2DRepository.save(myForm);
     }
 
