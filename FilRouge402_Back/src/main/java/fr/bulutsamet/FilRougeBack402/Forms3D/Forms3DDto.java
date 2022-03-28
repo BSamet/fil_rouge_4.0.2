@@ -43,6 +43,7 @@ public class Forms3DDto {
     public static Forms3D forms3DSentByUser2UpdateForms3D(Forms3D forms3D, Forms3DDto dto, Forms2D forms2D) {
         forms3D.setDepths(dto.getDepths());
         forms3D.setForms2D(forms2D);
+        forms3D.setSceneId(dto.sceneId);
         return forms3D;
     }
 }

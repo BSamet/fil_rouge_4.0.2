@@ -15,8 +15,8 @@
     <div class="allShape__forms">
       <Transition name="slide-fade">
         <modal-shape
-          v-if="$store.state.isModalVisible"
-          @close="closeModal"
+            v-if="$store.state.isModalVisible"
+            @close="closeModal"
         >
           <template v-slot:header>
             <h3><u>Add new shape</u></h3>
@@ -43,7 +43,7 @@ import ModalShape from "@/components/ModalShape.vue";
 import AddShape from "@/components/AddShape.vue";
 
 export default {
-  components: { AddShape, ModalShape, Card3d },
+  components: {AddShape, ModalShape, Card3d},
   data() {
     return {
       myForms: ""
@@ -90,15 +90,19 @@ export default {
     justify-content: center;
     align-items: center;
     transition: opacity 0.5s ease;
+
     > div {
-      width: 400px;
-      height: 500px;
+      width: auto;
+      height: auto;
       background-color: #d5d6aa;
       box-shadow: 20px 20px 40px 1px #5b5b5b;
       border-radius: 15px;
-      padding: 30px;
+      padding: 30px 70px 30px 70px;
     }
+
     &--footer {
+      padding-top: 10px;
+
       p {
         padding: 0 25px 0 25px;
         cursor: pointer;

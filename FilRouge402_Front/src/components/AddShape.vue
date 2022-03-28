@@ -4,15 +4,26 @@
       <div class="shapeForms__forms--container">
         <p class="shapeForms__forms--label">Type of shape </p>
         <select v-model="shapeType" required>
-        <option disabled value="">Select type of shape</option>
-        <option>Rectangle</option>
-        <option>Triangle</option>
-        <option>Circle</option>
+          <option disabled value="">Select type of shape</option>
+          <option>Rectangle</option>
+          <option>Cône</option>
+          <option>Cylindre</option>
         </select>
       </div>
       <div class="shapeForms__forms--container">
         <label class="shapeForms__forms--label" for="name">Name :</label>
         <input v-model="name" type="text" id="name" placeholder="Enter a name" required>
+      </div>
+      <div class="shapeForms__forms--container">
+        <p class="shapeForms__forms--label">Select a scene </p>
+        <select v-model="sceneId" required>
+          <option value="">0</option>
+          <option
+              v-for="scene of scene3d"
+              :key="scene.id"
+          >{{ scene.id }}
+          </option>
+        </select>
       </div>
       <div v-if="shapeType === 'Rectangle'">
         <div class="shapeForms__forms--container">
@@ -53,7 +64,7 @@
         </div>
       </div>
       <div class="shapeForms__forms--container">
-        <p class="shapeForms__forms--submit" @click.prevent="sendPost()">Post</p>
+        <p class="shapeForms__forms--submit" @click.prevent="sendPost()">Create</p>
       </div>
     </form>
   </div>
@@ -73,66 +84,84 @@ export default {
       base: "",
       rayon: "",
       depths: "",
-      forms2dId: "",
+      sceneId: "",
+    }
+  },
+  computed: {
+    scene3d() {
+      return this.$store.state.scene3d
     }
   },
   methods: {
-    sendPost: function() {
-      const post2dShape = { type: this.shapeType, name: this.name, longueur: this.longueur, largeur: this.largeur, base: this.base, rayon: this.rayon };
+    sendPost: function () {
+      const post3dShape = {
+        type: this.shapeType,
+        name: this.name,
+        longueur: this.longueur,
+        largeur: this.largeur,
+        base: this.base,
+        rayon: this.rayon,
+        depths: this.depths,
+        sceneId: this.sceneId
+      };
       axios
-      .post("http://localhost:9090/Forms2D", post2dShape)
-        .then(res => {
-          this.forms2dId = res.data.id;
-          const post3dShape = { depths: this.depths, forms2dId: this.forms2dId};
-          axios
-            .post("http://localhost:9090/Forms3D", post3dShape)
-          this.$store.state.updateComponent++
-          this.$store.state.isModalVisible = false
-        });
+          .post("http://localhost:9090/Forms3D", post3dShape)
+          .then(res => {
+            this.$store.state.isModalVisible = false
+          });
     }
+  },
+  async mounted() {
+    await this.$store.dispatch("getScene3d")
+        .then(() => (this.loading = true));
   }
 };
 </script>
 
 <style lang="scss" scoped>
-  .shapeForms {
-    &__forms {
-      &--container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 8px 0 8px 0;
-        input, select {
-          text-align: center;
-          font-size: 1rem;
-          border-radius: 15px;
-          width: 250px;
-          height: 25px;
-          border: none;
-          transition: all 0.2s linear;
-          &:focus, &:active {
-            outline: none;
-            border: 2px solid #d2c072;
-          }
-          &::-webkit-outer-spin-button,
-          &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
+.shapeForms {
+  &__forms {
+    &--container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 8px 0 8px 0;
+
+      input, select {
+        text-align: center;
+        font-size: 1rem;
+        border-radius: 15px;
+        width: 250px;
+        height: 25px;
+        border: none;
+        transition: all 0.2s linear;
+
+        &:focus, &:active {
+          outline: none;
+          border: 2px solid #d2c072;
+        }
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
       }
-      &--label {
-        align-self: self-start;
-      }
-      &--submit {
-        margin-top: 15px;
-        padding: 0 25px 0 25px;
-        cursor: pointer;
-        box-shadow: 0 0 2px 1px #5b5b5b;
-        border-radius: 15px;
-        background-color: #FFEEDD;
-      }
+    }
+
+    &--label {
+      align-self: self-start;
+    }
+
+    &--submit {
+      margin-top: 15px;
+      padding: 0 25px 0 25px;
+      cursor: pointer;
+      box-shadow: 0 0 2px 1px #5b5b5b;
+      border-radius: 15px;
+      background-color: #FFEEDD;
     }
   }
+}
 </style>

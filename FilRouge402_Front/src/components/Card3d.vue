@@ -46,8 +46,8 @@
     <div class="shape3d__forms">
       <Transition name="slide-fade">
         <modal-shape
-          v-if="$store.state.isModalUpdateVisible"
-          @close="closeModalUpdate"
+            v-if="$store.state.isModalUpdateVisible"
+            @close="closeModalUpdate"
         >
           <template v-slot:header>
             <h3><u>Update shape</u></h3>
@@ -58,7 +58,7 @@
           </template>
 
           <template v-slot:footer>
-            <div class="allShape__forms--footer">
+            <div class="shape3d__forms--footer">
               <p @click="closeModalUpdate()">Close</p>
             </div>
           </template>
@@ -71,9 +71,10 @@
 <script>
 import UpdateShape from "@/components/UpdateShape.vue";
 import ModalShape from "@/components/ModalShape.vue";
+
 export default {
   name: "Card3d",
-  components: { ModalShape, UpdateShape },
+  components: {ModalShape, UpdateShape},
   data() {
     return {
       loading: false,
@@ -92,10 +93,14 @@ export default {
   computed: {
     forms3d() {
       return this.$store.state.forms3d
+    },
+    scene3d() {
+      return this.$store.state.scene3d
     }
   },
   async mounted() {
     await this.$store.dispatch("getForms3d")
+    await this.$store.dispatch("getScene3d")
         .then(() => (this.loading = true));
   }
 };
@@ -112,17 +117,18 @@ export default {
   }
   to {
     transform: translateX(40px) rotateY(0) rotateX(0);
-    box-shadow: none;
+    box-shadow: 10px 10px 40px 1px #5b5b5b;
     z-index: 0;
   }
 }
+
 @keyframes slideUpdateOut {
   from {
     z-index: 0;
+    box-shadow: 10px 10px 40px 1px #5b5b5b;
   }
   50% {
     transform: translateX(85px) rotateY(45deg) rotateZ(20deg);
-    box-shadow: 10px 10px 40px 1px #5b5b5b;
   }
   to {
     transform: translateX(40px) rotateY(0) rotateX(0);
@@ -226,7 +232,7 @@ export default {
       width: 50px;
       height: 20%;
       position: absolute;
-      top: 0px;
+      top: 0;
       right: 20px;
       background-color: #d5d6aa;
       border-radius: 15px;
@@ -244,15 +250,18 @@ export default {
     justify-content: center;
     align-items: center;
     transition: opacity 0.5s ease;
+
     > div {
-      width: 400px;
-      height: 500px;
+      width: auto;
+      height: auto;
       background-color: #d5d6aa;
       box-shadow: 20px 20px 40px 1px #5b5b5b;
       border-radius: 15px;
-      padding: 30px;
+      padding: 30px 70px 30px 70px;
     }
+
     &--footer {
+      padding-top: 10px;
       p {
         padding: 0 25px 0 25px;
         cursor: pointer;
@@ -262,6 +271,7 @@ export default {
       }
     }
   }
+
   &--blur {
     position: fixed;
     top: 0;

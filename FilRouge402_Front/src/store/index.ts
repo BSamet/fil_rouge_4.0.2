@@ -6,6 +6,7 @@ export interface State {
   isModalUpdateVisible: boolean
   forms3d: any;
   forms3dbyid: any;
+  scene3d: any;
   updateComponent: number;
 }
 
@@ -16,6 +17,7 @@ const store = createStore<State>({
     isModalUpdateVisible: false,
     forms3d: [],
     forms3dbyid: [],
+    scene3d: [],
     updateComponent: 0,
   },
 
@@ -26,7 +28,11 @@ const store = createStore<State>({
 
     SET_FORMS3DBYID(state, forms3dbyId) {
       state.forms3dbyid = forms3dbyId
-    }
+    },
+
+    SET_SCENE3D(state, scene3d) {
+      state.scene3d = scene3d
+    },
   },
 
   actions: {
@@ -44,6 +50,14 @@ const store = createStore<State>({
         .then(forms3ddata => {
           commit('SET_FORMS3DBYID', forms3ddata.data)
       })
+    },
+
+    getScene3d({ commit }) {
+      axios
+          .get("http://localhost:9090/Forms3DComposite")
+          .then(scene3ddata=> {
+            commit('SET_SCENE3D', scene3ddata.data)
+          })
     },
   },
 });
