@@ -24,6 +24,7 @@ public class Forms3DComposite {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name = "my_alla3d_forms")
     private List<Forms3D> myAll3dForms;
+
     //
 
     //Method

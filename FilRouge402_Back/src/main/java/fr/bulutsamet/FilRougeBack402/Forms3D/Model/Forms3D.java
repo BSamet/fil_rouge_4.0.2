@@ -2,6 +2,8 @@ package fr.bulutsamet.FilRougeBack402.Forms3D.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.bulutsamet.FilRougeBack402.Forms2D.Model.Forms2D;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.text.DecimalFormat;
 
@@ -21,6 +23,11 @@ public class Forms3D {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "forms_2_d_id")
     private Forms2D forms2D;
+
+    @Column(name = "sceneId")
+    @Nullable
+    private int sceneId;
+
     //
 
     //Method
@@ -34,6 +41,7 @@ public class Forms3D {
         return "Forms3D{" +
                 "depths=" + depths +
                 ", forms2D=" + forms2D +
+                ", sceneId=" + sceneId +
                 '}';
     }
     //
@@ -58,13 +66,23 @@ public class Forms3D {
     public int getId() {
         return id;
     }
+
+    public int getSceneId() {
+        return sceneId;
+    }
+
+    public void setSceneId(int sceneId) {
+        this.sceneId = sceneId;
+    }
+
     //
 
     //Constructor
     public Forms3D() {}
 
-    public Forms3D(Forms2D forms2D, double depths) {
+    public Forms3D(Forms2D forms2D, double depths, int sceneId) {
         this.forms2D = forms2D;
         this.depths = depths;
+        this.sceneId = sceneId;
     }
 }

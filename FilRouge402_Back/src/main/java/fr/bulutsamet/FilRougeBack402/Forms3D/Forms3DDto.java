@@ -18,6 +18,7 @@ public class Forms3DDto {
     private double base;
     private double rayon;
     private double depths;
+    private int sceneId;
 
     // Method
     public static Forms2D forms3DSentByUser2Form2D(Forms3DDto dto) {
@@ -35,8 +36,8 @@ public class Forms3DDto {
         return forms2d.toForm2D();
     }
 
-    public static Forms3D forms3DSentByUser2Forms3D(Forms2D dto, double depths) {
-        return new Forms3D(dto, depths);
+    public static Forms3D forms3DSentByUser2Forms3D(Forms2D dto, double depths, int sceneId) {
+        return new Forms3D(dto, depths, sceneId);
     }
 
     public static Forms3D forms3DSentByUser2UpdateForms3D(Forms3D forms3D, Forms3DDto dto, Forms2D forms2D) {

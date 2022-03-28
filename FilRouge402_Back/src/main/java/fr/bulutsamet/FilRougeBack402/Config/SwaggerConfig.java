@@ -15,7 +15,7 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("fr.bulutsamet.FilRougeBack402.Controller"))
+                .apis(RequestHandlerSelectors.basePackage("fr.bulutsamet.FilRougeBack402"))
                 .paths(PathSelectors.regex("/Forms*.*"))
                 .build();
     }

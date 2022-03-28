@@ -22,7 +22,7 @@ public class Scene3dConceptDto {
         return getForms2D(dto.type, dto.name, dto.largeur, dto.longueur, dto.base, dto.rayon);
     }
 
-    public static Forms3D SceneSendByUser2Forms3D(Forms2D dto, double depths) {
-        return new Forms3D(dto, depths);
+    public static Forms3D SceneSendByUser2Forms3D(Forms2D dto, double depths, int sceneId) {
+        return new Forms3D(dto, depths, sceneId);
     }
 }

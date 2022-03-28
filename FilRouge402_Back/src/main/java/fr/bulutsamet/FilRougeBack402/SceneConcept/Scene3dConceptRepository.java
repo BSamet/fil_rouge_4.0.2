@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Scene3dConceptRepository extends JpaRepository<Forms3DComposite, Integer> {
-    Forms3DComposite findById(int id);
 }
