@@ -35,8 +35,8 @@ public class FilRougeBack402Application {
 			myScene.setName("My First Scene");
 				// Formes 2D
 			Rectangle rectangle = new Rectangle(10, 15, "Rectangle 1");
-			Triangle triangle = new Triangle(20, 40, "Triangle 1");
-			Circle circle = new Circle(18, "Circle 1");
+			Triangle triangle = new Triangle(20, 40, "Cône 1");
+			Circle circle = new Circle(18, "Cylindre 1");
 				// Formes 3D
 			Forms3D rectangle3d = new Forms3D(rectangle, 10, 0);
 			Forms3D triangle3d = new Forms3D(triangle, 30, 1);

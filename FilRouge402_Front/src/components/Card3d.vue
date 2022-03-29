@@ -1,25 +1,22 @@
 <template>
   <div v-if="loading" class="shape3d">
-    <div
-        v-for="forms of forms3d"
-        :key="forms.id"
-        class="card">
+    <div v-for="forms of forms3d" :key="forms.id" class="card">
       <div class="card__update">
-        <img src="../assets/update_shape.svg" @click="showModalUpdate(forms)">
-        <img src="../assets/delete_shape.svg">
+        <img src="../assets/update_shape.svg" @click="showModalUpdate(forms)" />
+        <img src="../assets/delete_shape.svg" @click="sendDelete(forms.id)" />
       </div>
       <div class="card__picture">
         <div
-            v-if="forms.forms2D.type === 'Rectangle'"
-            class="card__picture--rectangle"
+          v-if="forms.forms2D.type === 'Rectangle'"
+          class="card__picture--rectangle"
         ></div>
         <div
-            v-if="forms.forms2D.type === 'Triangle'"
-            class="card__picture--triangle"
+          v-if="forms.forms2D.type === 'Triangle'"
+          class="card__picture--triangle"
         ></div>
         <div
-            v-if="forms.forms2D.type === 'Circle'"
-            class="card__picture--circle"
+          v-if="forms.forms2D.type === 'Circle'"
+          class="card__picture--circle"
         ></div>
       </div>
       <div class="card__info">
@@ -46,8 +43,8 @@
     <div class="shape3d__forms">
       <Transition name="slide-fade">
         <modal-shape
-            v-if="$store.state.isModalUpdateVisible"
-            @close="closeModalUpdate"
+          v-if="$store.state.isModalUpdateVisible"
+          @close="closeModalUpdate"
         >
           <template v-slot:header>
             <h3><u>Update shape</u></h3>
@@ -66,15 +63,19 @@
       </Transition>
     </div>
   </div>
+  <div v-else>
+    <img src="../assets/loader.svg" />
+  </div>
 </template>
 
 <script>
 import UpdateShape from "@/components/UpdateShape.vue";
 import ModalShape from "@/components/ModalShape.vue";
+import axios from "axios";
 
 export default {
   name: "Card3d",
-  components: {ModalShape, UpdateShape},
+  components: { ModalShape, UpdateShape },
   data() {
     return {
       loading: false,
@@ -88,21 +89,25 @@ export default {
     },
     closeModalUpdate() {
       this.$store.state.isModalUpdateVisible = false;
-    }
+    },
+    sendDelete: function (id) {
+      axios.delete("http://localhost:9090/Forms3D/" + id).then((res) => {
+        this.$store.state.updateComponent = !this.$store.state.updateComponent;
+      });
+    },
   },
   computed: {
     forms3d() {
-      return this.$store.state.forms3d
+      return this.$store.state.forms3d;
     },
     scene3d() {
-      return this.$store.state.scene3d
-    }
+      return this.$store.state.scene3d;
+    },
   },
   async mounted() {
-    await this.$store.dispatch("getForms3d")
-    await this.$store.dispatch("getScene3d")
-        .then(() => (this.loading = true));
-  }
+    await this.$store.dispatch("getForms3d");
+    await this.$store.dispatch("getScene3d").then(() => (this.loading = true));
+  },
 };
 </script>
 
@@ -238,6 +243,10 @@ export default {
       border-radius: 15px;
       animation: slideUpdateOut 0.5s;
       animation-fill-mode: forwards;
+
+      img {
+        cursor: pointer;
+      }
     }
   }
 
@@ -262,12 +271,13 @@ export default {
 
     &--footer {
       padding-top: 10px;
+
       p {
         padding: 0 25px 0 25px;
         cursor: pointer;
         box-shadow: 0 0 2px 1px #5b5b5b;
         border-radius: 15px;
-        background-color: #FFEEDD;
+        background-color: #ffeedd;
       }
     }
   }
@@ -283,7 +293,8 @@ export default {
   }
 
   //Forms transition
-  .slide-fade-enter-active, .slide-fade-leave-active {
+  .slide-fade-enter-active,
+  .slide-fade-leave-active {
     transition: all 0.3s ease-out;
   }
 
@@ -302,6 +313,5 @@ export default {
   .fade-leave-to {
     opacity: 0;
   }
-
 }
 </style>

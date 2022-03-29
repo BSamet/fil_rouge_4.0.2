@@ -7,7 +7,7 @@ export interface State {
   forms3d: any;
   forms3dbyid: any;
   scene3d: any;
-  updateComponent: number;
+  updateComponent: boolean;
 }
 
 
@@ -18,7 +18,7 @@ const store = createStore<State>({
     forms3d: [],
     forms3dbyid: [],
     scene3d: [],
-    updateComponent: 0,
+    updateComponent: false,
   },
 
   mutations: {

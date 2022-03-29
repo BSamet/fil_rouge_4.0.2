@@ -1,10 +1,7 @@
 <template>
   <section class="allShape">
     <h1 class="allShape__title">Shape</h1>
-    <Transition name="fade" mode="out-in">
-      <card3d :key="$store.state.updateComponent"></card3d>
-    </Transition>
-    <div>{{ $store.state.updateComponent }}</div>
+    <card3d :key="$store.state.updateComponent"></card3d>
     <div class="allShape__button" @click="showModal"><img src="../assets/addShape.svg"></div>
 
     <!--    Shape forms-->
@@ -34,6 +31,7 @@
         </modal-shape>
       </Transition>
     </div>
+
   </section>
 </template>
 
@@ -44,11 +42,6 @@ import AddShape from "@/components/AddShape.vue";
 
 export default {
   components: {AddShape, ModalShape, Card3d},
-  data() {
-    return {
-      myForms: ""
-    };
-  },
   methods: {
     showModal() {
       this.$store.state.isModalVisible = true;

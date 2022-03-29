@@ -54,7 +54,7 @@ public class Forms3DController {
         Forms3D savedForms = forms3DRepository.save(convertMyDtoTo3d);
 
         if(savedForms.getSceneId() != 0) {
-            Forms3DComposite myScene = scene3dConceptRepository.getById(dto.getSceneId());
+            Forms3DComposite myScene = scene3dConceptRepository.getById(savedForms.getSceneId());
             myScene.add3dForm(savedForms);
             scene3dConceptRepository.save(myScene);
         }
