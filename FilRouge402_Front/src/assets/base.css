@@ -46,6 +46,23 @@
   font-weight: normal;
 }
 
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 50%;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: #bebebe;
+}
+
+
 body {
   min-height: 100vh;
   color: var(--color-text);

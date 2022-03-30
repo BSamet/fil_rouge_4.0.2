@@ -51,6 +51,7 @@ export default {
       loading: false,
       name: "",
       shapeId: [],
+      shape: this.$store.forms3dbyscene,
     };
   },
   computed: {
@@ -125,7 +126,14 @@ export default {
 
     &--checkbox {
       > div {
+        padding: 10px;
+        border: 1px solid #ffffff;
+        border-radius: 15px 0 0 15px;
+        box-shadow: inset 0px -2px 2px 2px #ffffff;
         width: 400px;
+        height: 150px;
+        overflow-y: scroll;
+        overflow-x: hidden;
         display: flex;
         justify-content: space-around;
         align-items: center;
