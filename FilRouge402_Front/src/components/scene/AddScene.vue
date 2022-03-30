@@ -130,14 +130,15 @@ export default {
         border: 1px solid #ffffff;
         border-radius: 15px 0 0 15px;
         box-shadow: inset 0px -2px 2px 2px #ffffff;
-        width: 400px;
+        width: 600px;
         height: 150px;
         overflow-y: scroll;
         overflow-x: hidden;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-row-gap: 10px;
+        align-items: start;
+        justify-items: start;
         >div {
           margin: 0 10px 0 10px;
         }
