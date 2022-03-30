@@ -3,13 +3,13 @@ import axios from "axios";
 
 export interface State {
   isModalVisible: boolean;
-  isModalUpdateVisible: boolean
+  isModalUpdateVisible: boolean;
   forms3d: any;
   forms3dbyid: any;
+  forms3dbyscene: any;
   scene3d: any;
   updateComponent: boolean;
 }
-
 
 const store = createStore<State>({
   state: {
@@ -17,50 +17,62 @@ const store = createStore<State>({
     isModalUpdateVisible: false,
     forms3d: [],
     forms3dbyid: [],
+    forms3dbyscene: [],
     scene3d: [],
     updateComponent: false,
   },
 
   mutations: {
     SET_FORMS3D(state, forms3d) {
-      state.forms3d = forms3d
+      state.forms3d = forms3d;
     },
 
     SET_FORMS3DBYID(state, forms3dbyId) {
-      state.forms3dbyid = forms3dbyId
+      state.forms3dbyid = forms3dbyId;
+    },
+
+    SET_FORMS3DBYSCENE(state, forms3dbyscene) {
+      state.forms3dbyscene = forms3dbyscene;
     },
 
     SET_SCENE3D(state, scene3d) {
-      state.scene3d = scene3d
+      state.scene3d = scene3d;
     },
   },
 
   actions: {
     getForms3d({ commit }) {
       axios
-        .get("http://localhost:9090/Forms3D")
-        .then(forms3ddata=> {
-          commit('SET_FORMS3D', forms3ddata.data)
-      })
+          .get("http://localhost:9090/Forms3D")
+          .then((forms3ddata) => {
+        commit("SET_FORMS3D", forms3ddata.data);
+      });
     },
 
     getForms3dById({ commit }, id) {
       axios
-        .get("http://localhost:9090/Forms3D/" + id)
-        .then(forms3ddata => {
-          commit('SET_FORMS3DBYID', forms3ddata.data)
-      })
+          .get("http://localhost:9090/Forms3D/" + id)
+          .then((forms3ddata) => {
+        commit("SET_FORMS3DBYID", forms3ddata.data);
+      });
+    },
+
+    getForms3dByScene({ commit }, sceneId) {
+      axios
+        .get("http://localhost:9090/Forms3D/scene/" + sceneId)
+        .then((forms3dScenedata) => {
+          commit("SET_FORMS3DBYSCENE", forms3dScenedata.data);
+        });
     },
 
     getScene3d({ commit }) {
       axios
-          .get("http://localhost:9090/Forms3DComposite")
-          .then(scene3ddata=> {
-            commit('SET_SCENE3D', scene3ddata.data)
-          })
+        .get("http://localhost:9090/Forms3DComposite")
+        .then((scene3ddata) => {
+          commit("SET_SCENE3D", scene3ddata.data);
+        });
     },
   },
 });
-
 
 export default store;

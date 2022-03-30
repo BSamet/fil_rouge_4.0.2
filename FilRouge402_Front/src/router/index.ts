@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Shape3dView from '../views/Shape3dView.vue'
 import AddShape3dView from '../components/AddShape.vue'
 import PageNotFound from '../views/PageNotFound.vue'
+import SandboxView from '../views/SandboxView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,11 @@ const router = createRouter({
       path: '/shape3d/:id',
       name: 'shape3d',
       component: Shape3dView
+    },
+    {
+      path: '/sandbox',
+      name: 'sandbox',
+      component: SandboxView
     },
     {
       path: '/:catchAll(.*)*',

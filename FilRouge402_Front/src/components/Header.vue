@@ -5,7 +5,7 @@
     </div>
     <nav class="header__nav">
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/">Sandbox</RouterLink>
+      <RouterLink to="/sandbox">Sandbox</RouterLink>
     </nav>
   </header>
 </template>

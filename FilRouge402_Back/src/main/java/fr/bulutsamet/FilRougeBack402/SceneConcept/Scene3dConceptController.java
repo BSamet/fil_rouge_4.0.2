@@ -35,9 +35,8 @@ public class Scene3dConceptController {
     }
 
     @GetMapping("/Forms3DComposite/{id}")
-    public Forms3DComposite listOneForms3DComposite(@PathVariable int id) throws UnkownFormsException {
-        Forms3DComposite forms3DComposite = sceneConceptRepository.getById(id);
-        return forms3DComposite;
+    public Optional<Forms3DComposite> listOneForms3DComposite(@PathVariable int id) throws UnkownFormsException {
+        return sceneConceptRepository.findById(id);
     }
 
     @PostMapping("/Forms3DComposite")
@@ -54,16 +53,28 @@ public class Scene3dConceptController {
         return ResponseEntity.created(location).build();
     }
 
-    @PostMapping("/Forms3DComposite/{id}/add")
-    public Forms3DComposite addFormsInScene(@RequestBody List<Integer> forms3DId , @PathVariable int id) {
-        Forms3DComposite scene3dConcept = sceneConceptRepository.getById(id);
-        forms3DId.forEach(formsId -> {
+    @PostMapping("/Forms3DComposite/{id}")
+    public Forms3DComposite addFormsInScene(@RequestBody Scene3dConceptDto dto, @PathVariable int id) {
+        Forms3DComposite scene3dConcept = null;
+        System.out.println(dto);
+        if(id != 0) {
+            scene3dConcept = sceneConceptRepository.getById(id);
+        } else {
+            scene3dConcept = new Forms3DComposite();
+            scene3dConcept.setName(dto.getName());
+            Forms3DComposite newScene = sceneConceptRepository.save(scene3dConcept);
+            scene3dConcept = sceneConceptRepository.getById(newScene.getId());
+        }
+
+        Forms3DComposite finalScene3dConcept = scene3dConcept;
+
+        dto.getForms3DId().forEach(formsId -> {
             Optional<Forms3D> forms3D = forms3DRepository.findById(formsId);
-            forms3D.get().setSceneId(id);
+            forms3D.get().setSceneId(finalScene3dConcept.getId());
             forms3DRepository.save(forms3D.get());
-            scene3dConcept.add3dForm(forms3D.get());
+            finalScene3dConcept.add3dForm(forms3D.get());
         });
-        return sceneConceptRepository.save(scene3dConcept);
+        return sceneConceptRepository.save(finalScene3dConcept);
     }
 
     @PutMapping("/Forms3DComposite/{id}")
@@ -75,11 +86,18 @@ public class Scene3dConceptController {
 
     @DeleteMapping("/Forms3DComposite/{id}")
     public void deleteForms3DComposite(@PathVariable int id) {
+        Forms3DComposite scene3dConcept = sceneConceptRepository.getById(id);
+        List<Forms3D> myAllForms = scene3dConcept.getMyAll3dForms();
+        for (Forms3D myAllForm : myAllForms) {
+            Forms3D forms3D = forms3DRepository.findById(myAllForm.getId());
+            forms3D.setSceneId(0);
+            forms3DRepository.save(forms3D);
+        }
         sceneConceptRepository.deleteById(id);
     }
 
     @DeleteMapping("/Forms3DComposite/{id}/delete")
-    public Forms3DComposite deleteFormsInScene(@RequestBody List<Integer> forms3DId , @PathVariable int id) {
+    public Forms3DComposite deleteFormsInScene(@RequestBody List<Integer> forms3DId, @PathVariable int id) {
         Forms3DComposite scene3dConcept = sceneConceptRepository.getById(id);
         forms3DId.forEach(formsId -> {
             Optional<Forms3D> forms3D = forms3DRepository.findById(formsId);

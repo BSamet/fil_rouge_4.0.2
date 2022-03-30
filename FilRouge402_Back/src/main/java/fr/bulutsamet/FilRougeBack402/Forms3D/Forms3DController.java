@@ -43,6 +43,11 @@ public class Forms3DController {
         return forms3d;
     }
 
+    @GetMapping("/Forms3D/scene/{sceneId}")
+    public List<Forms3D> listForms3DByScene(@PathVariable int sceneId) {
+        return forms3DRepository.findBySceneId(sceneId);
+    }
+
     @PostMapping("/Forms3D")
     public Forms3D addForms3D(@RequestBody Forms3DDto dto) {
         Forms2D convertedMyDtoTo2d = Forms3DDto.forms3DSentByUser2Form2D(dto);

@@ -4,7 +4,10 @@ import fr.bulutsamet.FilRougeBack402.Forms3D.Model.Forms3D;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface Forms3DRepository extends JpaRepository<Forms3D, Integer> {
     Forms3D findById(int id);
+    List<Forms3D> findBySceneId(int sceneId);
 }
