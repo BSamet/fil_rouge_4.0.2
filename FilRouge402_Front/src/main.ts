@@ -11,4 +11,6 @@ app.config.globalProperties.axios = axios;
 app.use(router);
 app.use(TroisJSVuePlugin);
 app.use(store);
+app.mount(await store.dispatch("getForms3d"))
+app.mount(await store.dispatch("getScene3d"))
 app.mount("#app");

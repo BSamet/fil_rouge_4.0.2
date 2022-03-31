@@ -1,9 +1,9 @@
 <template>
-  <div v-if="loading" class="shape3d">
+  <div class="shape3d">
     <div v-for="forms of forms3d" :key="forms.id" class="card">
       <div class="card__update">
-        <img src="../assets/update_shape.svg" @click="showModalUpdate(forms)" />
-        <img src="../assets/delete_shape.svg" @click="sendDelete(forms.id)" />
+        <img src="../../assets/update_shape.svg" @click="showModalUpdate(forms)" />
+        <img src="../../assets/delete_shape.svg" @click="sendDelete(forms.id)" />
       </div>
       <div class="card__picture">
         <div
@@ -63,13 +63,10 @@
       </Transition>
     </div>
   </div>
-  <div v-else>
-    <img src="../assets/loader.svg" />
-  </div>
 </template>
 
 <script>
-import UpdateShape from "@/components/UpdateShape.vue";
+import UpdateShape from "@/components/forms3d/UpdateShape.vue";
 import ModalShape from "@/components/ModalShape.vue";
 import axios from "axios";
 
@@ -78,7 +75,6 @@ export default {
   components: { ModalShape, UpdateShape },
   data() {
     return {
-      loading: false,
       formsUpdate: [],
     };
   },
@@ -91,8 +87,13 @@ export default {
       this.$store.state.isModalUpdateVisible = false;
     },
     sendDelete: function (id) {
-      axios.delete("http://localhost:9090/Forms3D/" + id).then((res) => {
-        this.$store.state.updateComponent = !this.$store.state.updateComponent;
+      axios.delete("http://localhost:9090/Forms3D/" + id).then(() => {
+        //Delete data in store
+        this.$store.state.forms3d.splice(
+          this.$store.state.forms3d.findIndex((forms3d) => forms3d.id === id),
+          1
+        );
+        //
       });
     },
   },
@@ -103,10 +104,6 @@ export default {
     scene3d() {
       return this.$store.state.scene3d;
     },
-  },
-  async mounted() {
-    await this.$store.dispatch("getForms3d");
-    await this.$store.dispatch("getScene3d").then(() => (this.loading = true));
   },
 };
 </script>

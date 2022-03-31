@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading" class="scene">
+  <div class="scene">
     <div v-for="scene of scene3d" :key="scene.id" class="card">
       <div class="card__update">
         <img
@@ -41,7 +41,9 @@
             <h3><u>Update scene</u></h3>
           </template>
 
-          <template v-slot:body> </template>
+          <template v-slot:body>
+            <update-scene :scene-id-update="sceneUpdate.id"></update-scene>
+          </template>
 
           <template v-slot:footer>
             <div class="scene__update--footer">
@@ -52,21 +54,18 @@
       </Transition>
     </div>
   </div>
-  <div v-else>
-    <img src="../../assets/loader.svg" />
-  </div>
 </template>
 
 <script>
 import ModalShape from "../ModalShape.vue";
 import axios from "axios";
+import UpdateScene from "@/components/scene/UpdateScene.vue";
 
 export default {
   name: "CardScene",
-  components: { ModalShape },
+  components: { UpdateScene, ModalShape },
   data() {
     return {
-      loading: false,
       sceneUpdate: [],
     };
   },
@@ -80,21 +79,27 @@ export default {
     },
     sendDelete: function (id, scene) {
       const forShapeId = { scene: scene };
-      axios
-        .delete("http://localhost:9090/Forms3DComposite/" + id)
-        .then((res) => {
-          this.$store.state.updateComponent =
-            !this.$store.state.updateComponent;
+      axios.delete("http://localhost:9090/Forms3DComposite/" + id).then(() => {
+        //Delete data in store
+        scene.myAll3dForms.forEach((value, index) => {
+          this.$store.state.forms3d[
+            this.$store.state.forms3d.findIndex(
+              (forms3d) => forms3d.id === value.id
+            )
+          ].sceneId = 0;
         });
+        this.$store.state.scene3d.splice(
+          this.$store.state.scene3d.findIndex((scene) => scene.id === id),
+          1
+        );
+        //
+      });
     },
   },
   computed: {
     scene3d() {
       return this.$store.state.scene3d;
     },
-  },
-  async mounted() {
-    await this.$store.dispatch("getScene3d").then(() => (this.loading = true));
   },
 };
 </script>

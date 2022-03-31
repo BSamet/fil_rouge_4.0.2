@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LoadingHomeView from '../views/LoadingHomeView.vue'
 import Shape3dView from '../views/Shape3dView.vue'
-import AddShape3dView from '../components/AddShape.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import SandboxView from '../views/SandboxView.vue'
 
@@ -10,6 +10,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'loading',
+      component: LoadingHomeView
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView
     },

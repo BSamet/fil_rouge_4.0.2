@@ -1,10 +1,10 @@
 <template>
-  <header class="eader">
+  <header class="header">
     <div class="header__title">
       <h1>Shape that !</h1>
     </div>
     <nav class="header__nav">
-      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/home">Home</RouterLink>
       <RouterLink to="/sandbox">Sandbox</RouterLink>
     </nav>
   </header>

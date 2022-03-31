@@ -1,90 +1,142 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div v-if="loadingUpdate" class="shapeForms__forms">
+    <div v-if="loading" class="shapeForms__forms">
       <form action="#">
         <div class="shapeForms__forms--container">
           <p class="shapeForms__forms--label">Type of shape</p>
-          <input type="text" v-model="shapeType" disabled />
+          <select v-model="shapeType" required>
+            <option disabled value="">Select type of shape</option>
+            <option>Rectangle</option>
+            <option>Triangle</option>
+            <option>Circle</option>
+          </select>
         </div>
-
+        <div class="shapeForms__forms--container">
+          <label class="shapeForms__forms--label" for="name">Name :</label>
+          <input
+            v-model="name"
+            type="text"
+            id="name"
+            placeholder="Enter a name"
+            required
+          />
+        </div>
         <div class="shapeForms__forms--container">
           <p class="shapeForms__forms--label">Select a scene</p>
           <select v-model="sceneId" required>
-            <option value="">{{ forms3dbyid.sceneId }}</option>
-            <option>0</option>
+            <option value="">0</option>
             <option v-for="scene of scene3d" :key="scene.id">
               {{ scene.id }}
             </option>
           </select>
         </div>
-
-        <div class="shapeForms__forms--container">
-          <label class="shapeForms__forms--label" for="name">Name :</label>
-          <input v-model="name" type="text" id="name" required />
-        </div>
-
-        <div v-if="forms3dbyid.forms2D.type === 'Rectangle'">
+        <div v-if="shapeType === 'Rectangle'">
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="rLongueur"
               >Length :</label
             >
-            <input v-model="longueur" type="number" id="rLongueur" required />
+            <input
+              v-model="longueur"
+              type="number"
+              id="rLongueur"
+              placeholder="Enter a lenght"
+              required
+            />
           </div>
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="rLargeur"
               >Width :</label
             >
-            <input v-model="largeur" type="number" id="rLargeur" required />
+            <input
+              v-model="largeur"
+              type="number"
+              id="rLargeur"
+              placeholder="Enter a width"
+              required
+            />
           </div>
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="rDepths"
               >Depths :</label
             >
-            <input v-model="depths" type="number" id="rDepths" required />
+            <input
+              v-model="depths"
+              type="number"
+              id="rDepths"
+              placeholder="Enter a deepth"
+              required
+            />
           </div>
         </div>
-
-        <div v-if="forms3dbyid.forms2D.type === 'Circle'">
+        <div v-if="shapeType === 'Circle'">
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="cRayon">Rayon :</label>
-            <input v-model="rayon" type="number" id="cRayon" required />
+            <input
+              v-model="rayon"
+              type="number"
+              id="cRayon"
+              placeholder="Enter a rayon"
+              required
+            />
           </div>
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="cDepths"
               >Depths :</label
             >
-            <input v-model="depths" type="number" id="cDepths" required />
+            <input
+              v-model="depths"
+              type="number"
+              id="cDepths"
+              placeholder="Enter a deepth"
+              required
+            />
           </div>
         </div>
-
-        <div v-if="forms3dbyid.forms2D.type === 'Triangle'">
+        <div v-if="shapeType === 'Triangle'">
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="tLongueur"
               >Length :</label
             >
-            <input v-model="longueur" type="number" id="tLongueur" required />
+            <input
+              v-model="longueur"
+              type="number"
+              id="tLongueur"
+              placeholder="Enter a length"
+              required
+            />
           </div>
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="tBase">Base :</label>
-            <input v-model="base" type="number" id="tBase" required />
+            <input
+              v-model="base"
+              type="number"
+              id="tBase"
+              placeholder="Enter a base"
+              required
+            />
           </div>
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="tDepths"
               >Depths :</label
             >
-            <input v-model="depths" type="number" id="tDepths" required />
+            <input
+              v-model="depths"
+              type="number"
+              id="tDepths"
+              placeholder="Enter a depth"
+              required
+            />
           </div>
         </div>
-
         <div class="shapeForms__forms--container">
-          <p class="shapeForms__forms--submit" @click.prevent="sendUpdate()">
-            Update
+          <p class="shapeForms__forms--submit" @click.prevent="sendPost()">
+            Create
           </p>
         </div>
       </form>
     </div>
     <div v-else class="shapeForms__forms">
-      <img src="../assets/loader.svg" />
+      <img src="../../assets/loader.svg" />
     </div>
   </transition>
 </template>
@@ -93,15 +145,10 @@
 import axios from "axios";
 
 export default {
-  name: "UpdateShape",
-  props: ["shapeIdUpdate"],
-  components: {},
+  name: "AddShapeView",
   data() {
     return {
-      loadingUpdate: false,
-      shapeName: String,
-
-      shapeid: this.shapeIdUpdate,
+      loading: true,
       shapeType: "",
       name: "",
       longueur: "",
@@ -112,11 +159,15 @@ export default {
       sceneId: "",
     };
   },
+  computed: {
+    scene3d() {
+      return this.$store.state.scene3d;
+    },
+  },
   methods: {
-    sendUpdate: function () {
-      this.loadingUpdate = false;
-      const update3dShape = {
-        id: this.shapeid,
+    sendPost: function () {
+      this.loading = false;
+      const post3dShape = {
         type: this.shapeType,
         name: this.name,
         longueur: this.longueur,
@@ -126,41 +177,13 @@ export default {
         depths: this.depths,
         sceneId: this.sceneId,
       };
-      axios.put("http://localhost:9090/Forms3D", update3dShape).then((res) => {
-        setTimeout(
-          () =>
-            (this.$store.state.updateComponent =
-              !this.$store.state.updateComponent),
-          1000
-        );
-        setTimeout(
-          () => (this.$store.state.isModalUpdateVisible = false),
-          1000
-        );
+      axios.post("http://localhost:9090/Forms3D", post3dShape).then((res) => {
+        setTimeout(() => {
+          this.$store.state.forms3d.push(res.data);
+          this.$store.state.isModalVisible = false;
+        }, 1000);
       });
     },
-  },
-  computed: {
-    forms3dbyid() {
-      this.shapeType = this.$store.state.forms3dbyid.forms2D.type;
-      this.name = this.$store.state.forms3dbyid.forms2D.name;
-      this.longueur = this.$store.state.forms3dbyid.forms2D.longueur;
-      this.largeur = this.$store.state.forms3dbyid.forms2D.largeur;
-      this.base = this.$store.state.forms3dbyid.forms2D.base;
-      this.rayon = this.$store.state.forms3dbyid.forms2D.rayon;
-      this.depths = this.$store.state.forms3dbyid.depths;
-      this.sceneId = this.$store.state.forms3dbyid.sceneId;
-      return this.$store.state.forms3dbyid;
-    },
-    scene3d() {
-      return this.$store.state.scene3d;
-    },
-  },
-  async mounted() {
-    await this.$store.dispatch("getForms3dById", this.shapeIdUpdate);
-    await this.$store.dispatch("getScene3d").then(() => {
-      setTimeout(() => (this.loadingUpdate = true), 1000);
-    });
   },
 };
 </script>
@@ -212,27 +235,5 @@ export default {
       background-color: #ffeedd;
     }
   }
-}
-
-//Forms transition
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

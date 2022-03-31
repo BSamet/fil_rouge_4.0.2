@@ -3,7 +3,6 @@
     <h1 class="allShape__title">Shape</h1>
     <card3d :key="$store.state.updateComponent"></card3d>
     <div class="allShape__button" @click="showModal"><img src="../assets/addShape.svg"></div>
-
     <!--    Shape forms-->
     <Transition name="slide-fade">
       <div class="allShape--blur" v-if="$store.state.isModalVisible"></div>
@@ -36,9 +35,9 @@
 </template>
 
 <script>
-import Card3d from "@/components/Card3d.vue";
+import Card3d from "@/components/forms3d/Card3d.vue";
 import ModalShape from "@/components/ModalShape.vue";
-import AddShape from "@/components/AddShape.vue";
+import AddShape from "@/components/forms3d/AddShape.vue";
 
 export default {
   components: {AddShape, ModalShape, Card3d},

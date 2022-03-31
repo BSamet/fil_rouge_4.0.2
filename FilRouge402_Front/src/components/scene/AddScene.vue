@@ -17,7 +17,7 @@
             >Add shape in scene ?</label
           >
           <div>
-            <div v-for="forms3d of forms3dbyscene" :key="forms3d.id">
+            <div v-for="forms3d of shape" :key="forms3d.id">
               <input
                 type="checkbox"
                 :id="forms3d.id"
@@ -51,41 +51,37 @@ export default {
       loading: false,
       name: "",
       shapeId: [],
-      shape: this.$store.forms3dbyscene,
+      shape: this.$store.getters.getForms3dBySceneId(0),
     };
-  },
-  computed: {
-    forms3dbyscene() {
-      return this.$store.state.forms3dbyscene;
-    },
   },
   methods: {
     sendPost: function () {
       this.loading = false;
       const toPost = {
         name: this.name,
-        forms3DId: this.shapeId
-      }
+        forms3DId: this.shapeId,
+      };
       axios
-        .post(
-          "http://localhost:9090/Forms3DComposite/0",
-            toPost
-        )
+        .post("http://localhost:9090/Forms3DComposite/0", toPost)
         .then((res) => {
-          setTimeout(
-            () =>
-              (this.$store.state.updateComponent =
-                !this.$store.state.updateComponent),
-            1000
-          );
-          setTimeout(() => (this.$store.state.isModalVisible = false), 1000);
+          // push data in store
+          setTimeout(() => {
+            this.$store.state.scene3d.push(res.data);
+            this.shapeId.forEach((value, index) => {
+              this.$store.state.forms3d[
+                this.$store.state.forms3d.findIndex(
+                  (forms3d) => forms3d.id === value
+                )
+              ].sceneId = res.data.id;
+            });
+            //
+            this.$store.state.isModalVisible = false;
+          }, 1000);
         });
     },
   },
-  async mounted() {
-    await this.$store
-      .dispatch("getForms3dByScene", 0)
-      .then(() => (this.loading = true));
+  mounted() {
+    this.loading = true;
   },
 };
 </script>
@@ -139,7 +135,7 @@ export default {
         grid-row-gap: 10px;
         align-items: start;
         justify-items: start;
-        >div {
+        > div {
           margin: 0 10px 0 10px;
         }
         label {

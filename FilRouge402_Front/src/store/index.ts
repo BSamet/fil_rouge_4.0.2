@@ -2,24 +2,38 @@ import { createStore } from "vuex";
 import axios from "axios";
 
 export interface State {
+  loadingHome: boolean;
   isModalVisible: boolean;
   isModalUpdateVisible: boolean;
+  updateComponent: boolean;
   forms3d: any;
   forms3dbyid: any;
   forms3dbyscene: any;
   scene3d: any;
-  updateComponent: boolean;
+  scene3dbyid: any;
 }
 
 const store = createStore<State>({
   state: {
+    loadingHome: false,
     isModalVisible: false,
     isModalUpdateVisible: false,
+    updateComponent: false,
     forms3d: [],
     forms3dbyid: [],
     forms3dbyscene: [],
     scene3d: [],
-    updateComponent: false,
+    scene3dbyid: [],
+  },
+
+  getters: {
+    getForms3dById: (state) => (id) => {
+      return state.forms3d.filter((forms3d) => forms3d.id === id);
+    },
+
+    getForms3dBySceneId: (state) => (sceneId) => {
+      return state.forms3d.filter((forms3d) => forms3d.sceneId === sceneId);
+    },
   },
 
   mutations: {
@@ -38,21 +52,21 @@ const store = createStore<State>({
     SET_SCENE3D(state, scene3d) {
       state.scene3d = scene3d;
     },
+
+    SET_SCENE3DBYID(state, scene3dbyid) {
+      state.scene3dbyid = scene3dbyid;
+    },
   },
 
   actions: {
     getForms3d({ commit }) {
-      axios
-          .get("http://localhost:9090/Forms3D")
-          .then((forms3ddata) => {
+      axios.get("http://localhost:9090/Forms3D").then((forms3ddata) => {
         commit("SET_FORMS3D", forms3ddata.data);
       });
     },
 
     getForms3dById({ commit }, id) {
-      axios
-          .get("http://localhost:9090/Forms3D/" + id)
-          .then((forms3ddata) => {
+      axios.get("http://localhost:9090/Forms3D/" + id).then((forms3ddata) => {
         commit("SET_FORMS3DBYID", forms3ddata.data);
       });
     },
@@ -70,6 +84,14 @@ const store = createStore<State>({
         .get("http://localhost:9090/Forms3DComposite")
         .then((scene3ddata) => {
           commit("SET_SCENE3D", scene3ddata.data);
+        });
+    },
+
+    async getScene3dById({ commit }, id) {
+      await axios
+        .get("http://localhost:9090/Forms3DComposite/" + id)
+        .then((scene3ddbyiddata) => {
+          commit("SET_SCENE3DBYID", scene3ddbyiddata.data);
         });
     },
   },
