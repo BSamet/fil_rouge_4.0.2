@@ -43,7 +43,6 @@ public class Forms2DDto {
     public static Forms2DDto toDto2D(Forms2D forms2D) {
         Forms2DDto f = new Forms2DDto();
         f.setName(forms2D.getName());
-        System.out.println(forms2D.getName());
         switch (forms2D.getType()) {
             case "Rectangle":
                 Rectangle rectangle = (Rectangle) forms2D;

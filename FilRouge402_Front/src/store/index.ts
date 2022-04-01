@@ -5,12 +5,8 @@ export interface State {
   loadingHome: boolean;
   isModalVisible: boolean;
   isModalUpdateVisible: boolean;
-  updateComponent: boolean;
   forms3d: any;
-  forms3dbyid: any;
-  forms3dbyscene: any;
   scene3d: any;
-  scene3dbyid: any;
 }
 
 const store = createStore<State>({
@@ -18,12 +14,8 @@ const store = createStore<State>({
     loadingHome: false,
     isModalVisible: false,
     isModalUpdateVisible: false,
-    updateComponent: false,
     forms3d: [],
-    forms3dbyid: [],
-    forms3dbyscene: [],
     scene3d: [],
-    scene3dbyid: [],
   },
 
   getters: {
@@ -37,61 +29,46 @@ const store = createStore<State>({
   },
 
   mutations: {
+    // Update 3d Shape
+    SET_UPDATE_FORMS3D(state, updatedForms3d) {
+      state.forms3d[
+        state.forms3d.findIndex((shape) => shape.id == updatedForms3d.id)
+      ] = JSON.parse(JSON.stringify(updatedForms3d));
+      // state.forms3d[(updatedForms3d.id -1)] = updatedForms3d;
+    },
+
+    // Get 3d Shape
     SET_FORMS3D(state, forms3d) {
       state.forms3d = forms3d;
     },
 
-    SET_FORMS3DBYID(state, forms3dbyId) {
-      state.forms3dbyid = forms3dbyId;
-    },
-
-    SET_FORMS3DBYSCENE(state, forms3dbyscene) {
-      state.forms3dbyscene = forms3dbyscene;
-    },
-
+    // Get 3d Scene
     SET_SCENE3D(state, scene3d) {
       state.scene3d = scene3d;
-    },
-
-    SET_SCENE3DBYID(state, scene3dbyid) {
-      state.scene3dbyid = scene3dbyid;
     },
   },
 
   actions: {
+    // Update 3d Shape
+    setUpdateForms3d({ commit }, update3dShape) {
+      axios.put("http://localhost:9090/Forms3D", update3dShape).then((res) => {
+        commit("SET_UPDATE_FORMS3D", res.data);
+      });
+    },
+
+    // Get 3d Shape
     getForms3d({ commit }) {
       axios.get("http://localhost:9090/Forms3D").then((forms3ddata) => {
         commit("SET_FORMS3D", forms3ddata.data);
       });
     },
 
-    getForms3dById({ commit }, id) {
-      axios.get("http://localhost:9090/Forms3D/" + id).then((forms3ddata) => {
-        commit("SET_FORMS3DBYID", forms3ddata.data);
-      });
-    },
-
-    getForms3dByScene({ commit }, sceneId) {
-      axios
-        .get("http://localhost:9090/Forms3D/scene/" + sceneId)
-        .then((forms3dScenedata) => {
-          commit("SET_FORMS3DBYSCENE", forms3dScenedata.data);
-        });
-    },
-
+    // Get 3d Scene
     getScene3d({ commit }) {
       axios
         .get("http://localhost:9090/Forms3DComposite")
         .then((scene3ddata) => {
           commit("SET_SCENE3D", scene3ddata.data);
-        });
-    },
-
-    async getScene3dById({ commit }, id) {
-      await axios
-        .get("http://localhost:9090/Forms3DComposite/" + id)
-        .then((scene3ddbyiddata) => {
-          commit("SET_SCENE3DBYID", scene3ddbyiddata.data);
         });
     },
   },

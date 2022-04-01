@@ -99,6 +99,8 @@ export default {
   data() {
     return {
       loadingUpdate: false,
+
+      // For Update
       shapeid: this.shapeIdUpdate,
       shapeType: "",
       name: "",
@@ -113,6 +115,7 @@ export default {
   methods: {
     sendUpdate: function () {
       this.loadingUpdate = false;
+
       const update3dShape = {
         id: this.shapeid,
         type: this.shapeType,
@@ -124,21 +127,17 @@ export default {
         depths: this.depths,
         sceneId: this.sceneId,
       };
-      axios.put("http://localhost:9090/Forms3D", update3dShape).then((res) => {
-        setTimeout(
-          () =>
-            (this.$store.state.updateComponent =
-              !this.$store.state.updateComponent),
-          1000
-        );
-        setTimeout(
-          () => (this.$store.state.isModalUpdateVisible = false),
-          1000
-        );
-      });
+
+      setTimeout(() => {
+        this.$store.dispatch("setUpdateForms3d", update3dShape).then(() => {
+          this.$store.state.isModalUpdateVisible = false;
+        });
+      }, 1000);
     },
   },
+
   computed: {
+    // Get shape by Id
     getForms3dById() {
       let myShape = this.$store.getters.getForms3dById(this.shapeIdUpdate);
       this.shapeType = myShape[0].forms2D.type;
@@ -151,6 +150,8 @@ export default {
       this.sceneId = myShape[0].sceneId;
       return myShape;
     },
+
+    // Get 3d Scene
     scene3d() {
       return this.$store.state.scene3d;
     },
