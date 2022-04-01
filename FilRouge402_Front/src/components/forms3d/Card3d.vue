@@ -37,13 +37,13 @@
     </div>
 
     <Transition name="slide-fade">
-      <div class="shape3d--blur" v-if="$store.state.isModalUpdateVisible"></div>
+      <div class="shape3d--blur" v-if="isModalUpdateVisible"></div>
     </Transition>
 
     <div class="shape3d__forms">
       <Transition name="slide-fade">
         <modal-shape
-          v-if="$store.state.isModalUpdateVisible"
+          v-if="isModalUpdateVisible"
           @close="closeModalUpdate"
         >
           <template v-slot:header>
@@ -86,15 +86,9 @@ export default {
     closeModalUpdate() {
       this.$store.state.isModalUpdateVisible = false;
     },
+
     sendDelete: function (id) {
-      axios.delete("http://localhost:9090/Forms3D/" + id).then(() => {
-        //Delete data in store
-        this.$store.state.forms3d.splice(
-          this.$store.state.forms3d.findIndex((forms3d) => forms3d.id === id),
-          1
-        );
-        //
-      });
+      this.$store.dispatch("setDeleteForms3d", id)
     },
   },
   computed: {
@@ -104,6 +98,9 @@ export default {
     scene3d() {
       return this.$store.state.scene3d;
     },
+    isModalUpdateVisible() {
+      return this.$store.state.isModalUpdateVisible;
+    }
   },
 };
 </script>

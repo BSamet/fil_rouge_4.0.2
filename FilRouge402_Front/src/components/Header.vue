@@ -4,7 +4,7 @@
       <h1>Shape that !</h1>
     </div>
     <nav class="header__nav">
-      <RouterLink to="/home">Home</RouterLink>
+      <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/sandbox">Sandbox</RouterLink>
     </nav>
   </header>
@@ -12,7 +12,12 @@
 
 <script>
 export default {
-  name: "header"
+  name: "header",
+  computed: {
+    isLoadingHome() {
+      return this.$store.state.loadingHome;
+    }
+  }
 }
 </script>
 

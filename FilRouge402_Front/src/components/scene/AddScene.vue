@@ -55,30 +55,18 @@ export default {
     };
   },
   methods: {
+    // Post new Scene
     sendPost: function () {
       this.loading = false;
       const toPost = {
         name: this.name,
         forms3DId: this.shapeId,
       };
-      axios
-        .post("http://localhost:9090/Forms3DComposite/0", toPost)
-        .then((res) => {
-          // push data in store
-          setTimeout(() => {
-            this.$store.state.scene3d.push(res.data);
-            this.shapeId.forEach((value, index) => {
-              this.$store.state.forms3d[
-                this.$store.state.forms3d.findIndex(
-                  (forms3d) => forms3d.id === value
-                )
-              ].sceneId = res.data.id;
-            });
-            //
-            this.$store.state.isModalVisible = false;
-          }, 1000);
-        });
+      setTimeout(() => {
+        this.$store.dispatch("setPostScene3d", toPost)
+      }, 1000);
     },
+    //
   },
   mounted() {
     this.loading = true;

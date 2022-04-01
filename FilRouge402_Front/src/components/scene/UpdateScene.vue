@@ -18,7 +18,7 @@
           >
           <div>
             <div
-              v-for="forms3dInScene of scene3dbyid.myAll3dForms"
+              v-for="forms3dInScene of sceneShape"
               :key="forms3dInScene.id"
             >
               <input
@@ -31,7 +31,7 @@
                 forms3dInScene.forms2D.name
               }}</label>
             </div>
-            <div v-for="forms3dFree of forms3dbyscene" :key="forms3dFree.id">
+            <div v-for="forms3dFree of freeShape" :key="forms3dFree.id">
               <input
                 type="checkbox"
                 :id="forms3dFree.id"
@@ -45,11 +45,10 @@
           </div>
         </div>
         <div class="sceneUpdate__forms--container">
-          <p class="sceneUpdate__forms--submit" @click.prevent="sendPost()">
+          <p class="sceneUpdate__forms--submit" @click.prevent="sendUpdate()">
             Update
           </p>
         </div>
-        {{ scene3dbyid }}
       </form>
     </div>
     <div v-else class="sceneUpdate__forms">
@@ -59,8 +58,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "UpdateScene",
   props: ["sceneIdUpdate"],
@@ -72,49 +69,32 @@ export default {
 
       sceneId: this.sceneIdUpdate,
       sceneName: "",
+      sceneShape: "",
+      freeShape: this.$store.getters.getForms3dBySceneId(0),
       formsToUpdate: [],
     };
   },
   methods: {
-    // sendUpdate: function () {
-    //   this.loadingUpdate = false;
-    //   const update3dShape = {
-    //     id: this.sceneId,
-    //     name: this.sceneName,
-    //   };
-    //   axios.put("http://localhost:9090/Forms3D", update3dShape).then((res) => {
-    //     setTimeout(
-    //       () =>
-    //         (this.$store.state.updateComponent =
-    //           !this.$store.state.updateComponent),
-    //       1000
-    //     );
-    //     setTimeout(
-    //       () => (this.$store.state.isModalUpdateVisible = false),
-    //       1000
-    //     );
-    //   });
-    // },
-  },
-  computed: {
-    scene3dbyid() {
-      this.sceneName = this.$store.state.scene3dbyid.name;
-      return this.$store.state.scene3dbyid;
-    },
-    forms3dbyscene() {
-      return this.$store.state.forms3dbyscene;
+    sendUpdate: function () {
+      this.loadingUpdate = false;
+      const update3dScene = {
+        id: this.sceneId,
+        name: this.sceneName,
+        forms3DId: this.formsToUpdate
+      };
+
+      setTimeout(() => {
+        this.$store.dispatch("setUpdateScene3d", update3dScene)
+      }, 1000);
     },
   },
-  async mounted() {
-    await this.$store.dispatch("getForms3dByScene", 0);
-    await this.$store.dispatch("getScene3dById", this.sceneId).then(() => {
-      console.log("ligne 111")
-      console.dir(this.$store.state.scene3dbyid)
-      setTimeout(() => (this.loadingUpdate = true), 1000);
-      this.$store.state.scene3dbyid.myAll3dForms.forEach((value, index) => {
-        this.formsToUpdate.push(value.id);
-      });
-    });
+  mounted() {
+    let myScene = this.$store.getters.getScene3dById(this.sceneIdUpdate);
+    this.sceneName = myScene[0].name;
+    this.sceneShape = myScene[0].myAll3dForms;
+    setTimeout(() => {
+      this.loadingUpdate = true;
+    }, 1000);
   },
 };
 </script>
@@ -153,8 +133,33 @@ export default {
       }
     }
 
+    &--checkbox {
+      > div {
+        padding: 10px;
+        border: 1px solid #ffffff;
+        border-radius: 15px 0 0 15px;
+        box-shadow: inset 0px -2px 2px 2px #ffffff;
+        width: 600px;
+        height: 150px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-row-gap: 10px;
+        align-items: start;
+        justify-items: start;
+        > div {
+          margin: 0 10px 0 10px;
+        }
+        label {
+          font-size: 1rem;
+          padding-left: 10px;
+        }
+      }
+    }
+
     &--label {
-      align-self: self-start;
+      align-self: center;
     }
 
     &--submit {
@@ -166,27 +171,5 @@ export default {
       background-color: #ffeedd;
     }
   }
-}
-
-//Forms transition
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

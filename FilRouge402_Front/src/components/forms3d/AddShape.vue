@@ -142,8 +142,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "AddShapeView",
   data() {
@@ -177,12 +175,9 @@ export default {
         depths: this.depths,
         sceneId: this.sceneId,
       };
-      axios.post("http://localhost:9090/Forms3D", post3dShape).then((res) => {
-        setTimeout(() => {
-          this.$store.state.forms3d.push(res.data);
-          this.$store.state.isModalVisible = false;
-        }, 1000);
-      });
+      setTimeout(() => {
+        this.$store.dispatch("setPostForms3d", post3dShape)
+      }, 1000);
     },
   },
 };

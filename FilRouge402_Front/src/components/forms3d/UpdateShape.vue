@@ -1,7 +1,7 @@
 <template>
   <transition name="fade" mode="out-in">
     <div v-if="loadingUpdate" class="shapeForms__forms">
-      <form v-for="shape in getForms3dById" action="#">
+      <form action="#">
         <div class="shapeForms__forms--container">
           <p class="shapeForms__forms--label">Type of shape</p>
           <input type="text" v-model="shapeType" disabled />
@@ -23,7 +23,7 @@
           <input v-model="name" type="text" id="name" required />
         </div>
 
-        <div v-if="shape.forms2D.type === 'Rectangle'">
+        <div v-if="shapeType === 'Rectangle'">
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="rLongueur"
               >Length :</label
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div v-if="shape.forms2D.type === 'Circle'">
+        <div v-if="shapeType === 'Circle'">
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="cRayon">Rayon :</label>
             <input v-model="rayon" type="number" id="cRayon" required />
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <div v-if="shape.forms2D.type === 'Triangle'">
+        <div v-if="shapeType === 'Triangle'">
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="tLongueur"
               >Length :</label
@@ -90,8 +90,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "UpdateShape",
   props: ["shapeIdUpdate"],
@@ -129,35 +127,31 @@ export default {
       };
 
       setTimeout(() => {
-        this.$store.dispatch("setUpdateForms3d", update3dShape).then(() => {
-          this.$store.state.isModalUpdateVisible = false;
-        });
+        this.$store.dispatch("setUpdateForms3d", update3dShape)
       }, 1000);
     },
   },
 
   computed: {
-    // Get shape by Id
-    getForms3dById() {
-      let myShape = this.$store.getters.getForms3dById(this.shapeIdUpdate);
-      this.shapeType = myShape[0].forms2D.type;
-      this.name = myShape[0].forms2D.name;
-      this.longueur = myShape[0].forms2D.longueur;
-      this.largeur = myShape[0].forms2D.largeur;
-      this.base = myShape[0].forms2D.base;
-      this.rayon = myShape[0].forms2D.rayon;
-      this.depths = myShape[0].depths;
-      this.sceneId = myShape[0].sceneId;
-      return myShape;
-    },
-
     // Get 3d Scene
     scene3d() {
       return this.$store.state.scene3d;
     },
   },
   mounted() {
-    this.loadingUpdate = true;
+    let myShape = this.$store.getters.getForms3dById(this.shapeIdUpdate);
+    this.shapeType = myShape[0].forms2D.type;
+    this.name = myShape[0].forms2D.name;
+    this.longueur = myShape[0].forms2D.longueur;
+    this.largeur = myShape[0].forms2D.largeur;
+    this.base = myShape[0].forms2D.base;
+    this.rayon = myShape[0].forms2D.rayon;
+    this.depths = myShape[0].depths;
+    this.sceneId = myShape[0].sceneId;
+
+    setTimeout(() => {
+      this.loadingUpdate= true;
+    }, 1000);
   },
 };
 </script>

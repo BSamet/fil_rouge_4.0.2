@@ -1,19 +1,19 @@
 <template>
   <section class="allScene">
     <h1 class="allScene__title">Scene</h1>
-    <card-scene :key="$store.state.updateComponent"></card-scene>
+    <card-scene></card-scene>
     <div class="allScene__button" @click="showModal">
       <img src="../assets/addShape.svg" />
     </div>
 
     <!--  Scene forms-->
     <Transition name="slide-fade">
-      <div class="allScene--blur" v-if="$store.state.isModalVisible"></div>
+      <div class="allScene--blur" v-if="isModalVisible"></div>
     </Transition>
 
     <div class="allScene__forms">
       <Transition name="slide-fade">
-        <modal-shape v-if="$store.state.isModalVisible" @close="closeModal">
+        <modal-shape v-if="isModalVisible" @close="closeModal">
           <template v-slot:header>
             <h3><u>Add new scene</u></h3>
           </template>
@@ -30,6 +30,8 @@
         </modal-shape>
       </Transition>
     </div>
+    <!-- ----- -->
+
   </section>
 </template>
 
@@ -42,13 +44,20 @@ export default {
   name: "SandboxView",
   components: { AddScene, CardScene, ModalShape },
   methods: {
+    // Modal for update
     showModal() {
       this.$store.state.isModalVisible = true;
     },
     closeModal() {
       this.$store.state.isModalVisible = false;
-    }
-  }
+    },
+    //
+  },
+  computed: {
+    isModalVisible() {
+      return this.$store.state.isModalVisible;
+    },
+  },
 };
 </script>
 
@@ -100,7 +109,7 @@ export default {
         cursor: pointer;
         box-shadow: 0 0 2px 1px #5b5b5b;
         border-radius: 15px;
-        background-color: #FFEEDD;
+        background-color: #ffeedd;
       }
     }
   }
@@ -117,7 +126,8 @@ export default {
 }
 
 //Forms transition
-.slide-fade-enter-active, .slide-fade-leave-active {
+.slide-fade-enter-active,
+.slide-fade-leave-active {
   transition: all 0.3s ease-out;
 }
 

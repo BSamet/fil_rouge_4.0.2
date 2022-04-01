@@ -6,10 +6,7 @@
           src="../../assets/update_shape.svg"
           @click="showModalUpdate(scene)"
         />
-        <img
-          src="../../assets/delete_shape.svg"
-          @click="sendDelete(scene.id, scene)"
-        />
+        <img src="../../assets/delete_shape.svg" @click="sendDelete(scene)" />
       </div>
       <div class="card__picture">
         <div class="card__picture--scene">
@@ -77,23 +74,8 @@ export default {
     closeModalUpdate() {
       this.$store.state.isModalUpdateVisible = false;
     },
-    sendDelete: function (id, scene) {
-      const forShapeId = { scene: scene };
-      axios.delete("http://localhost:9090/Forms3DComposite/" + id).then(() => {
-        //Delete data in store
-        scene.myAll3dForms.forEach((value, index) => {
-          this.$store.state.forms3d[
-            this.$store.state.forms3d.findIndex(
-              (forms3d) => forms3d.id === value.id
-            )
-          ].sceneId = 0;
-        });
-        this.$store.state.scene3d.splice(
-          this.$store.state.scene3d.findIndex((scene) => scene.id === id),
-          1
-        );
-        //
-      });
+    sendDelete: function (scene) {
+      this.$store.dispatch("setDeleteScene3d", scene);
     },
   },
   computed: {
