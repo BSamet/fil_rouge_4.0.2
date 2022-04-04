@@ -56,7 +56,6 @@ public class Scene3dConceptController {
     @PostMapping("/Forms3DComposite/{id}")
     public Forms3DComposite addFormsInScene(@RequestBody Scene3dConceptDto dto, @PathVariable int id) {
         Forms3DComposite scene3dConcept = null;
-        System.out.println(dto);
         if(id != 0) {
             scene3dConcept = sceneConceptRepository.getById(id);
         } else {
@@ -78,10 +77,10 @@ public class Scene3dConceptController {
     }
 
     @PutMapping("/Forms3DComposite/{id}")
-    public void updateScene(@RequestBody Forms3DComposite forms3DComposite, @PathVariable int id) {
+    public Forms3DComposite updateScene(@RequestBody Forms3DComposite forms3DComposite, @PathVariable int id) {
         Forms3DComposite scene3dConcept = sceneConceptRepository.getById(id);
         scene3dConcept.setName(forms3DComposite.getName());
-        sceneConceptRepository.save(scene3dConcept);
+        return sceneConceptRepository.save(scene3dConcept);
     }
 
     @DeleteMapping("/Forms3DComposite/{id}")

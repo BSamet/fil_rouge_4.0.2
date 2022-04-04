@@ -57,7 +57,7 @@ const store = createStore<State>({
     SET_UPDATE_SCENE3D(state, updatedScene3d) {
       state.scene3d[
         state.scene3d.findIndex((scene) => scene.id == updatedScene3d.id)
-      ] = JSON.parse(JSON.stringify(updatedScene3d));
+      ].name = updatedScene3d.name
       state.isModalUpdateVisible = false;
     },
 
@@ -129,7 +129,6 @@ const store = createStore<State>({
     setUpdateScene3d({ commit }, update3dScene) {
       const update3dSceneToSent = {
         name: update3dScene.name,
-        forms3DId: update3dScene.forms3DId,
       };
       axios
         .put(

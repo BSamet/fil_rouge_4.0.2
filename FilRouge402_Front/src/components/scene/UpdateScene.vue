@@ -12,38 +12,6 @@
             required
           />
         </div>
-        <div class="sceneUpdate__forms--checkbox">
-          <label class="sceneUpdate__forms--label" for="name"
-            >Update shape in scene ?</label
-          >
-          <div>
-            <div
-              v-for="forms3dInScene of sceneShape"
-              :key="forms3dInScene.id"
-            >
-              <input
-                type="checkbox"
-                :id="forms3dInScene.id"
-                :value="forms3dInScene.id"
-                v-model="formsToUpdate"
-              />
-              <label :for="forms3dInScene.id">{{
-                forms3dInScene.forms2D.name
-              }}</label>
-            </div>
-            <div v-for="forms3dFree of freeShape" :key="forms3dFree.id">
-              <input
-                type="checkbox"
-                :id="forms3dFree.id"
-                :value="forms3dFree.id"
-                v-model="formsToUpdate"
-              />
-              <label :for="forms3dFree.id">{{
-                forms3dFree.forms2D.name
-              }}</label>
-            </div>
-          </div>
-        </div>
         <div class="sceneUpdate__forms--container">
           <p class="sceneUpdate__forms--submit" @click.prevent="sendUpdate()">
             Update
@@ -69,9 +37,6 @@ export default {
 
       sceneId: this.sceneIdUpdate,
       sceneName: "",
-      sceneShape: "",
-      freeShape: this.$store.getters.getForms3dBySceneId(0),
-      formsToUpdate: [],
     };
   },
   methods: {
@@ -80,7 +45,6 @@ export default {
       const update3dScene = {
         id: this.sceneId,
         name: this.sceneName,
-        forms3DId: this.formsToUpdate
       };
 
       setTimeout(() => {
@@ -91,7 +55,6 @@ export default {
   mounted() {
     let myScene = this.$store.getters.getScene3dById(this.sceneIdUpdate);
     this.sceneName = myScene[0].name;
-    this.sceneShape = myScene[0].myAll3dForms;
     setTimeout(() => {
       this.loadingUpdate = true;
     }, 1000);

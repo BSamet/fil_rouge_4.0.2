@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="card__link">
-        <RouterLink :to="'/scene/' + scene.id">View Scene</RouterLink>
+        <RouterLink :to="'/scene3d/' + scene.id">View Scene</RouterLink>
       </div>
     </div>
 
