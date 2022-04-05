@@ -21,7 +21,7 @@
               dampingFactor: 0.05,
             }"
           >
-            <Camera :position="{ x: 0, y: 0, z: 50 }" />
+            <Camera :position="{ x: 0, y: 0, z: 100 }" />
             <Scene>
               <Cone
                 v-if="forms3dbyid.forms2D.type === 'Triangle'"
@@ -29,13 +29,7 @@
                 :size="1"
                 :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }"
                 :radius="forms3dbyid.depths"
-                :height="
-                  Math.sqrt(
-                    forms3dbyid.forms2D.longueur *
-                      forms3dbyid.forms2D.longueur -
-                      (forms3dbyid.forms2D.base * forms3dbyid.forms2D.base) / 4
-                  )
-                "
+                :height="forms3dbyid.forms2D.hauteur"
                 :radialSegments="100"
                 :heightSegments="100"
               >
@@ -82,6 +76,9 @@
           <p v-if="forms3dbyid.forms2D.base">
             Base : {{ forms3dbyid.forms2D.base }} cm
           </p>
+          <p v-if="forms3dbyid.forms2D.hauteur">
+            Hauteur : {{ forms3dbyid.forms2D.hauteur }} cm
+          </p>
           <p v-if="forms3dbyid.forms2D.rayon">
             Rayon : {{ forms3dbyid.forms2D.rayon }} cm
           </p>
@@ -116,7 +113,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.loading = true;
-    }, 1000);
+    }, 250);
   },
 };
 </script>

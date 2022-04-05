@@ -18,6 +18,7 @@ public class Forms2DDto {
     private String name;
     private double largeur;
     private double longueur;
+    private double hauteur;
     private double base;
     private double rayon;
 
@@ -30,7 +31,7 @@ public class Forms2DDto {
                 f = new Rectangle(dto.largeur, dto.longueur, dto.name);
                 break;
             case "Triangle":
-                f = new Triangle(dto.base, dto.longueur, dto.name);
+                f = new Triangle(dto.base, dto.hauteur, dto.name);
                 break;
             case "Circle":
                 f = new Circle(dto.rayon, dto.name);
@@ -52,7 +53,7 @@ public class Forms2DDto {
             case "Triangle":
                 Triangle triangle = (Triangle) forms2D;
                 f.setBase(triangle.getBase());
-                f.setLongueur(triangle.getLongueur());
+                f.setHauteur(triangle.getHauteur());
                 break;
             case "Circle":
                 Circle circle = (Circle) forms2D;
@@ -69,7 +70,7 @@ public class Forms2DDto {
                 f = new Rectangle(this.largeur, this.longueur, this.name);
                 break;
             case "Triangle":
-                f = new Triangle(this.base, this.longueur, this.name);
+                f = new Triangle(this.base, this.hauteur, this.name);
                 break;
             case "Circle":
                 f = new Circle(this.rayon, this.name);
@@ -90,7 +91,7 @@ public class Forms2DDto {
             Triangle triangle = (Triangle) forms2d.get();
             triangle.setName(dto.getName());
             triangle.setBase(dto.getBase());
-            triangle.setLongueur(dto.getLongueur());
+            triangle.setHauteur(dto.getHauteur());
             return triangle;
         } else if(Objects.equals(forms2d.get().getType(), "Circle")){
             Circle circle = (Circle) forms2d.get();

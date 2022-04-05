@@ -94,14 +94,14 @@
         </div>
         <div v-if="shapeType === 'Triangle'">
           <div class="shapeForms__forms--container">
-            <label class="shapeForms__forms--label" for="tLongueur"
-              >Length :</label
+            <label class="shapeForms__forms--label" for="tHauteur"
+              >Height :</label
             >
             <input
-              v-model="longueur"
+              v-model="hauteur"
               type="number"
-              id="tLongueur"
-              placeholder="Enter a length"
+              id="tHauteur"
+              placeholder="Enter a height"
               required
             />
           </div>
@@ -151,6 +151,7 @@ export default {
       name: "",
       longueur: "",
       largeur: "",
+      hauteur: "",
       base: "",
       rayon: "",
       depths: "",
@@ -170,6 +171,7 @@ export default {
         name: this.name,
         longueur: this.longueur,
         largeur: this.largeur,
+        hauteur: this.hauteur,
         base: this.base,
         rayon: this.rayon,
         depths: this.depths,

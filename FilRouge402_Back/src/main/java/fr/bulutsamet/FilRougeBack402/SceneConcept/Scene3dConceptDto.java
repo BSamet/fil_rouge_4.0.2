@@ -19,13 +19,14 @@ public class Scene3dConceptDto {
     private String name;
     private double largeur;
     private double longueur;
+    private double hauteur;
     private double base;
     private double rayon;
     private List<Integer> forms3DId;
 
     // Method
     public static Forms2D SceneSentByUser2Form2D(Scene3dConceptDto dto) {
-        return getForms2D(dto.type, dto.name, dto.largeur, dto.longueur, dto.base, dto.rayon);
+        return getForms2D(dto.type, dto.name, dto.largeur, dto.longueur, dto.hauteur, dto.base, dto.rayon);
     }
 
     public static Forms3D SceneSendByUser2Forms3D(Forms2D dto, double depths, int sceneId) {

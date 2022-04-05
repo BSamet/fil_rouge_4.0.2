@@ -15,6 +15,7 @@ public class Forms3DDto {
     private String name;
     private double largeur;
     private double longueur;
+    private double hauteur;
     private double base;
     private double rayon;
     private double depths;
@@ -22,15 +23,16 @@ public class Forms3DDto {
 
     // Method
     public static Forms2D forms3DSentByUser2Form2D(Forms3DDto dto) {
-        return getForms2D(dto.type, dto.name, dto.largeur, dto.longueur, dto.base, dto.rayon);
+        return getForms2D(dto.type, dto.name, dto.largeur, dto.longueur, dto.hauteur, dto.base, dto.rayon);
     }
 
-    public static Forms2D getForms2D(String type, String name, double largeur, double longueur, double base, double rayon) {
+    public static Forms2D getForms2D(String type, String name, double largeur, double longueur, double hauteur, double base, double rayon) {
         Forms2DDto forms2d = new Forms2DDto();
         forms2d.setType(type);
         forms2d.setName(name);
         forms2d.setLargeur(largeur);
         forms2d.setLongueur(longueur);
+        forms2d.setHauteur(hauteur);
         forms2d.setBase(base);
         forms2d.setRayon(rayon);
         return forms2d.toForm2D();

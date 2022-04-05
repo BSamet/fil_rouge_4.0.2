@@ -11,20 +11,25 @@ public class Triangle extends Forms2D {
     //Attribute
     @Column(name = "base")
     private double base;
-    @Column(name = "longueur")
-    private double longueur;
+    @Column(name = "hauteur")
+    private double hauteur;
     //
 
     //Method
     @Override
     public double getPerimetre() {
-        return 2 * this.longueur + this.base;
+
+        double hyp = (hauteur * hauteur) + ((base / 2) * (base / 2));
+        double finalHyp = Math.sqrt(hyp);
+
+        double longueur = finalHyp * 2 + base;
+
+        return 2 * longueur + this.base;
     }
 
     @Override
     public double getAire() {
-        double hauteur = Math.sqrt((this.longueur * this.longueur) - (this.base * this.base) / 4);
-        return (this.base * hauteur) / 2;
+        return (this.base * this.hauteur) / 2;
     }
 
     @Override
@@ -34,7 +39,7 @@ public class Triangle extends Forms2D {
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
                 ", base=" + base +
-                ", longueur=" + longueur +
+                ", hauteur=" + hauteur +
                 '}';
     }
     //
@@ -55,22 +60,22 @@ public class Triangle extends Forms2D {
     }
 
     public void setBase(double base) {
-        if ( base < 0 && base > this.longueur ) {
+        if ( base < 0 && base > this.hauteur ) {
             throw new IllegalArgumentException("Erreur lors de la configuration de la base");
         } else {
             this.base = base;
         }
     }
 
-    public double getLongueur() {
-        return longueur;
+    public double getHauteur() {
+        return this.hauteur;
     }
 
-    public void setLongueur(double longueur) {
-        if (longueur < 0 && longueur < this.base) {
-            throw new IllegalArgumentException("Erreur lors de la configuration de la longueur");
+    public void setHauteur(double hauteur) {
+        if (hauteur < 0 && hauteur < this.base) {
+            throw new IllegalArgumentException("Erreur lors de la configuration de la hauteur");
         } else {
-            this.longueur = longueur;
+            this.hauteur = hauteur;
         }
     }
     //
@@ -80,14 +85,14 @@ public class Triangle extends Forms2D {
         this.type = "Triangle";
     }
 
-    public Triangle(double base, double longueur, String name) {
-        if (base > longueur) {
-            throw new IllegalArgumentException("La base ne peut être plus long que la longueur");
+    public Triangle(double base, double hauteur, String name) {
+        if (base > hauteur) {
+            throw new IllegalArgumentException("La base ne peut être plus long que la hauteur");
         }
-        if (longueur > 0) {
-            this.longueur = longueur;
+        if (hauteur > 0) {
+            this.hauteur = hauteur;
         } else {
-            throw new IllegalArgumentException("La longueur ne peut pas valoir 0 ou être négatif");
+            throw new IllegalArgumentException("La hauteur ne peut pas valoir 0 ou être négatif");
         }
         if ( base > 0){
             this.base = base;

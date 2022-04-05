@@ -30,7 +30,6 @@
         </modal-shape>
       </Transition>
     </div>
-
   </section>
 </template>
 

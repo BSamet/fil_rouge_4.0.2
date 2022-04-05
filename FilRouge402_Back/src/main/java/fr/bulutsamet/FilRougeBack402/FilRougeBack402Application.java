@@ -42,6 +42,8 @@ public class FilRougeBack402Application {
 			Forms3D triangle3d = new Forms3D(triangle, 30, 1);
 			Forms3D circle3d = new Forms3D(circle, 20, 1);
 
+			System.out.println(triangle);
+
 			// Ajouter les formes
 			forms3DRepository.save(rectangle3d);
 			forms3DRepository.save(triangle3d);

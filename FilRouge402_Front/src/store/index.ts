@@ -46,10 +46,35 @@ const store = createStore<State>({
     },
 
     // Update 3d Shape
-    SET_UPDATE_FORMS3D(state, updatedForms3d) {
+    SET_UPDATE_FORMS3D(state, fullData) {
+      if (
+        fullData.data.sceneId != fullData.sceneIdBeforeChange &&
+        fullData.sceneIdBeforeChange != 0
+      ) {
+        const sceneToUpdate =
+          state.scene3d[
+            state.scene3d.findIndex(
+              (scene3d) => scene3d.id == fullData.sceneIdBeforeChange
+            )
+          ];
+        sceneToUpdate.myAll3dForms.splice(
+          sceneToUpdate.myAll3dForms.findIndex(
+            (forms3d) => forms3d.id === fullData.data.id
+          ),
+          1
+        );
+      }
+      if (
+        fullData.data.sceneId != fullData.sceneIdBeforeChange &&
+        fullData.data.sceneId != 0
+      ) {
+        state.scene3d[
+          state.scene3d.findIndex((scene) => scene.id == fullData.data.sceneId)
+        ].myAll3dForms.push(fullData.data);
+      }
       state.forms3d[
-        state.forms3d.findIndex((shape) => shape.id == updatedForms3d.id)
-      ] = JSON.parse(JSON.stringify(updatedForms3d));
+        state.forms3d.findIndex((shape) => shape.id == fullData.data.id)
+      ] = JSON.parse(JSON.stringify(fullData.data));
       state.isModalUpdateVisible = false;
     },
 
@@ -57,13 +82,18 @@ const store = createStore<State>({
     SET_UPDATE_SCENE3D(state, updatedScene3d) {
       state.scene3d[
         state.scene3d.findIndex((scene) => scene.id == updatedScene3d.id)
-      ].name = updatedScene3d.name
+      ].name = updatedScene3d.name;
       state.isModalUpdateVisible = false;
     },
 
     // Post 3d Shape
     SET_POST_FORMS3D(state, postForms3d) {
       state.forms3d.push(postForms3d);
+      if (postForms3d.sceneId != 0) {
+        state.scene3d[
+          state.scene3d.findIndex((scene) => scene.id == postForms3d.sceneId)
+        ].myAll3dForms.push(postForms3d);
+      }
       state.isModalVisible = false;
     },
 
@@ -72,7 +102,6 @@ const store = createStore<State>({
       state.scene3d.push(postScene3d);
       state.isModalVisible = false;
       postScene3d.myAll3dForms.forEach((value) => {
-        console.dir(value);
         state.forms3d[
           state.forms3d.findIndex((forms3d) => forms3d.id === value.id)
         ].sceneId = postScene3d.id;
@@ -81,6 +110,25 @@ const store = createStore<State>({
 
     // Delete 3d Shape
     SET_DELETE_FORMS3D(state, shapeId) {
+      const deletedShape =
+        state.forms3d[
+          state.forms3d.findIndex((forms3d) => forms3d.id == shapeId)
+        ];
+      const sceneId = deletedShape.sceneId;
+
+      if (sceneId != 0) {
+        const sceneToUpdate =
+          state.scene3d[
+            state.scene3d.findIndex((scene3d) => scene3d.id == sceneId)
+          ];
+        sceneToUpdate.myAll3dForms.splice(
+          sceneToUpdate.myAll3dForms.findIndex(
+            (forms3d) => forms3d.id === shapeId
+          ),
+          1
+        );
+      }
+
       state.forms3d.splice(
         state.forms3d.findIndex((forms3d) => forms3d.id === shapeId),
         1
@@ -98,6 +146,13 @@ const store = createStore<State>({
         state.scene3d.findIndex((scene) => scene.id === sceneToDelete.id),
         1
       );
+    },
+
+    // Delete 3d Shape in Scene
+    SET_DELETE_FORMS3D_IN_SCENE(state, sceneRes) {
+      state.scene3d[
+        state.scene3d.findIndex((scene) => scene.id == sceneRes.id)
+      ] = JSON.parse(JSON.stringify(sceneRes));
     },
   },
 
@@ -120,9 +175,15 @@ const store = createStore<State>({
 
     // Update 3d Shape
     setUpdateForms3d({ commit }, update3dShape) {
-      axios.put("http://localhost:9090/Forms3D", update3dShape).then((res) => {
-        commit("SET_UPDATE_FORMS3D", res.data);
-      });
+      axios
+        .put("http://localhost:9090/Forms3D", update3dShape.data)
+        .then((res) => {
+          const fullData = {
+            data: res.data,
+            sceneIdBeforeChange: update3dShape.sceneIdBeforeChange,
+          };
+          commit("SET_UPDATE_FORMS3D", fullData);
+        });
     },
 
     // Update 3d Scene
@@ -169,6 +230,18 @@ const store = createStore<State>({
         .delete("http://localhost:9090/Forms3DComposite/" + scene.id)
         .then(() => {
           commit("SET_DELETE_SCENE3D", scene);
+        });
+    },
+
+    // Delete 3d Shape in Scene
+    setDeleteForms3dInScene({ commit }, { sceneId, shapeToDelete }) {
+      axios
+        .delete(
+          "http://localhost:9090/Forms3DComposite/" + sceneId + "/delete",
+          shapeToDelete
+        )
+        .then((res) => {
+          commit("SET_DELETE_FORMS3D_IN_SCENE", res);
         });
     },
   },

@@ -59,10 +59,10 @@
 
         <div v-if="shapeType === 'Triangle'">
           <div class="shapeForms__forms--container">
-            <label class="shapeForms__forms--label" for="tLongueur"
-              >Length :</label
+            <label class="shapeForms__forms--label" for="tHauteur"
+              >Height :</label
             >
-            <input v-model="longueur" type="number" id="tLongueur" required />
+            <input v-model="hauteur" type="number" id="tHauteur" required />
           </div>
           <div class="shapeForms__forms--container">
             <label class="shapeForms__forms--label" for="tBase">Base :</label>
@@ -103,11 +103,14 @@ export default {
       shapeType: "",
       name: "",
       longueur: "",
+      hauteur: "",
       largeur: "",
       base: "",
       rayon: "",
       depths: "",
       sceneId: "",
+
+      sceneIdBeforeChange: "",
     };
   },
   methods: {
@@ -119,6 +122,7 @@ export default {
         type: this.shapeType,
         name: this.name,
         longueur: this.longueur,
+        hauteur: this.hauteur,
         largeur: this.largeur,
         base: this.base,
         rayon: this.rayon,
@@ -126,8 +130,13 @@ export default {
         sceneId: this.sceneId,
       };
 
+      const resultToSent = {
+        data: update3dShape,
+        sceneIdBeforeChange: this.sceneIdBeforeChange,
+      };
+
       setTimeout(() => {
-        this.$store.dispatch("setUpdateForms3d", update3dShape)
+        this.$store.dispatch("setUpdateForms3d", resultToSent);
       }, 1000);
     },
   },
@@ -143,14 +152,16 @@ export default {
     this.shapeType = myShape[0].forms2D.type;
     this.name = myShape[0].forms2D.name;
     this.longueur = myShape[0].forms2D.longueur;
+    this.hauteur = myShape[0].forms2D.hauteur;
     this.largeur = myShape[0].forms2D.largeur;
     this.base = myShape[0].forms2D.base;
     this.rayon = myShape[0].forms2D.rayon;
     this.depths = myShape[0].depths;
     this.sceneId = myShape[0].sceneId;
+    this.sceneIdBeforeChange = myShape[0].sceneId;
 
     setTimeout(() => {
-      this.loadingUpdate= true;
+      this.loadingUpdate = true;
     }, 1000);
   },
 };

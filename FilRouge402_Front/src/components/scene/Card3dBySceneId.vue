@@ -1,9 +1,15 @@
 <template>
   <div class="shape3d">
-    <div v-for="forms of forms3d" :key="forms.id" class="card">
+    <div v-for="forms of getForms3dBySceneId" :key="forms.id" class="card">
       <div class="card__update">
-        <img src="../../assets/update_shape.svg" @click="showModalUpdate(forms)" />
-        <img src="../../assets/delete_shape.svg" @click="sendDelete(forms.id)" />
+        <img
+          src="../../assets/update_shape.svg"
+          @click="showModalUpdate(forms)"
+        />
+        <img
+          src="../../assets/delete_shape.svg"
+          @click="sendDelete(forms.id)"
+        />
       </div>
       <div class="card__picture">
         <div
@@ -29,7 +35,9 @@
         </p>
         <p v-if="forms.forms2D.base">Base : {{ forms.forms2D.base }} cm</p>
         <p v-if="forms.forms2D.rayon">Rayon : {{ forms.forms2D.rayon }} cm</p>
-        <p v-if="forms.forms2D.hauteur">Hauteur : {{ forms.forms2D.hauteur }} cm</p>
+        <p v-if="forms.forms2D.hauteur">
+          Hauteur : {{ forms.forms2D.hauteur }} cm
+        </p>
         <p v-if="forms.depths">Profondeur : {{ forms.depths }} cm</p>
       </div>
       <div class="card__link">
@@ -43,10 +51,7 @@
 
     <div class="shape3d__forms">
       <Transition name="slide-fade">
-        <modal-shape
-          v-if="isModalUpdateVisible"
-          @close="closeModalUpdate"
-        >
+        <modal-shape v-if="isModalUpdateVisible" @close="closeModalUpdate">
           <template v-slot:header>
             <h3><u>Update shape</u></h3>
           </template>
@@ -67,15 +72,15 @@
 </template>
 
 <script>
-import UpdateShape from "@/components/forms3d/UpdateShape.vue";
-import ModalShape from "@/components/ModalShape.vue";
-import axios from "axios";
+import ModalShape from "../ModalShape.vue";
+import UpdateShape from "../forms3d/UpdateShape.vue";
 
 export default {
-  name: "Card3d",
+  name: "Card3dBySceneId",
   components: { ModalShape, UpdateShape },
   data() {
     return {
+      sceneId: Number(this.$route.params.id),
       formsUpdate: [],
     };
   },
@@ -89,19 +94,21 @@ export default {
     },
 
     sendDelete: function (id) {
-      this.$store.dispatch("setDeleteForms3d", id)
+      const shapeId = [];
+      shapeId.push(id);
+      this.$store.dispatch("setDeleteForms3dInScene", this.sceneId, shapeId);
     },
   },
   computed: {
-    forms3d() {
-      return this.$store.state.forms3d;
+    getForms3dBySceneId() {
+      return this.$store.getters.getForms3dBySceneId(this.sceneId);
     },
     scene3d() {
       return this.$store.state.scene3d;
     },
     isModalUpdateVisible() {
       return this.$store.state.isModalUpdateVisible;
-    }
+    },
   },
 };
 </script>

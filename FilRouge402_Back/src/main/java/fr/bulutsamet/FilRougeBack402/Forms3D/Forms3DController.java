@@ -70,6 +70,13 @@ public class Forms3DController {
     @PutMapping("/Forms3D")
     public Forms3D updateForms3D(@RequestBody Forms3DDto dto) {
         Forms3D toUpdate = forms3DRepository.findById(dto.getId());
+
+        if(dto.getSceneId() != toUpdate.getSceneId() && toUpdate.getSceneId() != 0) {
+            Optional<Forms3DComposite> sceneToDeleteForms3d = scene3dConceptRepository.findById(toUpdate.getSceneId());
+            sceneToDeleteForms3d.get().remove3dForm(toUpdate);
+            scene3dConceptRepository.save(sceneToDeleteForms3d.get());
+        }
+
         Optional<Forms2D> toUpdateForms2D = Optional.ofNullable(toUpdate.getForms2D());
 
         Forms2D toSaveForms2D = Forms3DDto.forms3DSentByUser2Form2D(dto);
@@ -79,7 +86,15 @@ public class Forms3DController {
         Forms3D toFinalSave = Forms3DDto.forms3DSentByUser2UpdateForms3D(toUpdate, dto, forms2D);
 
         forms2DRepository.save(forms2D);
-        return forms3DRepository.save(toFinalSave);
+        Forms3D forms3D = forms3DRepository.save(toFinalSave);
+
+        if (forms3D.getSceneId() != 0) {
+            Optional<Forms3DComposite> sceneToAddForms3d = scene3dConceptRepository.findById(forms3D.getSceneId());
+            sceneToAddForms3d.get().add3dForm(forms3D);
+            scene3dConceptRepository.save(sceneToAddForms3d.get());
+        }
+
+        return forms3D;
     }
 
     @DeleteMapping("/Forms3D/{id}")
