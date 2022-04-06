@@ -103,6 +103,7 @@ export default {
     return {
       shapeId: Number(this.$route.params.id),
       loading: false,
+      file: '../assets/yamete.mpa3'
     };
   },
   computed: {

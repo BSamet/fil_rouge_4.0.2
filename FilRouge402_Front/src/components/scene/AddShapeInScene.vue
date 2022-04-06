@@ -1,41 +1,28 @@
 <template>
   <transition name="fade" mode="out-in">
-    <div v-if="loading" class="sceneForms__forms">
+    <div v-if="loading" class="shapeForms__forms">
       <form action="#">
-        <div class="sceneForms__forms--container">
-          <label class="shapeForms__forms--label" for="name">Name :</label>
-          <input
-            v-model="name"
-            type="text"
-            id="name"
-            placeholder="Enter a name"
-            required
-          />
-        </div>
-        <div class="sceneForms__forms--checkbox">
-          <label class="sceneForms__forms--label" for="name"
-            >Add shape in scene ?</label
-          >
+        <div class="shapeForms__forms--checkbox">
           <div>
-            <div v-for="forms3d of shape" :key="forms3d.id">
+            <div v-for="forms3d of getForms3dBySceneId" :key="forms3d.id">
               <input
-                type="checkbox"
-                :id="forms3d.id"
-                :value="forms3d.forms2D.id"
-                v-model="shapeId"
+                  type="checkbox"
+                  :id="forms3d.id"
+                  :value="forms3d.forms2D.id"
+                  v-model="shapeId"
               />
               <label :for="forms3d.id">{{ forms3d.forms2D.name }}</label>
             </div>
           </div>
         </div>
-        <div class="sceneForms__forms--container">
-          <p class="sceneForms__forms--submit" @click.prevent="sendPost()">
+        <div class="shapeForms__forms--container">
+          <p class="shapeForms__forms--submit" @click.prevent="sendPost()">
             Create
           </p>
         </div>
       </form>
     </div>
-    <div v-else class="sceneForms__forms">
+    <div v-else class="shapeForms__forms">
       <img src="../../assets/loader.svg" />
     </div>
   </transition>
@@ -43,25 +30,29 @@
 
 <script>
 export default {
-  name: "AddScene",
+  name: "AddShapeInScene",
+  props: ['sceneId'],
   data() {
     return {
       loading: false,
-      name: "",
       shapeId: [],
-      shape: this.$store.getters.getForms3dBySceneId(0),
     };
   },
+  computed: {
+    getForms3dBySceneId() {
+      return this.$store.getters.getForms3dBySceneId(0)
+    }
+  },
   methods: {
-    // Post new Scene
+    // Post shape in scene
     sendPost: function () {
       this.loading = false;
       const toPost = {
-        name: this.name,
+        sceneId: this.sceneId,
         forms3DId: this.shapeId,
       };
       setTimeout(() => {
-        this.$store.dispatch("setPostScene3d", toPost);
+        this.$store.dispatch("setPostShape3dInScene", toPost);
       }, 1000);
     },
     //
@@ -73,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sceneForms {
+.shapeForms {
   &__forms {
     &--container {
       display: flex;

@@ -14,3 +14,9 @@ app.use(store);
 app.mount(await store.dispatch("getForms3d"))
 app.mount(await store.dispatch("getScene3d"))
 app.mount("#app");
+
+// Fetch data every 10 mins
+setInterval(async function(){
+    app.mount(await store.dispatch("getForms3d"))
+    app.mount(await store.dispatch("getScene3d"))
+}, 600000)

@@ -74,6 +74,43 @@
       <div>
         <card3d-by-scene-id></card3d-by-scene-id>
       </div>
+
+      <div class="scene3d__button" @click="showModal">
+        <img src="../assets/addShape.svg" />
+      </div>
+      <Transition name="slide-fade">
+        <div class="scene3d--blur" v-if="$store.state.isModalVisible"></div>
+      </Transition>
+      <div class="scene3d__forms">
+        <Transition name="slide-fade">
+          <modal-shape v-if="$store.state.isModalVisible" @close="closeModal">
+            <template v-slot:header>
+              <h3><u>Add shape in scene ?</u></h3>
+            </template>
+
+            <template v-slot:body>
+              <div class="scene3d__forms--select">
+                <div>
+                  <input type="radio" id="one" value="1" v-model="isExisting" />
+                  <label for="one">Add existing shape ?</label>
+                </div>
+                <div>
+                  <input type="radio" id="two" value="2" v-model="isExisting" />
+                  <label for="two">Or a new shape ?</label>
+                </div>
+              </div>
+              <add-shape-in-scene v-if="isExisting === '1'" :scene-id="sceneId"></add-shape-in-scene>
+              <add-shape-view v-if="isExisting === '2'"></add-shape-view>
+            </template>
+
+            <template v-slot:footer>
+              <div class="scene3d__forms--footer">
+                <p @click="closeModal">Close</p>
+              </div>
+            </template>
+          </modal-shape>
+        </Transition>
+      </div>
     </section>
     <div v-else class="scene3d--loading">
       <img src="../assets/loader.svg" />
@@ -84,19 +121,42 @@
 <script>
 import { Box, Camera, MatcapMaterial, Renderer, Scene } from "troisjs";
 import Card3dBySceneId from "@/components/scene/Card3dBySceneId.vue";
+import ModalShape from "@/components/ModalShape.vue";
+import AddShapeInScene from "@/components/scene/AddShapeInScene.vue";
+import AddShapeView from "@/components/forms3d/AddShape.vue";
 
 export default {
   name: "Scene3dView",
-  components: {Card3dBySceneId, Box, Camera, MatcapMaterial, Renderer, Scene },
+  components: {
+    AddShapeView,
+    AddShapeInScene,
+    ModalShape,
+    Card3dBySceneId,
+    Box,
+    Camera,
+    MatcapMaterial,
+    Renderer,
+    Scene,
+  },
   data() {
     return {
       sceneId: Number(this.$route.params.id),
       loading: false,
+
+      isExisting: "",
     };
   },
   computed: {
     getScene3dById() {
       return this.$store.getters.getScene3dById(this.sceneId);
+    },
+  },
+  methods: {
+    showModal() {
+      this.$store.state.isModalVisible = true;
+    },
+    closeModal() {
+      this.$store.state.isModalVisible = false;
     },
   },
   mounted() {
@@ -137,6 +197,73 @@ section {
   &--loading {
     width: 100%;
     text-align: center;
+  }
+
+  &__button {
+    cursor: pointer;
+    position: fixed;
+    bottom: 75px;
+    right: 7%;
+
+    img {
+      height: 75px;
+      background: #d5d6aa;
+      border-radius: 50%;
+    }
+  }
+
+  &__forms {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+
+    > div {
+      width: auto;
+      height: auto;
+      background-color: #d5d6aa;
+      box-shadow: 20px 20px 40px 1px #5b5b5b;
+      border-radius: 15px;
+      padding: 30px 70px 30px 70px;
+    }
+
+    &--footer {
+      padding-top: 10px;
+
+      p {
+        padding: 0 25px 0 25px;
+        cursor: pointer;
+        box-shadow: 0 0 2px 1px #5b5b5b;
+        border-radius: 15px;
+        background-color: #ffeedd;
+      }
+    }
+
+    &--select {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      >div {
+        input {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  &--blur {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f2f2f2;
+    opacity: 0.5;
   }
 }
 

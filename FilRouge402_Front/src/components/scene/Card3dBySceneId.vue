@@ -94,9 +94,11 @@ export default {
     },
 
     sendDelete: function (id) {
-      const shapeId = [];
-      shapeId.push(id);
-      this.$store.dispatch("setDeleteForms3dInScene", this.sceneId, shapeId);
+      const toDelete = {
+        sceneId: this.sceneId,
+        forms3DId: [id],
+      };
+      this.$store.dispatch("setDeleteForms3dInScene", toDelete);
     },
   },
   computed: {

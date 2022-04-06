@@ -55,7 +55,6 @@
 
 <script>
 import ModalShape from "../ModalShape.vue";
-import axios from "axios";
 import UpdateScene from "@/components/scene/UpdateScene.vue";
 
 export default {
