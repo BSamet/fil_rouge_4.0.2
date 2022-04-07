@@ -31,7 +31,7 @@ public class Forms3DController {
     //
 
     // Method
-    @RequestMapping("/Forms3D")
+    @GetMapping("/Forms3D")
     public List<Forms3D> findAllForms3D() {
         return forms3DRepository.findAll();
     }
@@ -41,11 +41,6 @@ public class Forms3DController {
         Forms3D forms3d = forms3DRepository.findById(id);
         if (forms3d == null) throw new UnkownFormsException("La forme avec l'id " + id + " est introuvable.");
         return forms3d;
-    }
-
-    @GetMapping("/Forms3D/scene/{sceneId}")
-    public List<Forms3D> listForms3DByScene(@PathVariable int sceneId) {
-        return forms3DRepository.findBySceneId(sceneId);
     }
 
     @PostMapping("/Forms3D")

@@ -8,9 +8,9 @@ package "fr.bulutsamet.FilRougeBack402" {
             -type:String
             -name:String
             --Method--
-            {abstract} getId();
             {abstract} getPerimetre();
             {abstract} getAire();
+            {abstract} getId();
             {abstract} getName();
             {abstract} setName();
             {abstract} getType();
@@ -22,8 +22,8 @@ package "fr.bulutsamet.FilRougeBack402" {
             --Method--
             +getPerimetre(): double;
             +getAire(): double;
-            +toString(): String;
             +getDiametre(): double;
+            +toString(): String;
             +getName():String;
             +setName(name:String);
             +getRayon(): double;
@@ -55,7 +55,7 @@ package "fr.bulutsamet.FilRougeBack402" {
         class Triangle #9BD1A7 {
             --Attribute--
             -base:double;
-            -longueur:double;
+            -hauteur:double;
             --Method--
             +getPerimetre(): double;
             +getAire(): double;
@@ -64,11 +64,11 @@ package "fr.bulutsamet.FilRougeBack402" {
             +setName(name:String);
             +getBase(): double;
             +setBase(base:double);
-            +getLongueur(): double;
-            +setLongueur(longueur:double);
+            +getHauteur(): double;
+            +setHauteur(hauteur:double);
             --Constructor--
             +Triangle();
-            +Triangle(base:double, longueur:double, name:String);
+            +Triangle(base:double, hauteur:double, name:String);
         }
 
         class Forms2DComposite #9BD1A7 {
@@ -98,21 +98,23 @@ package "fr.bulutsamet.FilRougeBack402" {
         }
 
         interface Forms2DRepository #9BD1A7 {
-            --Method--
-            +findById(id:integer)
         }
 
-        class Forms2DSendByUser #9BD1A7 {
+        class Forms2DDto #9BD1A7 {
             --Attribute--
+            -id:integer
             -type:String
             -name:String
             -largeur:double;
             -longueur:double;
+            -hauteur:double;
             -base:double;
             -rayon:double;
             --Method--
-            +Forms2DSendByUser2Form2D(dto:Forms2DSendByUser)
+            +toEntity2D(dto:Forms2DDto)
+            +toDto2D(forms2D:Forms2D)
             +toForm2D():Forms2D
+            +Forms2DSendByUser2UpdateForm2D(forms2D:Forms2D, dto:Forms2DDto)
             --Constructor--
             +Forms2DSendByUser()
         }
@@ -124,7 +126,7 @@ package "fr.bulutsamet.FilRougeBack402" {
             Forms2D "*" <-- Forms2DComposite #6CBB7A
             Forms2DController "1" *-- "*" Forms2D #6CBB7A
             Forms2DRepository "1" -- "1" Forms2DController #6CBB7A
-            Forms2DSendByUser "1" -- "1" Forms2DController #6CBB7A
+            Forms2DDto "1" -- "1" Forms2DController #6CBB7A
     }
 
     package "Forms3D" {
@@ -133,54 +135,131 @@ package "fr.bulutsamet.FilRougeBack402" {
             -df:DecimalFormat;
             -id:integer;
             -depths:double;
-            -forms2dId:integer;
+            -sceneId:integer;
             --Method--
             +getVolumes():double;
             +toString():String;
             +getForms():Forms;
             +setForms(forms:Forms);
             +getDepths():double;
-            setDepths(depths:double);
+            +setDepths(depths:double);
+            +getId():Integer;
+            +getSceneId():Integer;
+            +setSceneId(sceneId:integer);
             --Constructor--
-            +Forms3d(forms:Forms, depths:double);
+            +Forms3D();
+            +Forms3d(forms:Forms, depths:double, sceneId:integer);
         }
 
         class Forms3dComposite #9BD1A7 {
             --Attribute--
             -df:DecimalFormat;
+            -id:integer;
+            -name:String
             --Method--
             +getVolumes():double;
             +toString():String;
             +add3dForm(forms:Forms);
             +remove3dForm(forms:Forms);
+            +getId():Integer;
+            +getName():String
+            +setName(name:String);
+            +getMyAll3dForms():List<Forms3D>;
             --Constructor--
             +Forms3dComposite();
         }
 
         class Forms3DController #80BA9D {
             --Attribute--
-            -forms3DRepository:Forms3DRepository
-            -forms2DRepository:Forms2DRepository
+            -forms3DRepository:Forms3DRepository;
+            -forms2DRepository:Forms2DRepository;
+            -Scene3dConceptRepository:scene3dConceptRepository;
             --Method--
-            +findAllForms3D():List<Forms3D>
-            +listOneForms3D():Forms3D
-            +addForms3D(forms3d:Forms3D)
-            +updateForms3D(forms3d:Forms3D)
-            +deleteForms3D(id:integer)
+            +findAllForms3D():List<Forms3D>;
+            +listOneForms3D():Forms3D;
+            +addForms3D(forms3d:Forms3D):Forms3D;
+            +updateForms3D(forms3d:Forms3D):Forms3D;
+            +deleteForms3D(id:integer);
             --Constructor--
-            +Forms3DController(forms3DRepository:Forms3DRepository, forms2DRepository:Forms2DRepository)
+            +Forms3DController(forms3DRepository:Forms3DRepository, forms2DRepository:Forms2DRepository, scene3dConceptRepository:Scene3dConceptRepository);
+        }
+
+        class Forms3DDto #9BD1A7 {
+            --Attribute--
+            -id:integer
+            -type:String
+            -name:String
+            -largeur:double;
+            -longueur:double;
+            -hauteur:double;
+            -base:double;
+            -rayon:double;
+            -depths:double;
+            -sceneId:integer;
+            --Method--
+            +forms3DSentByUser2Form2D(dto:Forms3DDto):Forms2D
+            +getForms2D(type:String, name:String, largeur:double, longueur:double, hauteur:double, base:double, rayon:double):Forms2D
+            +forms3DSentByUser2Forms3D(dto:Forms2D, depths:double, sceneId:integer):Forms3D
+            +forms3DSentByUser2UpdateForms3D(forms3D:Forms3D, dto:Forms3DDto, forms2D:Forms2D)
+            --Constructor--
+            +Forms2DSendByUser()
         }
 
         interface Forms3DRepository #80BA9D {
             --Method--
-            +findById(id:integer)
+            +findById(id:integer);
         }
         Forms3d "*" <-- Forms3dComposite #6CBB7A
         Forms3DController "1" *-- "*" Forms3d #6CBB7A
         Forms3DRepository "1" -- "1" Forms3DController #6CBB7A
+        Forms3DDto "1" -- "1" Forms3DController #6CBB7A
+        Forms2D "1" <-- Forms3d #6CBB7A
+        Forms2D "1" <-- "1" Forms3DController #6CBB7A
     }
-    Forms2D "1" <-- Forms3d #6CBB7A
-    Forms2D "1" <-- "1" Forms3DController #6CBB7A
+
+    package "SceneConcept" {
+        class Scene3dConceptController #80BA9D {
+            --Attribute--
+            -forms3DRepository:Forms3DRepository;
+            -Scene3dConceptRepository:scene3dConceptRepository;
+            --Method--
+            +findAllListForms3DComposite():List<Forms3DComposite>;
+            +listOneForms3DComposite():Forms3DComposite;
+            +addNewScene(forms3DComposite:Forms3DComposite);
+            +addFormsInScene(dto:Scene3dConceptDto, id:integer):Forms3DComposite;
+            +updateScene(forms3DComposite:Forms3DComposite, id:integer):Forms3DComposite;
+            +deleteForms3DComposite(id:integer);
+            +deleteFormsInScene(forms3DId:List<integer>, id:integer);
+            --Constructor--
+            +Forms3DController(forms3DRepository:Forms3DRepository, scene3dConceptRepository:Scene3dConceptRepository);
+        }
+
+        class Scene3dConceptDto #9BD1A7 {
+            --Attribute--
+            -value:integer
+            -type:String
+            -name:String
+            -largeur:double;
+            -longueur:double;
+            -hauteur:double;
+            -base:double;
+            -rayon:double;
+            -depths:double;
+            -sceneId:integer;
+            -forms3DId:List<integer>;
+            --Method--
+            +SceneSentByUser2Form2D(dto:Scene3dConceptDto):Forms2D
+            +SceneSendByUser2Forms3D(dto:Forms2D, depths:double, sceneId:integer):Forms3D
+        }
+
+        interface Scene3dConceptRepository #80BA9D {
+
+        }
+
+        Scene3dConceptController "1" *-- "*" Forms3dComposite #6CBB7A
+        Scene3dConceptRepository "1" -- "1" Scene3dConceptController #6CBB7A
+        Scene3dConceptDto "1" -- "1" Scene3dConceptController #6CBB7A
+    }
 }
 
 

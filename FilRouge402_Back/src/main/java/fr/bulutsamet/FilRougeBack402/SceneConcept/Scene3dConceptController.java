@@ -29,7 +29,7 @@ public class Scene3dConceptController {
     //
 
     // Method
-    @RequestMapping("/Forms3DComposite")
+    @GetMapping("/Forms3DComposite")
     public List<Forms3DComposite> findAllListForms3DComposite() {
         return sceneConceptRepository.findAll();
     }

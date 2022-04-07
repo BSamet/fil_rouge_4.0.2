@@ -13,7 +13,6 @@ import static fr.bulutsamet.FilRougeBack402.Forms3D.Forms3DDto.getForms2D;
 public class Scene3dConceptDto {
     // Attribute
     private int value;
-    private int forms2did;
     private double depths;
     private String type;
     private String name;
@@ -22,6 +21,7 @@ public class Scene3dConceptDto {
     private double hauteur;
     private double base;
     private double rayon;
+    private int sceneId;
     private List<Integer> forms3DId;
 
     // Method

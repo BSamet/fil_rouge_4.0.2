@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface Forms3DRepository extends JpaRepository<Forms3D, Integer> {
     Forms3D findById(int id);
-    List<Forms3D> findBySceneId(int sceneId);
 }

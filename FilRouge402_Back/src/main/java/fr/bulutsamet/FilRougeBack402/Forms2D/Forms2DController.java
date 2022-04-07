@@ -21,7 +21,7 @@ public class Forms2DController {
     //
 
     //Method
-    @RequestMapping("/Forms2D")
+    @GetMapping("/Forms2D")
     public List<Forms2D> findAllForms2D() {
         return forms2DRepository.findAll();
     }
